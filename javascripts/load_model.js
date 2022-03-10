@@ -1,8 +1,8 @@
-import * as THREE from "/Easy3DViewer/external/three.js/build/three.module.js";
-import { OBJLoader } from "/Easy3DViewer/external/three.js/examples/jsm/loaders/OBJLoader.js";
-import { PCDLoader } from "/Easy3DViewer/external/three.js/examples/jsm/loaders/PCDLoader.js";
-import { Lut } from "/Easy3DViewer/external/three.js/examples/jsm/math/Lut.js";
-import { TextGeometry } from "/Easy3DViewer/external/three.js/examples/jsm/geometries/TextGeometry.js";
+import * as THREE from "https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js";
+import { OBJLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/OBJLoader.js";
+import { PCDLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/PCDLoader.js";
+import { Lut } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/math/Lut.js";
+import { TextGeometry } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/geometries/TextGeometry.js";
 
 // Model loading
 export function loadModel(name, data, engine_data) {

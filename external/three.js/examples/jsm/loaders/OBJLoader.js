@@ -13,7 +13,7 @@ import {
 	PointsMaterial,
 	Vector3,
 	Color
-} from '/Easy3DViewer/external/three.js/build/three.module.js';
+} from 'https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js';
 
 // o object_name | g group_name
 const _object_pattern = /^[og]\s*(.+)?/;
