@@ -1,6 +1,6 @@
 const pug = require('pug');
 var fs = require('fs');
-const config = require('config')
+const config = require('./config')
 
 const compiledFunction = pug.compileFile('./views/index.pug');
 
