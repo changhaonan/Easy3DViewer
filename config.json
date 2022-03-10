@@ -1,17 +1,4 @@
 {
     "repository_name": "/testghpages",
-    "data": [
-        {
-            "name":"move_dragon",
-            "folder_name": "move_dragon4Cam", 
-            "title": "Move Dragon Toy",
-            "frames": ["frame_000001", "frame_000002", "frame_000003", "frame_000004","frame_000005"]
-        },
-        {
-            "name":"scarf",
-            "folder_name": "scarf4Cam", 
-            "title": "Moving Scarf",
-            "frames": ["frame_000001"]
-        }
-    ]
+    "source_threejs": "/testghpages"
 }
