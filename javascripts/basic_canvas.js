@@ -1,7 +1,7 @@
-import * as THREE from "/testghpages/external/three.js/build/three.module.js";
-import { TrackballControls } from "/testghpages/external/three.js/examples/jsm/controls/TrackballControls.js";
-import { GUI } from "/testghpages/external/three.js/examples/jsm/libs/lil-gui.module.min.js";
-import { FontLoader } from "/testghpages/external/three.js/examples/jsm/loaders/FontLoader.js";
+import * as THREE from "/Easy3DViewer/external/three.js/build/three.module.js";
+import { TrackballControls } from "/Easy3DViewer/external/three.js/examples/jsm/controls/TrackballControls.js";
+import { GUI } from "/Easy3DViewer/external/three.js/examples/jsm/libs/lil-gui.module.min.js";
+import { FontLoader } from "/Easy3DViewer/external/three.js/examples/jsm/loaders/FontLoader.js";
 
 export function createBasicCanvas(container_id, gui_enable=false) {
     const engine_data = {

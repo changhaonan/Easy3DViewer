@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" href="/testghpages/stylesheets/main.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script></head><body><div class="header" id="header"><div class="title" id="title" style="height:50px"><div class="title_left" id="title_left"> <image src="/testghpages/images/slogan.svg" id="title_img"></image></div><div class="title_middle" id="title_left"></div><div class="title_right" id="title_right">Haonan Chang</div></div></div><div class="container"><!-- Normal-Shader--><script id="normal-vertexshader">varying vec3 viewNormal;
+<!DOCTYPE html><html><head><link rel="stylesheet" href="/Easy3DViewer/stylesheets/main.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script></head><body><div class="header" id="header"><div class="title" id="title" style="height:50px"><div class="title_left" id="title_left"> <image src="/Easy3DViewer/images/slogan.svg" id="title_img"></image></div><div class="title_middle" id="title_left"></div><div class="title_right" id="title_right">Haonan Chang</div></div></div><div class="container"><!-- Normal-Shader--><script id="normal-vertexshader">varying vec3 viewNormal;
 void main() {
     viewNormal = normal;
     vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
@@ -40,22 +40,22 @@ varying vec3 viewColor;
 void main() {
     gl_FragColor = vec4(viewColor * (faceRatio * 0.5 + 0.5), 1.0);
 }
-</script><h3>Debug</h3><div class="single_canvas_container"><div style="height: 90%; width: 100%; margin: auto;  position: relative"><div class="canvas" id="move_dragon" style="height: 100%; width: 100%"><script type="module">import { createBasicCanvas, animate } from "/testghpages/javascripts/basic_canvas.js";
-import { loadFirstContext, loadContext } from "/testghpages/javascripts/load_context.js";
-import { onKeydown } from "/testghpages/javascripts/key_parser.js";
+</script><h3>Debug</h3><div class="single_canvas_container"><div style="height: 90%; width: 100%; margin: auto;  position: relative"><div class="canvas" id="move_dragon" style="height: 100%; width: 100%"><script type="module">import { createBasicCanvas, animate } from "/Easy3DViewer/javascripts/basic_canvas.js";
+import { loadFirstContext, loadContext } from "/Easy3DViewer/javascripts/load_context.js";
+import { onKeydown } from "/Easy3DViewer/javascripts/key_parser.js";
 const engine_data = createBasicCanvas(move_dragon, true);
 let frames = "frame_000001,frame_000002,frame_000003,frame_000004,frame_000005".split(',') 
 engine_data.container_id = "move_dragon";
-loadFirstContext("/testghpages", "move_dragon4Cam", frames, engine_data);
+loadFirstContext("/Easy3DViewer", "move_dragon4Cam", frames, engine_data);
 $(document).keydown((e) => { onKeydown(e, engine_data, false); });
-animate(engine_data);</script></div><div class="figure_title"><p>Fig. Move Dragon Toy</p></div></div></div><div class="single_canvas_container"><div style="height: 90%; width: 100%; margin: auto;  position: relative"><div class="canvas" id="scarf" style="height: 100%; width: 100%"><script type="module">import { createBasicCanvas, animate } from "/testghpages/javascripts/basic_canvas.js";
-import { loadFirstContext, loadContext } from "/testghpages/javascripts/load_context.js";
-import { onKeydown } from "/testghpages/javascripts/key_parser.js";
+animate(engine_data);</script></div><div class="figure_title"><p>Fig. Move Dragon Toy</p></div></div></div><div class="single_canvas_container"><div style="height: 90%; width: 100%; margin: auto;  position: relative"><div class="canvas" id="scarf" style="height: 100%; width: 100%"><script type="module">import { createBasicCanvas, animate } from "/Easy3DViewer/javascripts/basic_canvas.js";
+import { loadFirstContext, loadContext } from "/Easy3DViewer/javascripts/load_context.js";
+import { onKeydown } from "/Easy3DViewer/javascripts/key_parser.js";
 const engine_data = createBasicCanvas(scarf, true);
 let frames = "frame_000001".split(',') 
 engine_data.container_id = "scarf";
-loadFirstContext("/testghpages", "scarf4Cam", frames, engine_data);
+loadFirstContext("/Easy3DViewer", "scarf4Cam", frames, engine_data);
 $(document).keydown((e) => { onKeydown(e, engine_data, false); });
-animate(engine_data);</script></div><div class="figure_title"><p>Fig. Moving Scarf</p></div></div></div><!--+loadConfigCanvasSingle("previous", "pick_two4Cam_second", "result of Calibration")--><!--+loadConfigCanvasSingle("debug", "Calibration4Cam", "result of Calibration")--><!--+loadConfigCanvasSingle("raw_data", "Calibration", "Raw data for Calibration")--><!-- +loadConfigCanvasSingle("debug", "Box_rot4Cam", "Topological change in box down pose (Version 2)")--><!-- +loadMarkDown("progress", "star")--><!-- +loadConfigCanvasSingle("canvas_spot", "Spot4Cam", "Fix bugs")--><!-- +loadConfigCanvasSingle("canvas_ur5e", "Ur5e4Cam", "Result")--><!-- +loadConfigCanvasSingle("canvas_box_up", "Box_up4Cam", "Topological change in box up pose")--><!-- +loadConfigCanvasSingle("canvas_box_down", "Box_down4Cam", "Topological change in box down pose")--><!-- +loadConfigCanvasSingle("canvas_box_down_2", "Box_down_24Cam", "Topological change in box down pose (Version 2)")--><!-- +loadMarkDown("issue", "star")--><!-- +loadMarkDown("plan", "star")--></div><div class="sidenav"><div id="toc"><script src="/testghpages/javascripts/markdown_toc.js"></script><script>const markdown_toc = new MarkdownToc(3, "progress,issue,plan", "star");
+animate(engine_data);</script></div><div class="figure_title"><p>Fig. Moving Scarf</p></div></div></div><!--+loadConfigCanvasSingle("previous", "pick_two4Cam_second", "result of Calibration")--><!--+loadConfigCanvasSingle("debug", "Calibration4Cam", "result of Calibration")--><!--+loadConfigCanvasSingle("raw_data", "Calibration", "Raw data for Calibration")--><!-- +loadConfigCanvasSingle("debug", "Box_rot4Cam", "Topological change in box down pose (Version 2)")--><!-- +loadMarkDown("progress", "star")--><!-- +loadConfigCanvasSingle("canvas_spot", "Spot4Cam", "Fix bugs")--><!-- +loadConfigCanvasSingle("canvas_ur5e", "Ur5e4Cam", "Result")--><!-- +loadConfigCanvasSingle("canvas_box_up", "Box_up4Cam", "Topological change in box up pose")--><!-- +loadConfigCanvasSingle("canvas_box_down", "Box_down4Cam", "Topological change in box down pose")--><!-- +loadConfigCanvasSingle("canvas_box_down_2", "Box_down_24Cam", "Topological change in box down pose (Version 2)")--><!-- +loadMarkDown("issue", "star")--><!-- +loadMarkDown("plan", "star")--></div><div class="sidenav"><div id="toc"><script src="/Easy3DViewer/javascripts/markdown_toc.js"></script><script>const markdown_toc = new MarkdownToc(3, "progress,issue,plan", "star");
 $("#toc").html(marked.parse(markdown_toc.getToc()));
 </script></div></div></body></html>

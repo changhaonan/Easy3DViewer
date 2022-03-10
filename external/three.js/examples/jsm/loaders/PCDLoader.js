@@ -6,7 +6,7 @@ import {
 	LoaderUtils,
 	Points,
 	PointsMaterial
-} from '/testghpages/external/three.js/build/three.module.js';
+} from '/Easy3DViewer/external/three.js/build/three.module.js';
 
 class PCDLoader extends Loader {
 

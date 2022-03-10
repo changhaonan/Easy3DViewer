@@ -8,7 +8,7 @@ class MarkdownToc {
 
         let list_of_md = list_of_md_str.split(",");
         for (let i = 0; i < list_of_md.length; ++i) {
-            let md_file_name = "/testghpages/markdown/" + root_dir + "/" + list_of_md[i] + ".md";
+            let md_file_name = "/Easy3DViewer/markdown/" + root_dir + "/" + list_of_md[i] + ".md";
             $.get(md_file_name, (data) => {
                 this.process(data);
             })

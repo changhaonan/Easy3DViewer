@@ -1,4 +1,4 @@
-import { loadContext } from "/testghpages/javascripts/load_context.js"
+import { loadContext } from "/Easy3DViewer/javascripts/load_context.js"
 
 export function onKeydown(event, engine_data, global_keyevent) {
     if (!global_keyevent)

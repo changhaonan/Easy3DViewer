@@ -1,6 +1,6 @@
 // import * as config_json from 'config.json'
-import { animate } from "/testghpages/javascripts/basic_canvas.js";
-import { loadModel } from "/testghpages/javascripts/load_model.js"
+import { animate } from "/Easy3DViewer/javascripts/basic_canvas.js";
+import { loadModel } from "/Easy3DViewer/javascripts/load_model.js"
 
 /*
  * \brief we should enable lasy-loading and event-based loop

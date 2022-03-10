@@ -4,7 +4,7 @@ import {
 	Quaternion,
 	Vector2,
 	Vector3
-} from '/testghpages/external/three.js/build/three.module.js';
+} from '/Easy3DViewer/external/three.js/build/three.module.js';
 
 const _changeEvent = { type: 'change' };
 const _startEvent = { type: 'start' };
