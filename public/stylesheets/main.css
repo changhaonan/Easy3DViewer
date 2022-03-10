@@ -1,0 +1,367 @@
+body {
+    font: 14px Helvetica;
+    margin:  0px;
+    padding: 0px;
+    position: relative;
+}
+
+.header {
+    margin: 0px;
+}
+
+.title {
+    background-color: peru;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.title_left {
+    font-size: 30px;
+    font-family: "Permanent Marker";
+    margin: auto;
+}
+
+#title_img {
+    max-height: 50px;
+    margin: auto;
+}
+
+.title_middle {
+    flex: auto;
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
+    justify-content: center;
+    margin: 10px;
+}
+
+.title_right {
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    justify-content: right;
+    margin: 10px;
+}
+
+.container {
+    margin-left: max(200px, 20%);
+    margin-right: 0px;
+    padding-top: 0.1rem; /* Compensate for top blank */
+    padding-bottom: 0.1rem; /* Compensate for top blank */
+    width: 70%;
+    max-width: 1100px;
+    position: relative;
+    background-color: AntiqueWhite
+}
+
+a {
+    color: #00B7FF;
+}
+
+.canvas {
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    position: relative;
+}
+
+.single_canvas_container {
+    aspect-ratio: 1;
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    padding-bottom: 1.5rem;
+}
+
+#gui {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 10  /* Put it on top*/
+}
+
+.figure_title {
+    margin: auto;
+    text-align: center;
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.markdown_block {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+/* The sidebar menu */
+.sidenav {
+    margin-top: 100px;
+    
+    height: auto; /* Full-height: remove this if you want "auto" height */
+    max-width: 200px; /* Set the width of the sidebar */
+    max-height: 80%;
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: white;
+    overflow-x: hidden; /* Disable horizontal scroll */
+}
+
+    .sidenav ul {
+        padding-left: 0px;
+        margin: 0px;
+        display: table-row;
+    }
+    .sidenav li {
+        list-style: none;
+        margin-left: 10px;
+    }
+
+    /* The navigation menu links */
+    .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 20px;
+        color: #154360;
+        display: block;
+    }
+
+    /* When you mouse over the navigation links, change their color */
+        .sidenav a:visited {
+            color: #154360;
+        }
+
+        .sidenav a:hover {
+            color: #E74C3C;
+        }
+
+/* Splendor style */
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+        a[href]:after {
+            content: " (" attr(href) ")";
+        }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+html {
+    font-size: 12px;
+}
+
+@media screen and (min-width: 32rem) and (max-width: 48rem) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media screen and (min-width: 48rem) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    line-height: 1.85;
+}
+
+p,
+.splendor-p {
+    font-size: 1rem;
+    margin-bottom: 1.3rem;
+}
+
+h1,
+.splendor-h1,
+h2,
+.splendor-h2,
+h3,
+.splendor-h3,
+h4,
+.splendor-h4 {
+    margin: 1.414rem 0 .5rem;
+    font-weight: inherit;
+    line-height: 1.42;
+}
+
+h1,
+.splendor-h1 {
+    margin-top: 0;
+    font-size: 3.998rem;
+}
+
+h2,
+.splendor-h2 {
+    font-size: 2.827rem;
+}
+
+h3,
+.splendor-h3 {
+    font-size: 1.999rem;
+}
+
+h4,
+.splendor-h4 {
+    font-size: 1.414rem;
+}
+
+h5,
+.splendor-h5 {
+    font-size: 1.121rem;
+}
+
+h6,
+.splendor-h6 {
+    font-size: .88rem;
+}
+
+small,
+.splendor-small {
+    font-size: .707em;
+}
+
+/* https://github.com/mrmrs/fluidity */
+
+img,
+canvas,
+iframe,
+video,
+svg,
+select,
+textarea {
+    max-width: 100%;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Merriweather:300italic,300);
+
+html {
+    font-size: 18px;
+    max-width: 100%;
+}
+
+body {
+    color: #444;
+    font-family: 'Merriweather', Georgia, serif;
+    margin: 0;
+    max-width: 100%;
+}
+
+/* === A bit of a gross hack so we can have bleeding divs/blockquotes. */
+/* Remove this in case of strange behavior. */
+/*p,
+*:not(div):not(img):not(body):not(html):not(li):not(blockquote):not(p):not(canvas):not(controller) {
+    margin: 1rem auto 1rem;
+    max-width: 36rem;
+    padding: .25rem;
+}
+
+div:not(controller) {
+    width: 100%;
+}*/
+
+div img {
+    width: 100%;
+}
+
+blockquote p {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin: 1rem auto 1rem;
+    max-width: 48rem;
+}
+
+li {
+    margin-left: 2rem;
+}
+
+ Counteract the specificity of the gross *:not() chain. 
+
+h1 {
+    padding: 4rem 0 !important;
+}
+
+/*  === End gross hack */
+
+p {
+    color: #555;
+    height: auto;
+    line-height: 1.45;
+}
+
+pre,
+code {
+    font-family: Menlo, Monaco, "Courier New", monospace;
+}
+
+pre {
+    background-color: #fafafa;
+    font-size: .8rem;
+    overflow-x: scroll;
+    padding: 1.125em;
+}
+
+a,
+a:visited {
+    color: #3498db;
+}
+
+a:hover,
+a:focus,
+a:active {
+    color: #2980b9;
+}

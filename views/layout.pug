@@ -1,0 +1,12 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", href=`${git_root_file}/stylesheets/main.css`)
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/marked/marked.min.js")
+
+    body
+        include header
+        .container
+            block content
+        block sidebar
