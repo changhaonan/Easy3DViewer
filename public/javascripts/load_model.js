@@ -1,8 +1,8 @@
-import * as THREE from "/external/three.js/build/three.module.js";
-import { OBJLoader } from "/external/three.js/examples/jsm/loaders/OBJLoader.js";
-import { PCDLoader } from "/external/three.js/examples/jsm/loaders/PCDLoader.js";
-import { Lut } from '/external/three.js/examples/jsm/math/Lut.js';
-import { TextGeometry } from '/external/three.js/examples/jsm/geometries/TextGeometry.js';
+import * as THREE from "https://dhruvmetha.github.io/testghpages/external/three.js/build/three.module.js";
+import { OBJLoader } from "https://dhruvmetha.github.io/testghpages/external/three.js/examples/jsm/loaders/OBJLoader.js";
+import { PCDLoader } from "https://dhruvmetha.github.io/testghpages/external/three.js/examples/jsm/loaders/PCDLoader.js";
+import { Lut } from 'https://dhruvmetha.github.io/testghpages/external/three.js/examples/jsm/math/Lut.js';
+import { TextGeometry } from 'https://dhruvmetha.github.io/testghpages/external/three.js/examples/jsm/geometries/TextGeometry.js';
 
 // Model loading
 export function loadModel(name, data, engine_data) {

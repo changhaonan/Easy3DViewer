@@ -1,0 +1,379 @@
+{
+    "bounding_box": {
+        "vis": {
+            "control": "helper",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.09999999403953552,
+                -0.050000011920928955,
+                0.75,
+                1.0
+            ],
+            "default": false,
+            "depth": 0.5,
+            "geometry": "bounding_box",
+            "gui": "check_box",
+            "height": 0.5,
+            "intersectable": false,
+            "mode": "geometry",
+            "section": "Geometry",
+            "width": 1.0
+        }
+    },
+    "coord_0": {
+        "vis": {
+            "control": "coord_0",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "default": false,
+            "geometry": "coord",
+            "gui": "check_box",
+            "intersectable": false,
+            "mode": "geometry",
+            "scale": 0.10000000149011612,
+            "section": "Geometry"
+        }
+    },
+    "coord_1": {
+        "vis": {
+            "control": "coord_1",
+            "coordinate": [
+                -0.8320134878158569,
+                0.3821724057197571,
+                -0.40211668610572815,
+                0.0,
+                -0.44737765192985535,
+                -0.033616453409194946,
+                0.893713116645813,
+                0.0,
+                0.32803475856781006,
+                0.9234793782234192,
+                0.19894474744796753,
+                0.0,
+                -0.1951979249715805,
+                -0.7892429232597351,
+                0.7921780943870544,
+                1.0
+            ],
+            "default": false,
+            "geometry": "coord",
+            "gui": "check_box",
+            "intersectable": false,
+            "mode": "geometry",
+            "scale": 0.10000000149011612,
+            "section": "Geometry"
+        }
+    },
+    "coord_2": {
+        "vis": {
+            "control": "coord_2",
+            "coordinate": [
+                -0.2607208788394928,
+                -0.7029076218605042,
+                0.6617744565010071,
+                0.0,
+                0.735109269618988,
+                0.2998068630695343,
+                0.6080543994903564,
+                0.0,
+                -0.6258106231689453,
+                0.6450090408325195,
+                0.4385480284690857,
+                0.0,
+                0.6375547051429749,
+                -0.5505198240280151,
+                0.5037431716918945,
+                1.0
+            ],
+            "default": false,
+            "geometry": "coord",
+            "gui": "check_box",
+            "intersectable": false,
+            "mode": "geometry",
+            "scale": 0.10000000149011612,
+            "section": "Geometry"
+        }
+    },
+    "live": {
+        "file_name": "live.pcd",
+        "file_type": "pcd",
+        "vis": {
+            "control": "live",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "default": false,
+            "gui": "check_box",
+            "intersectable": false,
+            "mode": "point",
+            "section": "Point-Cloud",
+            "size": 1.0
+        }
+    },
+    "node_group": {
+        "file_name": "node_group.json",
+        "file_type": "json",
+        "vis": {
+            "control": "node_group",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "default": false,
+            "gui": "check_box",
+            "id_visible": false,
+            "intersectable": false,
+            "max_val": 3.0,
+            "min_val": 0.0,
+            "mode": "graph",
+            "normal_len": 4.0,
+            "section": "Graph",
+            "size": 2.0
+        }
+    },
+    "node_status": {
+        "file_name": "node_status.json",
+        "file_type": "json",
+        "vis": {
+            "control": "node_status",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "default": false,
+            "gui": "check_box",
+            "id_visible": false,
+            "intersectable": false,
+            "max_val": 1.0,
+            "min_val": -1.0,
+            "mode": "graph",
+            "normal_len": 4.0,
+            "section": "Graph",
+            "size": 2.0
+        }
+    },
+    "obj_0": {
+        "file_name": "obj_0.pcd",
+        "file_type": "pcd",
+        "vis": {
+            "control": "obj_0",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "default": false,
+            "gui": "check_box",
+            "intersectable": false,
+            "mode": "point",
+            "section": "Point-Cloud",
+            "size": 1.0
+        }
+    },
+    "obj_1": {
+        "file_name": "obj_1.pcd",
+        "file_type": "pcd",
+        "vis": {
+            "control": "obj_1",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "default": false,
+            "gui": "check_box",
+            "intersectable": false,
+            "mode": "point",
+            "section": "Point-Cloud",
+            "size": 1.0
+        }
+    },
+    "obj_2": {
+        "file_name": "obj_2.pcd",
+        "file_type": "pcd",
+        "vis": {
+            "control": "obj_2",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "default": false,
+            "gui": "check_box",
+            "intersectable": false,
+            "mode": "point",
+            "section": "Point-Cloud",
+            "size": 1.0
+        }
+    },
+    "origin": {
+        "vis": {
+            "control": "helper",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "default": false,
+            "geometry": "coord",
+            "gui": "check_box",
+            "intersectable": false,
+            "mode": "geometry",
+            "scale": 1.0,
+            "section": "Geometry"
+        }
+    },
+    "seperation": {
+        "file_name": "seperation.pcd",
+        "file_type": "pcd",
+        "vis": {
+            "control": "seperation",
+            "coordinate": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "default": false,
+            "gui": "check_box",
+            "intersectable": false,
+            "mode": "point",
+            "section": "Point-Cloud",
+            "size": 1.0
+        }
+    }
+}
