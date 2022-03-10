@@ -75,11 +75,11 @@ const compiledFunction = pug.compileFile('./views/index.pug');
 // console.log(compiledFunction())
 
 // fs.writeFile('index.html', compiledFunction({
-//     git_root_file: '/testghpages'
+//     git_root_file: '/Easy3DViewer'
 //     }), function (err) {
 //     if (err) return console.log(err);
 //     console.log(`${compiledFunction({
-//         git_root_file: '/testghpages'
+//         git_root_file: '/Easy3DViewer'
 //         })}`);
 // });
 

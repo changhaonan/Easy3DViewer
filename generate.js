@@ -5,7 +5,7 @@ const config = require('config')
 const compiledFunction = pug.compileFile('./views/index.pug');
 
 // let config = {
-//     repository_name: '/testghpages',
+//     repository_name: '/Easy3DViewer',
 //     data: [{
 //     name:"move_dragon",
 //     folder_name: "move_dragon4Cam", 
