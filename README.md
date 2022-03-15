@@ -12,9 +12,9 @@ There are two parts to using this software.
 The node app (in the master branch) consists of the code that you can use to run and test the software locally on your systems and generate the files needed for static hosting (can be used on github with github-pages). 
 
 The steps to run the software locally is as follows:
-a. clone the repository
-b. `npm install`
-c. `node app.js`
+1. clone the repository
+2. `npm install`
+3. `node app.js`
  
 To add in your own 3D visualizations, you need to add a folder with your animation to `public/test_data`. The folder should contain files that look like [this](https://github.com/changhaonan/Easy3DViewer/tree/master/public/test_data/move_dragon4Cam/frame_000001). Once added, you need to change the `config.json` to add the name of your folder and the frames you want to render.
 
