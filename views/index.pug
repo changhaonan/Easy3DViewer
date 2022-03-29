@@ -39,7 +39,7 @@ mixin loadConfigCanvasSingle(root_folder, default_data_folder, source_url, sourc
                     const engine_data = createBasicCanvas(#{name}, true);
                     let frames = "#{frames}".split(',') 
                     engine_data.container_id = "#{name}";
-                    loadFirstContext("#{root_folder}", "#{default_data_folder}", "#{data_root}", "#{source_url}", "#{source_directory}", frames, engine_data, loadModel);
+                    loadFirstContext("#{root_folder}", "#{default_data_folder}", "#{data_root}", "#{source_url}", "#{source_directory}", frames, engine_data);
                     $(document).keydown((e) => { onKeydown(e, engine_data, #{global_keyevent}); });
                     animate(engine_data);
             div.figure_title

@@ -40,8 +40,8 @@ namespace WebViewer3D {
         explicit Context() {};
         void setDir(
             const std::string& data_root_dir,
-            const std::string& dir_prefix = "",
-            const std::string& dir_suffix = "") {
+            const std::string& dir_prefix="",
+            const std::string& dir_suffix="") {
             m_data_root_dir = data_root_dir;
             m_dir_prefix = dir_prefix;
             m_dir_suffix = dir_suffix;
@@ -72,8 +72,8 @@ namespace WebViewer3D {
         }
 
         // Adding function
-        void addPointCloud(const std::string& name, const std::string& control_name = "",
-            const Eigen::Matrix4f& coordinate = Eigen::Matrix4f::Identity(), const float size = 0.5f) {
+        void addPointCloud(const std::string& name, const std::string& control_name="",
+            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float size=0.5f) {
             json info_data;
             info_data["file_type"] = "pcd";
             info_data["file_name"] = (name + ".pcd");
@@ -90,8 +90,8 @@ namespace WebViewer3D {
             addData(name, info_data);
         }
 
-        void addPoly(const std::string& name, const std::string& control_name = "",
-            const Eigen::Matrix4f& coordinate = Eigen::Matrix4f::Identity()) {
+        void addPoly(const std::string& name, const std::string& control_name="",
+            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity()) {
             json info_data;
             info_data["file_type"] = "obj";
             info_data["file_name"] = (name + ".obj");
@@ -107,9 +107,10 @@ namespace WebViewer3D {
             addData(name, info_data);
         }
 
-        void addGraph(const std::string& name, const std::string& control_name = "",
-            const Eigen::Matrix4f& coordinate = Eigen::Matrix4f::Identity(), const float min_val = 0.f,
-            const float max_val = 1.f, const float size = 1.f, const bool id_visible = false) {
+        void addGraph(const std::string& name, const std::string& control_name="",
+            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float min_val=0.f,
+            const float max_val=1.f, const float size=1.f, const bool id_visible=false,
+            const float normal_len = 2.f) {
             json info_data;
             info_data["file_type"] = "json";
             info_data["file_name"] = (name + ".json");
@@ -123,14 +124,14 @@ namespace WebViewer3D {
             info_data["vis"]["intersectable"] = false;
             info_data["vis"]["coordinate"] = std::vector<float>(coordinate.data(), coordinate.data() + 16);
             info_data["vis"]["size"] = size;
-            info_data["vis"]["normal_len"] = 2.f * size;
+            info_data["vis"]["normal_len"] = normal_len;
             info_data["vis"]["min_val"] = min_val;
             info_data["vis"]["max_val"] = max_val;
             info_data["vis"]["id_visible"] = id_visible;
             addData(name, info_data);
         }
 
-        void addImage(const std::string& name, const std::string& control_name = "") {
+        void addImage(const std::string& name, const std::string& control_name="") {
             json info_data;
             info_data["file_type"] = "png";
             info_data["file_name"] = (name + ".png");
@@ -159,9 +160,9 @@ namespace WebViewer3D {
             }
         }
 
-        void addGeometry(const std::string& name, const std::string& control_name = "", 
-            const std::string& geometry_type = "coord", const Eigen::Matrix4f& coordinate = Eigen::Matrix4f::Identity(),
-            const float param_0 = 0.f, const float param_1 = 0.f, const float param_2 = 0.f) {
+        void addGeometry(const std::string& name, const std::string& control_name="", 
+            const std::string& geometry_type="coord", const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(),
+            const float param_0=0.f, const float param_1=0.f, const float param_2=0.f) {
 
             json info_data;
             // Visulaization part
@@ -196,22 +197,22 @@ namespace WebViewer3D {
             addData(name, info_data);
         }
 
-        void addCoord(const std::string& name, const std::string& control_name = "",
-            const Eigen::Matrix4f& coordinate = Eigen::Matrix4f::Identity(), const float scale = 0.1f) {
+        void addCoord(const std::string& name, const std::string& control_name="",
+            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float scale=0.1f) {
             addGeometry(name, control_name, "coord", coordinate, scale);
         }
 
         // Box is centered at (0, 0, 0) of the coordinate
-        void addBox(const std::string& name, const std::string& control_name = "",
-            const Eigen::Matrix4f& coordinate = Eigen::Matrix4f::Identity(), const float width = 1.f,
-            const float height = 1.f, const float depth = 1.f) {
+        void addBox(const std::string& name, const std::string& control_name="",
+            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float width=1.f,
+            const float height=1.f, const float depth=1.f) {
             addGeometry(name, control_name, "box", coordinate, width, height, depth);
         }
 
         // Bounding Box is centered at (0, 0, 0) of the coordinate
-        void addBoundingBox(const std::string& name, const std::string& control_name = "",
-            const Eigen::Matrix4f& coordinate = Eigen::Matrix4f::Identity(), const float width = 1.f,
-            const float height = 1.f, const float depth = 1.f) {
+        void addBoundingBox(const std::string& name, const std::string& control_name="",
+            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float width=1.f,
+            const float height=1.f, const float depth=1.f) {
             addGeometry(name, control_name, "bounding_box", coordinate, width, height, depth);
         }
         

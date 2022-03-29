@@ -63,7 +63,7 @@ class Context:
         info_data["vis"]["intersectable"] = False
         info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
         info_data["vis"]["size"] = size
-        info_data["vis"]["normal_len"] = normal_len * size  # If this one is negative, we do not normalize the length of normal
+        info_data["vis"]["normal_len"] = normal_len  # If this one is negative, we do not normalize the length of normal
         info_data["vis"]["min_val"] = min_val
         info_data["vis"]["max_val"] = max_val
         info_data["vis"]["id_visible"] = id_visible
