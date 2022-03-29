@@ -7,11 +7,6 @@ var logger = require("morgan");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 
-var routes = require("./routes/index");
-var users = require("./routes/users");
-var visualize = require("./routes/visualize");
-var fs = require("fs");
-
 // App settings
 var app = express();
 app.use(favicon(__dirname + "/public/images/favicon.ico"));
