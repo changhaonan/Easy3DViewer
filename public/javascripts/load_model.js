@@ -340,7 +340,7 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                     color_v.push(color.r, color.g, color.b);
                 }
                 else 
-                    color_v.push(1.0, 1.0, 1.0);
+                    color_v.push(0.0, 0.0, 1.0);  // Blue is the default color
             });
 
             const geometry_v = new THREE.BufferGeometry().setFromPoints(vertices);
@@ -358,7 +358,7 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
             if (data.normals != undefined) {
                 let normal_len;
                 if (data_vis.normal_len != undefined) {
-                    normal_len = data_vis.normal_len * 0.005;
+                    normal_len = data_vis.normal_len;  // Scale times to normal
                 }
                 else {
                     normal_len = 0.015;  // [meter]
@@ -379,7 +379,7 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                     if (data.weight_n != undefined)
                         color = lut.getColor(data.weight_n[i]);
                     else
-                        color = { "r": 1.0, "g": 1.0, "b": 1.0 };
+                        color = { "r": 1.0, "g": 0.0, "b": 0.0 };  // Red is the default color
 
                     color_n.push(color.r, color.g, color.b);
                     color_n.push(color.r, color.g, color.b);

@@ -7,6 +7,7 @@ A web-based 3D viewer based on three.js designed for easy-to-use.
 To use our system, you should first write a config.json to the root of our workspace.
 
 An example of config.json is shown as follows:
+
 ```
 {
     "repository_name" : "http://localhost:8000",
@@ -49,3 +50,7 @@ We make a copy of this `index.html` and the `public/test_data` folder, and switc
 Once this is done, you need to push your code back to github.  You do not need to push the `externals` folder (in the `gh-pages` branch), as the exisiting code will point to this repository only. If you have github-pages enabled (see [this](https://docs.github.com/en/pages/quickstart)), you should see your page at https://username.github.io/repository_name. This may take a while to compile given the size of your repository.
 
 If you do make changes to the `externals` folder in the `gh-pages` branch, in your editor you should search for `changhaonan.github.io/Easy3DViewer` and replace it with your `username.github.io/repository_name`
+
+## Issue
+
+- [ ] When I remove "source_directory": "/test_data", the file can not be correctly loaded.
