@@ -4,7 +4,27 @@ A web-based 3D viewer based on three.js designed for easy-to-use.
 
 ## Usage
 
-There are two parts to using this software.
+To use our system, you should first write a config.json to the root of our workspace.
+
+An example of config.json is shown as follows:
+```
+{
+    "repository_name" : "http://localhost:8000",
+    "default_data_folder": "/test_data",
+    "data": [
+        {
+            "source_url": "https://changhaonan.github.io/Easy3DViewer", 
+            "source_directory": "/test_data", 
+            "name":"test",
+            "folder_name": "scarf4Cam", 
+            "title": "Test",
+            "frames": ["frame_000001"]
+        }
+    ]
+}
+```
+
+There are two different ways of using this software.
 
 ### Running the Node App locally
 
