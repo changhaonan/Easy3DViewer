@@ -9,5 +9,6 @@ __pychache__
 # Data
 public/test_data/*
 
-# Generated file
+# Generated/Generating file
+config.json
 index.html
