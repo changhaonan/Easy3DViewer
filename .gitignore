@@ -1,1 +1,7 @@
 node_modules/
+
+# Python
+__pychache__
+
+# Editor
+.vscode
