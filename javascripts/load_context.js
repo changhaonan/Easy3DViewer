@@ -1,13 +1,30 @@
-// import * as config_json from 'config.json'
-import { animate } from "/Easy3DViewer/javascripts/basic_canvas.js";
-import { loadModel } from "/Easy3DViewer/javascripts/load_model.js"
+import { animate } from "/javascripts/basic_canvas.js";
+import { loadModel } from "/javascripts/load_model.js"
 
 /*
  * \brief we should enable lasy-loading and event-based loop
  */
-export function loadFirstContext(root_folder, data_root, dir_list, engine_data) {
+export function loadFirstContext(root_folder, data_root, source_url, source_directory, dir_list, engine_data) {
     // Init engine_data
-    engine_data.data_root = root_folder + "/test_data/" + data_root;
+    engine_data.data_root = ""
+    console.log(source_url + " " + source_directory)
+    if (source_url == ''){
+        if (source_directory == ''){
+            engine_data.data_root = root_folder + "/test_data/" + data_root;
+        }
+        else{
+            engine_data.data_root = root_folder + source_directory + "/" + data_root
+        }
+    }
+    else{
+        if (source_directory == ''){
+            engine_data.data_root = source_url + "/test_data/" + data_root;
+        }
+        else{
+            engine_data.data_root = source_url + source_directory + "/" + data_root
+        }
+    }
+    console.log(engine_data.data_root)
     engine_data.data_dir = "";
     engine_data.controlls = {};
     engine_data.vis_controls = {};
