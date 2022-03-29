@@ -1,5 +1,5 @@
 {
-    "repository_name": "/Easy3DViewer",
+    "repository_name": "http://localhost:8000",
     "data": [
         {
             "name":"move_dragon",
@@ -8,6 +8,8 @@
             "frames": ["frame_000001", "frame_000002", "frame_000003", "frame_000004","frame_000005"]
         },
         {
+            "source_url": "https://changhaonan.github.io/Easy3DViewer", 
+            "source_directory": "/test_data", 
             "name":"scarf",
             "folder_name": "scarf4Cam", 
             "title": "Moving Scarf",
