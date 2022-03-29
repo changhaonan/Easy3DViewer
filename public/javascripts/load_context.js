@@ -1,8 +1,9 @@
+import { loadModel } from "/javascripts/load_model.js"
 
 /*
  * \brief we should enable lasy-loading and event-based loop
  */
-export function loadFirstContext(root_folder, default_data_folder, data_root, source_url, source_directory, dir_list, engine_data, loadModel) {
+export function loadFirstContext(root_folder, default_data_folder, data_root, source_url, source_directory, dir_list, engine_data) {
     // Init engine_data
     // engine_data.data_root = ""
     console.log('here' + source_url + " " + source_directory, source_url.length == 0)
@@ -53,7 +54,7 @@ export function loadFirstContext(root_folder, default_data_folder, data_root, so
     engine_data.p = 0;
     engine_data.data_dir = engine_data.data_root + "/" + engine_data.dir_list[0];
     let file_path = engine_data.data_dir + "/context.json";  // Parse first one
-    parseJson(file_path, engine_data, loadModel);
+    parseJson(file_path, engine_data);
     console.log(engine_data)
 }
 
@@ -66,7 +67,7 @@ export function loadContext(data_dir, engine_data) {
     parseJson(file_path, engine_data);
 }
 
-function parseJson(file_path, engine_data, loadModel) {
+function parseJson(file_path, engine_data) {
     // Add new controllers
     $.getJSON(file_path).done(function (data) {
         infoLog(file_path + " loaded.");
@@ -80,7 +81,7 @@ function parseJson(file_path, engine_data, loadModel) {
 
         // Vis callback
         $.each(engine_data.vis_controls, (key) => {
-            engine_data.controls[key].onChange(visibleCallBack(key, engine_data, loadModel));
+            engine_data.controls[key].onChange(visibleCallBack(key, engine_data));
         });
         
         // Actively load model
@@ -150,7 +151,7 @@ function infoLog(msg) {
 }
 
 // Call-back function
-function visibleCallBack(name_control, engine_data, loadModel) {
+function visibleCallBack(name_control, engine_data) {
     return function (value) {
         $.each(engine_data.vis_controls[name_control],
             (_i, name) => {
