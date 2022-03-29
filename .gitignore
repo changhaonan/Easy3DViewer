@@ -8,3 +8,6 @@ __pychache__
 
 # Data
 public/test_data/*
+
+# Generated file
+index.html
