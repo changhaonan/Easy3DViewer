@@ -112,41 +112,18 @@ block content
             gl_FragColor = vec4(viewColor * (faceRatio * 0.5 + 0.5), 1.0);
         }
 
-    h3 Debug
+    h3 Test
 
     each conf in config
         +loadConfigCanvasSingle(git_root_file, default_data_folder, conf['source_url'], conf['source_directory'], conf['name'], conf['folder_name'], conf['title'], conf['frames'])
 
+//- mixin addToc(md_name_list, root_dir)
+//-     #toc
+//-         script(src=`${git_root_file}/javascripts/markdown_toc.js`)
+//-         script.
+//-             const markdown_toc = new MarkdownToc(3, "#{md_name_list}", "#{root_dir}");
+//-             $("#toc").html(marked.parse(markdown_toc.getToc()));
 
-    //- +loadConfigCanvasSingle("open_bag", "open_bag4Cam", "OpenBag")
-    //- +loadConfigCanvasSingle("move_dragon", "move_dragon4Cam", "Move Dragon Toy")
-    //- +loadConfigCanvasSingle("move_dragon", "move_dragon4Cam", "Move Dragon Toy")
-    //- +loadConfigCanvasSingle("scarf", "scarf4Cam", "Moving Scarf")
-    //- +loadConfigCanvasSingle("move_triple", "move_triple4Cam", "Moving YCB object")
-    //- //+loadConfigCanvasSingle("hammer", "hammer4Cam", "Using Hammer")
-    //- +loadConfigCanvasSingle("mario", "mario4Cam", "Mario")
-    //- +loadConfigCanvasSingle("mario_v2", "mario_v24Cam", "Mario_v2")
-    //- +loadConfigCanvasSingle("mario_v2_v01", "mario_v24Cam_v01", "Mario_v2_v01")
-    //+loadConfigCanvasSingle("previous", "pick_two4Cam_second", "result of Calibration")
-    //+loadConfigCanvasSingle("debug", "Calibration4Cam", "result of Calibration")
-    //+loadConfigCanvasSingle("raw_data", "Calibration", "Raw data for Calibration")
-    // +loadConfigCanvasSingle("debug", "Box_rot4Cam", "Topological change in box down pose (Version 2)")
-    // +loadMarkDown("progress", "star")
-    // +loadConfigCanvasSingle("canvas_spot", "Spot4Cam", "Fix bugs")
-    // +loadConfigCanvasSingle("canvas_ur5e", "Ur5e4Cam", "Result")
-    // +loadConfigCanvasSingle("canvas_box_up", "Box_up4Cam", "Topological change in box up pose")
-    // +loadConfigCanvasSingle("canvas_box_down", "Box_down4Cam", "Topological change in box down pose")
-    // +loadConfigCanvasSingle("canvas_box_down_2", "Box_down_24Cam", "Topological change in box down pose (Version 2)")
-    // +loadMarkDown("issue", "star")
-    // +loadMarkDown("plan", "star")
-
-mixin addToc(md_name_list, root_dir)
-    #toc
-        script(src=`${git_root_file}/javascripts/markdown_toc.js`)
-        script.
-            const markdown_toc = new MarkdownToc(3, "#{md_name_list}", "#{root_dir}");
-            $("#toc").html(marked.parse(markdown_toc.getToc()));
-
-block sidebar
-    .sidenav
-        +addToc(["progress", "issue", "plan"], "star")
+//- block sidebar
+//-     .sidenav
+//-         +addToc(["progress", "issue", "plan"], "star")
