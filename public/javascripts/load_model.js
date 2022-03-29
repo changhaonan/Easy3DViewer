@@ -379,7 +379,7 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                     if (data.weight_n != undefined)
                         color = lut.getColor(data.weight_n[i]);
                     else
-                        color = { "r": 1.0, "g": 0.0, "b": 0.0 };  // Red is the default color
+                        color = { "r": 0.0, "g": 1.0, "b": 0.0 };  // Green is the default color
 
                     color_n.push(color.r, color.g, color.b);
                     color_n.push(color.r, color.g, color.b);

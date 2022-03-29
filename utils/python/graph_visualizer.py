@@ -7,7 +7,7 @@ import json
 
 
 def SaveGraph(vertices, edges, file_name):
-    return SaveGraph_Generic(
+    return SaveGraph(
         vertices, 
         np.array([]),
         np.array([]),
@@ -20,7 +20,7 @@ def SaveGraph(vertices, edges, file_name):
 
 
 def SaveGraph(vertices, edges, normals, file_name):
-    return SaveGraph_Generic(
+    return SaveGraph(
         vertices, 
         np.array([]),
         np.array([]),
@@ -32,15 +32,15 @@ def SaveGraph(vertices, edges, normals, file_name):
     ) 
 
 
-def SaveGraph_Generic(
-    vertices,  # (N, 3), np.darray
-    vertex_color,  # (N, 3)
-    vertex_weight,  # (N, 1)
-    normals,  # (N, 3)
-    normal_weight,  # (N, 1)
-    edges,  # (M, 2)
-    edge_weight,  # (M, 1)
-    file_name):
+def SaveGraph(
+    vertices=np.array([]),  # (N, 3), np.darray
+    vertex_color=np.array([]),  # (N, 3)
+    vertex_weight=np.array([]),  # (N, 1)
+    normals=np.array([]),  # (N, 3)
+    normal_weight=np.array([]),  # (N, 1)
+    edges=np.array([]),  # (M, 2)
+    edge_weight=np.array([]),  # (M, 1)
+    file_name=""):
     graph_json = dict()
 
 
