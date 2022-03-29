@@ -27,7 +27,7 @@ mixin loadConfigCanvas(name, data_root, global_keyevent)
             $(document).keydown((e) => { onKeydown(e, engine_data, #{global_keyevent}); });
             animate(engine_data);
 
-mixin loadConfigCanvasSingle(root_folder, source_url, source_directory, name, data_root, figure_title="", frames=['frame_000001'], global_keyevent=false)
+mixin loadConfigCanvasSingle(root_folder, default_data_folder, source_url, source_directory, name, data_root, figure_title="", frames=['frame_000001'], global_keyevent=false)
      div(class="single_canvas_container")
         div(style="height: 90%; width: 100%; margin: auto;  position: relative")
             div(id= name, class="canvas", style="height: 100%; width: 100%")
@@ -35,10 +35,11 @@ mixin loadConfigCanvasSingle(root_folder, source_url, source_directory, name, da
                     import { createBasicCanvas, animate } from "#{source_url? source_url: git_root_file}/javascripts/basic_canvas.js";
                     import { loadFirstContext, loadContext } from "#{source_url? source_url: git_root_file}/javascripts/load_context.js";
                     import { onKeydown } from "#{source_url? source_url: git_root_file}/javascripts/key_parser.js";
+                    import { loadModel } from "#{source_url? source_url: git_root_file}/javascripts/load_model.js";
                     const engine_data = createBasicCanvas(#{name}, true);
                     let frames = "#{frames}".split(',') 
                     engine_data.container_id = "#{name}";
-                    loadFirstContext("#{root_folder}", "#{data_root}", "#{source_url}", "#{source_directory}", frames, engine_data);
+                    loadFirstContext("#{root_folder}", "#{default_data_folder}", "#{data_root}", "#{source_url}", "#{source_directory}", frames, engine_data, loadModel);
                     $(document).keydown((e) => { onKeydown(e, engine_data, #{global_keyevent}); });
                     animate(engine_data);
             div.figure_title
@@ -114,7 +115,7 @@ block content
     h3 Debug
 
     each conf in config
-        +loadConfigCanvasSingle(git_root_file, conf['source_url'], conf['source_directory'], conf['name'], conf['folder_name'], conf['title'], conf['frames'])
+        +loadConfigCanvasSingle(git_root_file, default_data_folder, conf['source_url'], conf['source_directory'], conf['name'], conf['folder_name'], conf['title'], conf['frames'])
 
 
     //- +loadConfigCanvasSingle("open_bag", "open_bag4Cam", "OpenBag")

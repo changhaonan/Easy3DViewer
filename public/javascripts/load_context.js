@@ -1,27 +1,28 @@
-import { animate } from "/javascripts/basic_canvas.js";
-import { loadModel } from "/javascripts/load_model.js"
 
 /*
  * \brief we should enable lasy-loading and event-based loop
  */
-export function loadFirstContext(root_folder, data_root, source_url, source_directory, dir_list, engine_data) {
+export function loadFirstContext(root_folder, default_data_folder, data_root, source_url, source_directory, dir_list, engine_data, loadModel) {
     // Init engine_data
-    engine_data.data_root = ""
-    console.log(source_url + " " + source_directory)
-    if (source_url == ''){
-        if (source_directory == ''){
-            engine_data.data_root = root_folder + "/test_data/" + data_root;
+    // engine_data.data_root = ""
+    console.log('here' + source_url + " " + source_directory, source_url.length == 0)
+    if (source_url.length == 0){
+        if (source_directory.length == 0){
+            console.log('here', root_folder, default_data_folder, data_root)
+            engine_data.data_root = root_folder + default_data_folder + '/' + data_root;
+            console.log(engine_data.data_root)
+
         }
         else{
-            engine_data.data_root = root_folder + source_directory + "/" + data_root
+            engine_data.data_root = root_folder + source_directory + '/' +  data_root
         }
     }
     else{
-        if (source_directory == ''){
-            engine_data.data_root = source_url + "/test_data/" + data_root;
+        if (source_directory.length == 0){
+            engine_data.data_root = source_url + default_data_folder + '/' +  data_root;
         }
         else{
-            engine_data.data_root = source_url + source_directory + "/" + data_root
+            engine_data.data_root = source_url + source_directory + '/' + data_root
         }
     }
     console.log(engine_data.data_root)
@@ -52,7 +53,7 @@ export function loadFirstContext(root_folder, data_root, source_url, source_dire
     engine_data.p = 0;
     engine_data.data_dir = engine_data.data_root + "/" + engine_data.dir_list[0];
     let file_path = engine_data.data_dir + "/context.json";  // Parse first one
-    parseJson(file_path, engine_data);
+    parseJson(file_path, engine_data, loadModel);
     console.log(engine_data)
 }
 
@@ -65,7 +66,7 @@ export function loadContext(data_dir, engine_data) {
     parseJson(file_path, engine_data);
 }
 
-function parseJson(file_path, engine_data) {
+function parseJson(file_path, engine_data, loadModel) {
     // Add new controllers
     $.getJSON(file_path).done(function (data) {
         infoLog(file_path + " loaded.");
@@ -79,7 +80,7 @@ function parseJson(file_path, engine_data) {
 
         // Vis callback
         $.each(engine_data.vis_controls, (key) => {
-            engine_data.controls[key].onChange(visibleCallBack(key, engine_data));
+            engine_data.controls[key].onChange(visibleCallBack(key, engine_data, loadModel));
         });
         
         // Actively load model
@@ -149,7 +150,7 @@ function infoLog(msg) {
 }
 
 // Call-back function
-function visibleCallBack(name_control, engine_data) {
+function visibleCallBack(name_control, engine_data, loadModel) {
     return function (value) {
         $.each(engine_data.vis_controls[name_control],
             (_i, name) => {
