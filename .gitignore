@@ -5,3 +5,6 @@ __pychache__
 
 # Editor
 .vscode
+
+# Data
+public/test_data/*
