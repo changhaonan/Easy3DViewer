@@ -30,6 +30,8 @@ mixin loadConfigCanvas(name, data_root, global_keyevent)
 mixin loadConfigCanvasSingle(root_folder, default_data_folder, source_url, source_directory, name, data_root, figure_title="", frames=['frame_000001'], global_keyevent=false)
      div(class="single_canvas_container")
         div(style="height: 90%; width: 100%; margin: auto;  position: relative")
+            div.help
+                p (a/d): go to last/next frame; (p): screen shot
             div(id= name, class="canvas", style="height: 100%; width: 100%")
                 script(type="module").
                     import { createBasicCanvas, animate } from "#{source_url? source_url: git_root_file}/javascripts/basic_canvas.js";
@@ -111,8 +113,6 @@ block content
         void main() {
             gl_FragColor = vec4(viewColor * (faceRatio * 0.5 + 0.5), 1.0);
         }
-
-    h3 Test
 
     each conf in config
         +loadConfigCanvasSingle(git_root_file, default_data_folder, conf['source_url'], conf['source_directory'], conf['name'], conf['folder_name'], conf['title'], conf['frames'])
