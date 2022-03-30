@@ -33,4 +33,4 @@ var server = app.listen(app.get("port"), function () {
     debug("Express server listening on port " + server.address().port);
 });
 
-console.log(app.get("port"))
+console.log("Easy3DViewer is launched at: ", config["repository_name"])
