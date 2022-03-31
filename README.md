@@ -51,6 +51,18 @@ Once this is done, you need to push your code back to github.  You do not need t
 
 If you do make changes to the `externals` folder in the `gh-pages` branch, in your editor you should search for `changhaonan.github.io/Easy3DViewer` and replace it with your `username.github.io/repository_name`
 
+## Open-box usage
+
+### Locally
+
+First generate visualiazation data into `public/test_data`. Then run the following commands:
+
+```
+npm install
+python configure.py
+node app.js
+```
+
 ## Issue
 
 - [ ] When I remove "source_directory": "/test_data", the file can not be correctly loaded.
@@ -59,5 +71,4 @@ If you do make changes to the `externals` folder in the `gh-pages` branch, in yo
 
 * [ ] Write a script to combine all javascript files into one. Instead of hosting a directory. We can instead only host one file. If people want to use our package, they only need to import from an url.
 * [X] Add a python install script to further improve the easy to use ability.
-
 * [X] Add more introduction in the interface.
