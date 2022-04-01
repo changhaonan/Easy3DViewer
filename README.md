@@ -55,7 +55,7 @@ If you do make changes to the `externals` folder in the `gh-pages` branch, in yo
 
 ### Locally
 
-First generate visualiazation data into `public/test_data`. Then run the following commands:
+First generate visualiazation data into `public/test_data` (or use our prepared test data) Then run the following commands:
 
 ```
 npm install
