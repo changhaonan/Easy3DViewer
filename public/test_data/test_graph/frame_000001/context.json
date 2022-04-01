@@ -1,0 +1,1 @@
+{"test_graph": {"file_type": "json", "file_name": "test_graph.json", "vis": {"section": "Graph", "control": "test_graph", "mode": "graph", "gui": "check_box", "default": false, "intersectable": false, "coordinate": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0], "size": 2, "normal_len": 1, "min_val": 0.0, "max_val": 1.0, "id_visible": false}}}
