@@ -63,6 +63,20 @@ python configure.py
 node app.js
 ```
 
+## Python interface
+
+```
+cd Easy3DViewer/
+pip install .
+```
+
+Or
+
+```
+cd Easy3DViewer/
+python setup.py install
+```
+
 ## Issue
 
 - [ ] When I remove "source_directory": "/test_data", the file can not be correctly loaded.
