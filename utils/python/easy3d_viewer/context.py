@@ -3,6 +3,7 @@ Created by Haonan Chang, 03/28/2022
 The python interface for Easy3DViewer
 """
 import os
+from pydoc import classname
 import numpy as np
 import json
 import shutil
@@ -57,6 +58,50 @@ class Context():
             print(f"Warning: {name} is not founded.")
 
     # Add visualization info
+    @classmethod
+    def addGeomtry(cls, name, control_name="", geometry_type="coord", coordinate=np.eye(4, dtype=np.float32),
+        param_0=0.0, param_1=1.0, param_2=2.0):
+
+        info_data = dict()
+        info_data["vis"] = dict()
+        info_data["vis"]["section"] = "Geometry"
+        info_data["vis"]["control"] = control_name if (control_name) else name
+        info_data["vis"]["mode"] = "geometry"
+        info_data["vis"]["gui"] = "check_box"
+        info_data["vis"]["default"] = False
+        info_data["vis"]["intersectable"] = False
+        info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
+        
+        # Different according to geometry type
+        info_data["vis"]["geometry"] = geometry_type
+        if geometry_type == "coord":
+            info_data["vis"]["scale"] = param_0
+        elif geometry_type == "box":
+            info_data["vis"]["width"] = param_0
+            info_data["vis"]["height"] = param_1
+            info_data["vis"]["depth"] = param_2
+        elif geometry_type == "bounding_box":
+            info_data["vis"]["width"] = param_0
+            info_data["vis"]["height"] = param_1
+            info_data["vis"]["depth"] = param_2
+        elif geometry_type == "plane":
+            info_data["vis"]["width"] = param_0
+            info_data["vis"]["height"] = param_1
+        
+        cls.context_info[name] = info_data
+
+    @classmethod
+    def addCoord(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), scale=0.1):
+        cls.addGeomtry(name, control_name, "coord", coordinate, scale)
+
+    @classmethod
+    def addBox(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), width=1.0, height=1.0, depth=1.0):
+        cls.addGeomtry(name, control_name, "box", coordinate, width, height, depth)
+
+    @classmethod
+    def addBoundingBox(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), width=1.0, height=1.0, depth=1.0):
+        cls.addGeomtry(name, control_name, "bounding_box", coordinate, width, height, depth)
+
     @classmethod
     def addGraph(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), min_val=0.0, max_val=1.0, size=1.0, 
         id_visible=False, normal_len=2.0)->None:
