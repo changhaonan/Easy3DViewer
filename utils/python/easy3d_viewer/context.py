@@ -8,46 +8,57 @@ import json
 import shutil
 
 
-class Context:
-    def __init__(self):
-        self.context_info = dict()
-        self.data_root_dir = 0
-        self.dir_prefix = ""
-        self.dir_suffix = ""
-        self.id = 0
+class Context():
+    # Use class member to represent static member
+    context_info = dict()
+    data_root_dir = 0
+    dir_prefix = ""
+    dir_suffix = ""
+    id = 0
 
-    def setDir(self, data_root_dir, dir_prefix="", dir_suffix=""):
+    @classmethod
+    def Instance(cls):
+        """ This method literally do nothing, we have this because we want to pair c++ method
+        """
+        return cls 
+
+    @classmethod
+    def setDir(cls, data_root_dir, dir_prefix="", dir_suffix=""):
         """ Set root workspace
         """
-        self.data_root_dir = data_root_dir
-        self.dir_prefix = dir_prefix
-        self.dir_suffix = dir_suffix
-        if not os.path.isdir(self.data_root_dir):
-            os.mkdir(self.data_root_dir)
+        cls.data_root_dir = data_root_dir
+        cls.dir_prefix = dir_prefix
+        cls.dir_suffix = dir_suffix
+        if not os.path.isdir(cls.data_root_dir):
+            os.mkdir(cls.data_root_dir)
         else:
-            self.clearDir(self.data_root_dir)
+            cls.clearDir(cls.data_root_dir)
 
-    def currentDir(self):
+    @classmethod
+    def currentDir(cls):
         """ Current active directory
         """
-        rel_dir = f"{self.dir_prefix}{self.id:06}{self.dir_suffix}"
-        return os.path.join(self.data_root_dir, rel_dir)
+        rel_dir = f"{cls.dir_prefix}{cls.id:06}{cls.dir_suffix}"
+        return os.path.join(cls.data_root_dir, rel_dir)
 
-    def currentFile(self, name):
+    @classmethod
+    def currentFile(cls, name):
         """ The full file name corresponding to name
         """
-        file_type = self.context_info[name]["file_type"]
+        file_type = cls.context_info[name]["file_type"]
         file_name = f"{name}.{file_type}"
-        return os.path.join(self.currentDir(), file_name)
+        return os.path.join(cls.currentDir(), file_name)
 
-    def at(self, name):
-        if name in self.context_info.keys():
-            return self.currentFile(name)
+    @classmethod
+    def at(cls, name):
+        if name in cls.context_info.keys():
+            return cls.currentFile(name)
         else:
             print(f"Warning: {name} is not founded.")
 
     # Add visualization info
-    def addGraph(self, name, control_name="", coordinate=np.eye(4, dtype=np.float32), min_val=0.0, max_val=1.0, size=1.0, 
+    @classmethod
+    def addGraph(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), min_val=0.0, max_val=1.0, size=1.0, 
         id_visible=False, normal_len=2.0)->None:
         info_data = dict()
         info_data["file_type"] = "json"
@@ -68,24 +79,28 @@ class Context:
         info_data["vis"]["max_val"] = max_val
         info_data["vis"]["id_visible"] = id_visible
 
-        self.context_info[name] = info_data
+        cls.context_info[name] = info_data
 
     # Save/Load
-    def open(self, id):
-        self.context_info.clear()  # Clean previous: important
-        self.id = id
-        if not os.path.isdir(self.currentDir()):
-            os.mkdir(self.currentDir())
+    @classmethod
+    def open(cls, id):
+        cls.context_info.clear()  # Clean previous: important
+        cls.id = id
+        if not os.path.isdir(cls.currentDir()):
+            os.mkdir(cls.currentDir())
 
-    def close(self):
-        self.save()
+    @classmethod
+    def close(cls):
+        cls.save()
 
-    def save(self):
-        file_name = os.path.join(self.currentDir(), "context.json")
+    @classmethod
+    def save(cls):
+        file_name = os.path.join(cls.currentDir(), "context.json")
         with open(file_name, "w") as f:
-            json.dump(self.context_info, f)
+            json.dump(cls.context_info, f)
 
-    def clearDir(self, dir_path):
+    @classmethod
+    def clearDir(cls, dir_path):
         for files in os.listdir(dir_path):
             path = os.path.join(dir_path, files)
             try:
@@ -95,8 +110,8 @@ class Context:
 
 
 if __name__ == "__main__":
-    context = Context()
-    context.setDir("code/data")
+    context = Context.Instance()
+    context.setDir("./data")
     for i in range(5):
         context.open(i)
         context.addGraph("test_graph")
