@@ -37,6 +37,8 @@ The steps to run the software locally is as follows:
 2. `npm install`
 3. `node app.js`
 
+If you get error when running `npm install`, then run `npm init` first.
+
 To add in your own 3D visualizations, you need to add a folder with your animation to `public/test_data`. The folder should contain files that look like [this](https://github.com/changhaonan/Easy3DViewer/tree/master/public/test_data/move_dragon4Cam/frame_000001). Once added, you need to change the `config.json` to add the name of your folder and the frames you want to render.
 
 Now if you run `node app.js`, you should see your visualizations. You can add multiple of these folders as shown in the example `config.json` and `test_data` folder that we have added.
