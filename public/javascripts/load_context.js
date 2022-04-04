@@ -37,18 +37,8 @@ export function loadFirstContext(root_folder, default_data_folder, data_root, so
     engine_data.obj_loaded = [];
     engine_data.defaults = {};
     engine_data.controls = {};
-
     engine_data.locker = { "context": true };
-    // Async Get
-    // $.post("/dir_list", { data_root: engine_data.data_root }, function (data, status) {
-    //    engine_data.dir_list = data.dir_list;
-    //     engine_data.p = 0;
-    //     engine_data.data_dir = engine_data.data_root + "/" + engine_data.dir_list[0];
-    //     let file_path = engine_data.data_dir + "/context.json";  // Parse first one
-    //     parseJson(file_path, engine_data);
-    // }) 
 
-    // let dir_list = ['frame_000001']
     console.log(dir_list)
     engine_data.dir_list = dir_list;
     engine_data.p = 0;
@@ -159,15 +149,6 @@ function visibleCallBack(name_control, engine_data) {
                     if (engine_data.scene.getObjectByName(name) != undefined) {  // 3D object
                         engine_data.scene.getObjectByName(name).visible = value;
                     }
-                    //else {
-                    //    if (value) {
-                    //        $("#" + name).css("display", "initial");
-                    //    }
-                    //    else {
-                    //        $("#" + name).css("display", "none");
-                    //    }
-
-                    //}
                 }
                 else {
                     // If it doesn't exist. Show it.

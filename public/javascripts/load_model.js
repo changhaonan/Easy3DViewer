@@ -311,16 +311,16 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                     if ((id_e0 >= num_vertices) || (id_e1 >= num_vertices)) return;
 
                     // Recheck 0-connection next (Zero conection is idle connection by default.)
-                    if ((id_e0 == 0) || (id_e1 == 0)) {
-                        // Check if in isolated_list
-                        if (!isolated_list.includes(id_e0)) {
-                            isolated_list.push(id_e0);
-                        }
-                        if (!isolated_list.includes(id_e1)) {
-                            isolated_list.push(id_e1);
-                        }
-                        return;
-                    }
+                    // if ((id_e0 == 0) || (id_e1 == 0)) {
+                    //     // Check if in isolated_list
+                    //     if (!isolated_list.includes(id_e0)) {
+                    //         isolated_list.push(id_e0);
+                    //     }
+                    //     if (!isolated_list.includes(id_e1)) {
+                    //         isolated_list.push(id_e1);
+                    //     }
+                    //     return;
+                    // }
                 });
             }
 
@@ -405,9 +405,9 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                 // check sanity first
                 if ((id_e0 >= num_vertices) || (id_e1 >= num_vertices)) return;
 
-                // Recheck 0-connection next (Zero conection is idle connection by default.)
-                if ((id_e0 == 0) || (id_e1 == 0)) return;
-                if ((id_e0 == 1) || (id_e1 == 1)) return;  // 1 is also forbidden for connection
+                // // Recheck 0-connection next (Zero conection is idle connection by default.)
+                // if ((id_e0 == 0) || (id_e1 == 0)) return;
+                // if ((id_e0 == 1) || (id_e1 == 1)) return;  // 1 is also forbidden for connection
 
                 edges.push(
                     new THREE.Vector3(
