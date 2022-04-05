@@ -5,6 +5,8 @@ __pychache__
 
 # Editor
 .vscode
+.vs
+Easy3DViewer.njsproj.user
 
 # Data
 public/test_data/*

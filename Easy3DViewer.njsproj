@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{f3c62621-3d8d-40a8-8662-3c7a40f8222e}</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartupFile>app.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">16.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include="configure.py" />
+    <Content Include="index.html" />
+    <Content Include="config.json" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="app.js" />
+    <Content Include="generate.js" />
+    <Content Include="setup.py" />
+    <Content Include="utils\cpp\context.hpp" />
+    <Content Include="utils\cpp\context_utils.hpp" />
+    <Content Include="utils\python\easy3d_viewer\context.py" />
+    <Content Include="utils\python\easy3d_viewer\graph_visualizer.py" />
+    <Content Include="utils\python\easy3d_viewer\__init__.py" />
+    <Content Include="utils\README.md" />
+    <Content Include="views\error.pug" />
+    <Content Include="views\header.pug" />
+    <Content Include="views\index.pug" />
+    <Content Include="views\layout.pug" />
+    <Content Include="public\images\favicon.ico" />
+    <Content Include="public\images\slogan.svg" />
+    <Content Include="public\javascripts\basic_canvas.js" />
+    <Content Include="public\javascripts\file_saver.js" />
+    <Content Include="public\javascripts\key_parser.js" />
+    <Content Include="public\javascripts\load_context.js" />
+    <Content Include="public\javascripts\load_model.js" />
+    <Content Include="public\javascripts\markdown_toc.js" />
+    <Content Include="public\stylesheets\main.css" />
+    <Content Include="public\markdown\star\issue.md" />
+    <Content Include="public\markdown\star\plan.md" />
+    <Content Include="public\markdown\star\progress.md" />
+    <Content Include="public\test_data\example\frame_000000\context.json" />
+    <Content Include="public\test_data\example\frame_000000\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000000\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000000\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000000\example.json" />
+    <Content Include="public\test_data\example\frame_000001\context.json" />
+    <Content Include="public\test_data\example\frame_000001\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000001\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000001\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000001\example.json" />
+    <Content Include="public\test_data\example\frame_000002\context.json" />
+    <Content Include="public\test_data\example\frame_000002\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000002\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000002\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000002\example.json" />
+    <Content Include="public\test_data\example\frame_000003\context.json" />
+    <Content Include="public\test_data\example\frame_000003\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000003\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000003\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000003\example.json" />
+    <Content Include="public\test_data\example\frame_000004\context.json" />
+    <Content Include="public\test_data\example\frame_000004\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000004\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000004\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000004\example.json" />
+    <Content Include="public\test_data\example\frame_000005\context.json" />
+    <Content Include="public\test_data\example\frame_000005\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000005\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000005\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000005\example.json" />
+    <Content Include="public\test_data\example\frame_000006\context.json" />
+    <Content Include="public\test_data\example\frame_000006\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000006\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000006\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000006\example.json" />
+    <Content Include="public\test_data\example\frame_000007\context.json" />
+    <Content Include="public\test_data\example\frame_000007\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000007\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000007\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000007\example.json" />
+    <Content Include="public\test_data\example\frame_000008\context.json" />
+    <Content Include="public\test_data\example\frame_000008\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000008\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000008\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000008\example.json" />
+    <Content Include="public\test_data\example\frame_000009\context.json" />
+    <Content Include="public\test_data\example\frame_000009\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000009\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000009\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000009\example.json" />
+    <Content Include="public\test_data\example\frame_000010\context.json" />
+    <Content Include="public\test_data\example\frame_000010\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000010\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000010\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000010\example.json" />
+    <Content Include="public\test_data\example\frame_000011\context.json" />
+    <Content Include="public\test_data\example\frame_000011\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000011\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000011\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000011\example.json" />
+    <Content Include="public\test_data\example\frame_000012\context.json" />
+    <Content Include="public\test_data\example\frame_000012\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000012\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000012\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000012\example.json" />
+    <Content Include="public\test_data\example\frame_000013\context.json" />
+    <Content Include="public\test_data\example\frame_000013\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000013\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000013\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000013\example.json" />
+    <Content Include="public\test_data\example\frame_000014\context.json" />
+    <Content Include="public\test_data\example\frame_000014\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000014\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000014\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000014\example.json" />
+    <Content Include="public\test_data\example\frame_000015\context.json" />
+    <Content Include="public\test_data\example\frame_000015\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000015\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000015\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000015\example.json" />
+    <Content Include="public\test_data\example\frame_000016\context.json" />
+    <Content Include="public\test_data\example\frame_000016\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000016\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000016\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000016\example.json" />
+    <Content Include="public\test_data\example\frame_000017\context.json" />
+    <Content Include="public\test_data\example\frame_000017\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000017\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000017\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000017\example.json" />
+    <Content Include="public\test_data\example\frame_000018\context.json" />
+    <Content Include="public\test_data\example\frame_000018\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000018\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000018\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000018\example.json" />
+    <Content Include="public\test_data\example\frame_000019\context.json" />
+    <Content Include="public\test_data\example\frame_000019\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000019\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000019\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000019\example.json" />
+    <Content Include="public\test_data\example\frame_000020\context.json" />
+    <Content Include="public\test_data\example\frame_000020\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000020\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000020\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000020\example.json" />
+    <Content Include="public\test_data\example\frame_000021\context.json" />
+    <Content Include="public\test_data\example\frame_000021\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000021\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000021\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000021\example.json" />
+    <Content Include="public\test_data\example\frame_000022\context.json" />
+    <Content Include="public\test_data\example\frame_000022\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000022\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000022\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000022\example.json" />
+    <Content Include="public\test_data\example\frame_000023\context.json" />
+    <Content Include="public\test_data\example\frame_000023\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000023\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000023\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000023\example.json" />
+    <Content Include="public\test_data\example\frame_000024\context.json" />
+    <Content Include="public\test_data\example\frame_000024\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000024\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000024\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000024\example.json" />
+    <Content Include="public\test_data\example\frame_000025\context.json" />
+    <Content Include="public\test_data\example\frame_000025\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000025\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000025\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000025\example.json" />
+    <Content Include="public\test_data\example\frame_000026\context.json" />
+    <Content Include="public\test_data\example\frame_000026\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000026\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000026\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000026\example.json" />
+    <Content Include="public\test_data\example\frame_000027\context.json" />
+    <Content Include="public\test_data\example\frame_000027\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000027\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000027\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000027\example.json" />
+    <Content Include="public\test_data\example\frame_000028\context.json" />
+    <Content Include="public\test_data\example\frame_000028\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000028\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000028\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000028\example.json" />
+    <Content Include="public\test_data\example\frame_000029\context.json" />
+    <Content Include="public\test_data\example\frame_000029\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000029\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000029\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000029\example.json" />
+    <Content Include="public\test_data\example\frame_000030\context.json" />
+    <Content Include="public\test_data\example\frame_000030\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000030\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000030\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000030\example.json" />
+    <Content Include="public\test_data\example\frame_000031\context.json" />
+    <Content Include="public\test_data\example\frame_000031\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000031\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000031\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000031\example.json" />
+    <Content Include="public\test_data\example\frame_000032\context.json" />
+    <Content Include="public\test_data\example\frame_000032\down_sample_graph1.json" />
+    <Content Include="public\test_data\example\frame_000032\down_sample_graph2.json" />
+    <Content Include="public\test_data\example\frame_000032\down_sample_graph3.json" />
+    <Content Include="public\test_data\example\frame_000032\example.json" />
+    <Content Include="public\test_data\test_graph\frame_000001\context.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="public" />
+    <Folder Include="public\images" />
+    <Folder Include="public\javascripts" />
+    <Folder Include="public\markdown" />
+    <Folder Include="public\markdown\star" />
+    <Folder Include="public\stylesheets" />
+    <Folder Include="public\test_data" />
+    <Folder Include="public\test_data\example" />
+    <Folder Include="public\test_data\example\frame_000000" />
+    <Folder Include="public\test_data\example\frame_000001" />
+    <Folder Include="public\test_data\example\frame_000002" />
+    <Folder Include="public\test_data\example\frame_000003" />
+    <Folder Include="public\test_data\example\frame_000004" />
+    <Folder Include="public\test_data\example\frame_000005" />
+    <Folder Include="public\test_data\example\frame_000006" />
+    <Folder Include="public\test_data\example\frame_000007" />
+    <Folder Include="public\test_data\example\frame_000008" />
+    <Folder Include="public\test_data\example\frame_000009" />
+    <Folder Include="public\test_data\example\frame_000010" />
+    <Folder Include="public\test_data\example\frame_000011" />
+    <Folder Include="public\test_data\example\frame_000012" />
+    <Folder Include="public\test_data\example\frame_000013" />
+    <Folder Include="public\test_data\example\frame_000014" />
+    <Folder Include="public\test_data\example\frame_000015" />
+    <Folder Include="public\test_data\example\frame_000016" />
+    <Folder Include="public\test_data\example\frame_000017" />
+    <Folder Include="public\test_data\example\frame_000018" />
+    <Folder Include="public\test_data\example\frame_000019" />
+    <Folder Include="public\test_data\example\frame_000020" />
+    <Folder Include="public\test_data\example\frame_000021" />
+    <Folder Include="public\test_data\example\frame_000022" />
+    <Folder Include="public\test_data\example\frame_000023" />
+    <Folder Include="public\test_data\example\frame_000024" />
+    <Folder Include="public\test_data\example\frame_000025" />
+    <Folder Include="public\test_data\example\frame_000026" />
+    <Folder Include="public\test_data\example\frame_000027" />
+    <Folder Include="public\test_data\example\frame_000028" />
+    <Folder Include="public\test_data\example\frame_000029" />
+    <Folder Include="public\test_data\example\frame_000030" />
+    <Folder Include="public\test_data\example\frame_000031" />
+    <Folder Include="public\test_data\example\frame_000032" />
+    <Folder Include="public\test_data\test_graph" />
+    <Folder Include="public\test_data\test_graph\frame_000001" />
+    <Folder Include="utils" />
+    <Folder Include="utils\cpp" />
+    <Folder Include="utils\python" />
+    <Folder Include="utils\python\easy3d_viewer" />
+    <Folder Include="views" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

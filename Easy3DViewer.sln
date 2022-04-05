@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Easy3DViewer", "Easy3DViewer.njsproj", "{F3C62621-3D8D-40A8-8662-3C7A40F8222E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3C62621-3D8D-40A8-8662-3C7A40F8222E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C62621-3D8D-40A8-8662-3C7A40F8222E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C62621-3D8D-40A8-8662-3C7A40F8222E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3C62621-3D8D-40A8-8662-3C7A40F8222E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B90251EB-63FB-41EB-8985-78F46D4FF5E2}
+	EndGlobalSection
+EndGlobal

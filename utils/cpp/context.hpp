@@ -33,7 +33,7 @@ std::string stringFormat(const std::string& format, Args ... args) {
     return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
 }
 
-namespace WebViewer3D {
+namespace Easy3DViewer {
 
     class Context {
     public:
