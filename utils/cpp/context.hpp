@@ -23,17 +23,18 @@
 using json = nlohmann::json;
 
 
-template<typename ... Args>
-std::string stringFormat(const std::string& format, Args ... args) {
-    int size_s = std::snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
-    if (size_s <= 0) { throw std::runtime_error("Error during formatting."); }
-    auto size = static_cast<size_t>(size_s);
-    auto buf = std::make_unique<char[]>(size);
-    std::snprintf(buf.get(), size, format.c_str(), args ...);
-    return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
-}
-
 namespace Easy3DViewer {
+    namespace utils {
+        template<typename ... Args>
+        std::string stringFormat(const std::string& format, Args ... args) {
+            int size_s = std::snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
+            if (size_s <= 0) { throw std::runtime_error("Error during formatting."); }
+            auto size = static_cast<size_t>(size_s);
+            auto buf = std::make_unique<char[]>(size);
+            std::snprintf(buf.get(), size, format.c_str(), args ...);
+            return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
+        }
+    }
 
     class Context {
     public:
@@ -233,13 +234,13 @@ namespace Easy3DViewer {
         boost::filesystem::path currentDir() {
             std::string dir_name;
             if ((m_dir_prefix == "") && (m_dir_suffix == ""))
-                dir_name = stringFormat("%06d", m_id);
+                dir_name = utils::stringFormat("%06d", m_id);
             else if (m_dir_prefix == "")
-                dir_name = stringFormat("%06d_%s", m_id, m_dir_suffix.c_str());
+                dir_name = utils::stringFormat("%06d_%s", m_id, m_dir_suffix.c_str());
             else if (m_dir_suffix == "")
-                dir_name = stringFormat("%s_%06d", m_dir_prefix.c_str(), m_id);
+                dir_name = utils::stringFormat("%s_%06d", m_dir_prefix.c_str(), m_id);
             else
-                dir_name = stringFormat("%s_%06d_%s", m_dir_prefix.c_str(), m_id, m_dir_suffix.c_str());
+                dir_name = utils::stringFormat("%s_%06d_%s", m_dir_prefix.c_str(), m_id, m_dir_suffix.c_str());
 
             boost::filesystem::path rel_dir(dir_name);
             boost::filesystem::path data_dir = m_data_root_dir / rel_dir;
@@ -253,7 +254,8 @@ namespace Easy3DViewer {
         void open(const int id) {
             // Assign id
             m_id = id;
-
+            // Clear info
+            m_context_info.clear();
             // Check existence
             boost::filesystem::path current_dir;
             if (!boost::filesystem::exists(current_dir = currentDir())) {
@@ -261,8 +263,8 @@ namespace Easy3DViewer {
             }
         }
 
-        void close() {
-            save();
+        void close(const bool enable_vis=true) {
+            if (enable_vis) save();
         }
 
         void clearDir() {
