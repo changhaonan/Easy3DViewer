@@ -110,7 +110,7 @@ class Context():
         info_data["vis"] = dict()
         info_data["vis"]["section"] = "Camera"
         info_data["vis"]["control"] = control_name if (control_name) else name
-        info_data["vis"]["mode"] = "graph"
+        info_data["vis"]["mode"] = "camera"
         info_data["vis"]["gui"] = "check_box"
         info_data["vis"]["default"] = False
         info_data["vis"]["intersectable"] = False

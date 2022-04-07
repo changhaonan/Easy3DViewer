@@ -32,7 +32,8 @@ export function loadModel(name, data, engine_data) {
         infoLog("Geometry: " + name + " loaded");
     }
     else {
-        infoLog("Format" + data_save.format + " is not supported.");
+        infoLog("Data is not supported:");
+        infoLog(data);
     }
 }
 
