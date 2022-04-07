@@ -263,8 +263,8 @@ namespace Easy3DViewer {
             }
         }
 
-        void close(const bool enable_vis=true) {
-            if (enable_vis) save();
+        void close(const bool enable_save=true) {
+            if (enable_save) save();
         }
 
         void clearDir() {

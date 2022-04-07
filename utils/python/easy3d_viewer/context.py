@@ -103,6 +103,34 @@ class Context():
         cls.addGeomtry(name, control_name, "bounding_box", coordinate, width, height, depth)
 
     @classmethod
+    def addCamera(cls, name, control_name, coordinate, intrinsic, image_cols, image_rows, clip_near=0, clip_far=0):
+        info_data = dict()
+        
+        # Visualization part
+        info_data["vis"] = dict()
+        info_data["vis"]["section"] = "Camera"
+        info_data["vis"]["control"] = control_name if (control_name) else name
+        info_data["vis"]["mode"] = "graph"
+        info_data["vis"]["gui"] = "check_box"
+        info_data["vis"]["default"] = False
+        info_data["vis"]["intersectable"] = False
+        info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
+        info_data["vis"]["intrinsic"] = intrinsic.tolist()
+        info_data["vis"]["image_cols"] = image_cols  # If this one is negative, we do not normalize the length of normal
+        info_data["vis"]["image_rows"] = image_rows
+        info_data["vis"]["clip_near"] = clip_near
+        info_data["vis"]["clip_far"] = clip_far
+
+        # Stat part: used for constructing the space 
+        info_data["extrinsic"] = coordinate.flatten().tolist()
+        info_data["intrinsic"] = intrinsic.tolist()
+        info_data["image_cols"] = image_cols  # If this one is negative, we do not normalize the length of normal
+        info_data["image_rows"] = image_rows
+        info_data["clip_near"] = clip_near
+        info_data["clip_far"] = clip_far
+        cls.context_info[name] = info_data
+
+    @classmethod
     def addGraph(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), min_val=0.0, max_val=1.0, size=1.0, 
         id_visible=False, normal_len=2.0)->None:
         info_data = dict()
@@ -135,8 +163,9 @@ class Context():
             os.mkdir(cls.currentDir())
 
     @classmethod
-    def close(cls):
-        cls.save()
+    def close(cls, enable_save=True):
+        if enable_save:
+            cls.save()
 
     @classmethod
     def save(cls):
@@ -152,6 +181,12 @@ class Context():
                 shutil.rmtree(path)
             except OSError:
                 os.remove(path)
+
+    @classmethod
+    def context(cls):
+        """ Generate the context
+        """
+        return cls.context_info
 
 
 if __name__ == "__main__":
