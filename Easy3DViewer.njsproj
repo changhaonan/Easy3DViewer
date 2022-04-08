@@ -17,7 +17,6 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="configure.py" />
-    <Content Include="index.html" />
     <Content Include="config.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
