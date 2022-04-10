@@ -103,7 +103,9 @@ class Context():
         cls.addGeomtry(name, control_name, "bounding_box", coordinate, width, height, depth)
 
     @classmethod
-    def addCamera(cls, name, control_name, coordinate, intrinsic, image_cols, image_rows, clip_near=0, clip_far=0, depth_flip=False):
+    def addCamera(cls, name, control_name, coordinate, intrinsic, image_cols, image_rows, clip_near=0, clip_far=0, depth_flip=False,
+        downsample_scale=1.0
+    ):
         info_data = dict()
         
         # Visualization part
@@ -129,6 +131,7 @@ class Context():
         info_data["clip_near"] = clip_near
         info_data["clip_far"] = clip_far
         info_data["depth_flip"] = depth_flip
+        info_data["downsample_scale"] = downsample_scale
         cls.context_info[name] = info_data
 
     @classmethod
