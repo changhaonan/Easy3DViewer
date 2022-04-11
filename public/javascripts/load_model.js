@@ -404,7 +404,8 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                 let id_e1 = edge[1];
 
                 // check sanity first
-                if ((id_e0 >= num_vertices) || (id_e1 >= num_vertices)) return;
+                if ((id_e0 >= num_vertices) || (id_e1 >= num_vertices) ||
+                    (id_e0 < 0) || (id_e1 < 0)) return;
 
                 // // Recheck 0-connection next (Zero conection is idle connection by default.)
                 // if ((id_e0 == 0) || (id_e1 == 0)) return;
