@@ -25,6 +25,12 @@
     <Content Include="setup.py" />
     <Content Include="utils\cpp\context.hpp" />
     <Content Include="utils\cpp\context_utils.hpp" />
+    <Content Include="utils\cpp\visualizer.h">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="utils\cpp\graph_visualizer.hpp">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="utils\python\easy3d_viewer\context.py" />
     <Content Include="utils\python\easy3d_viewer\graph_visualizer.py" />
     <Content Include="utils\python\easy3d_viewer\__init__.py" />
