@@ -28,6 +28,7 @@ namespace Easy3DViewer {
 		const size_t graph_size,
 		const FT* vertices,
 		const IT* edges,
+		const FT* edge_weights,
 		const std::string& path
 	) {
 		json graph_json;
@@ -35,7 +36,6 @@ namespace Easy3DViewer {
 		// Vertex edge
 		std::vector<std::vector<float>> vec_vertices;
 		std::vector<std::vector<int>> vec_edges;
-
 		for (auto i = 0; i < graph_size; ++i) {
 			// vertex
 			std::vector<float> v_coord{ 
@@ -54,6 +54,21 @@ namespace Easy3DViewer {
 		}
 		graph_json["vertices"] = vec_vertices;
 		graph_json["edges"] = vec_edges;
+
+		// Edege weight
+		if (edge_weights != nullptr) {
+			std::vector<float> vec_edge_weight;
+			for (auto i = 0; i < graph_size; ++i) {
+				for (auto j = 0; j < k; ++j) {
+					int id_e = static_cast<int>(edges[i * k + j]);
+					float w_e = static_cast<float>(edge_weights[i * k + j]);
+					if ((id_e >= 0) && (id_e < graph_size) && (id_e != i)) {
+						vec_edge_weight.push_back(w_e);
+					}
+				}
+			}
+			graph_json["weight_e"] = vec_edge_weight;
+		}
 
 		// Write out
 		std::ofstream o(path);
