@@ -27,6 +27,7 @@ namespace Easy3DViewer {
 	void SaveGraph(
 		const size_t graph_size,
 		const FT* vertices,
+		const FT* normals,
 		const IT* edges,
 		const FT* edge_weights,
 		const std::string& path
@@ -54,6 +55,16 @@ namespace Easy3DViewer {
 		}
 		graph_json["vertices"] = vec_vertices;
 		graph_json["edges"] = vec_edges;
+
+		// Normals
+		if (normals != nullptr) {
+			std::vector<std::vector<float>> vec_normals;
+			for (auto i = 0; i < graph_size; ++i) {
+				std::vector<float> n_direction{ normals[i * 3 + 0], normals[i * 3 + 1], normals[i * 3 + 2] };
+				vec_normals.push_back(n_direction);
+			}
+			graph_json["normals"] = vec_normals;
+		}
 
 		// Edege weight
 		if (edge_weights != nullptr) {
