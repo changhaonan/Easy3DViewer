@@ -60,7 +60,10 @@ namespace Easy3DViewer {
 		if (normals != nullptr) {
 			std::vector<std::vector<float>> vec_normals;
 			for (auto i = 0; i < graph_size; ++i) {
-				std::vector<float> n_direction{ normals[i * 3 + 0], normals[i * 3 + 1], normals[i * 3 + 2] };
+				std::vector<float> n_direction{
+					static_cast<float>(normals[i * 3 + 0]),
+					static_cast<float>(normals[i * 3 + 1]),
+					static_cast<float>(normals[i * 3 + 2]) };
 				vec_normals.push_back(n_direction);
 			}
 			graph_json["normals"] = vec_normals;
