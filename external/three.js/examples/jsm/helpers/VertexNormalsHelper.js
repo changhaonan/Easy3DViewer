@@ -71,8 +71,9 @@ class VertexNormalsHelper extends LineSegments {
 
 				_v2.set( objNorm.getX( j ), objNorm.getY( j ), objNorm.getZ( j ) );
 
-				_v2.applyMatrix3( _normalMatrix ).normalize().multiplyScalar( this.size ).add( _v1 );
-
+				// _v2.applyMatrix3( _normalMatrix ).normalize().multiplyScalar( this.size ).add( _v1 );
+				_v2.applyMatrix3( _normalMatrix ).multiplyScalar( this.size ).add( _v1 );
+				
 				position.setXYZ( idx, _v1.x, _v1.y, _v1.z );
 
 				idx = idx + 1;
