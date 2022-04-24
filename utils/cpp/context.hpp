@@ -111,7 +111,7 @@ namespace Easy3DViewer {
         void addGraph(const std::string& name, const std::string& control_name="",
             const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float min_val=0.f,
             const float max_val=1.f, const float size=1.f, const bool id_visible=false,
-            const float normal_len = 2.f) {
+            const float normal_len = 1.f) {
             json info_data;
             info_data["file_type"] = "json";
             info_data["file_name"] = (name + ".json");

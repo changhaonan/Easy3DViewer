@@ -16,3 +16,6 @@ config.json
 index.html
 build
 obj
+
+# External
+public/external

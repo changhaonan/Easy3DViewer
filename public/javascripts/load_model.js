@@ -3,6 +3,8 @@ import { OBJLoader } from "https://changhaonan.github.io/Easy3DViewer/external/t
 import { PCDLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/PCDLoader.js";
 import { Lut } from 'https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/math/Lut.js';
 import { TextGeometry } from 'https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/geometries/TextGeometry.js';
+// To change this to support cloud
+import { VertexNormalsHelper } from 'https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/helpers/VertexNormalsHelper.js';
 
 // Model loading
 export function loadModel(name, data, engine_data) {
@@ -100,11 +102,8 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
     pcd_loader.load(
         file_path,
         (pcd) => {
-            pcd.name = name;
-            
-            let M = new THREE.Matrix4();  // relative transform
-            M.elements = data_vis.coordinate;
-            pcd.applyMatrix4(M);
+            const pcd_whole = new THREE.Group();
+            pcd_whole.add(pcd);
 
             // size
             if (pcd.geometry.attributes.normal != undefined && pcd.geometry.attributes.color != undefined) {
@@ -129,6 +128,9 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
                     fragmentShader: $("#shadow-fragmentshader")[0].textContent,
                 });
                 pcd.material = shaderMaterial;
+                // Draw normal
+                const normal_helper = new VertexNormalsHelper(pcd, 1.0, 0x00ff00, 1.0);
+                pcd_whole.add(normal_helper);
             }
             else {
                 pcd.material.size = pcd.material.size * data_vis.size;
@@ -137,19 +139,23 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
             let pcd_to_remove;
             if ((pcd_to_remove = engine_data.scene.getObjectByName(name)) != undefined) {
                 // color inherit
-                pcd.material.color = pcd_to_remove.material.color;
+                pcd.material.color = pcd_to_remove.children[0].material.color;  // Get material from pcd material
                 const index = engine_data.intersectable.indexOf(pcd_to_remove);
                 if (index > -1) {
                     engine_data.intersectable.splice(index, 1);
                 }
                 engine_data.scene.remove(pcd_to_remove);
             }
-
-            pcd.visible = true;
-            engine_data.scene.add(pcd);
+                        
+            pcd_whole.name = name;
+            let M = new THREE.Matrix4();  // relative transform
+            M.elements = data_vis.coordinate;
+            pcd_whole.applyMatrix4(M);
+            pcd_whole.visible = true;
+            engine_data.scene.add(pcd_whole);
 
             if (data_vis.intersectable) {
-                engine_data.intersectable.push(pcd);
+                engine_data.intersectable.push(pcd_whole);
             }
 
             // Release locker
