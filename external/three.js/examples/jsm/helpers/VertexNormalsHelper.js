@@ -5,7 +5,7 @@ import {
 	LineBasicMaterial,
 	Matrix3,
 	Vector3
-} from 'three';
+} from 'https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js';
 
 const _v1 = new Vector3();
 const _v2 = new Vector3();
