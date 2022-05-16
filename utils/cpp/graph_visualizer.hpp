@@ -124,13 +124,15 @@ namespace Easy3DViewer {
 		graph_json["vertices"] = vec_vertices;
 
 		// Edge
-		for (auto i = 0; i < graph_pair_size; ++i) {
-			int id_e_0 = static_cast<int>(edge_pairs[i * 2 + 0]);
-			int id_e_1 = static_cast<int>(edge_pairs[i * 2 + 1]);
-			std::vector<int> e_ind{ id_e_0, id_e_1 };
-			vec_edges.push_back(e_ind);
+		if (edge_pairs != nullptr) {
+			for (auto i = 0; i < graph_pair_size; ++i) {
+				int id_e_0 = static_cast<int>(edge_pairs[i * 2 + 0]);
+				int id_e_1 = static_cast<int>(edge_pairs[i * 2 + 1]);
+				std::vector<int> e_ind{ id_e_0, id_e_1 };
+				vec_edges.push_back(e_ind);
+			}
+			graph_json["edges"] = vec_edges;
 		}
-		graph_json["edges"] = vec_edges;
 
 		// Normals
 		if (normals != nullptr) {

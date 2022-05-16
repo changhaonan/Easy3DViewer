@@ -370,6 +370,22 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                 else {
                     normal_len = 0.015;  // [meter]
                 }
+                
+                let normal_color;
+                if (data_vis.color_code != "") {
+                    if (data_vis.color_code == "red")
+                        normal_color = { "r" : 1.0, "g" : 0.0, "b" : 0.0 };
+                    else if (data_vis.color_code == "green")
+                        normal_color = { "r" : 0.0, "g" : 1.0, "b" : 0.0 };
+                    else if (data_vis.color_code == "blue")
+                        normal_color = { "r" : 0.0, "g" : 0.0, "b" : 1.0 };
+                    else
+                        normal_color = { "r" : 0.0, "g" : 0.0, "b" : 0.0 };
+                }
+                else {
+                    normal_color = { "r" : Math.random() * 0.5, "g" : Math.random() * 0.5, "b" : Math.random() * 0.5 };
+                }
+                
                 $.each(data.normals, (i, normal) => {
                     normals.push(
                         new THREE.Vector3(
@@ -386,7 +402,8 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                     if (data.weight_n != undefined)
                         color = lut.getColor(data.weight_n[i]);
                     else
-                        color = { "r": 0.0, "g": 1.0, "b": 0.0 };  // Green is the default color
+                        // color = { "r": 0.0, "g": 1.0, "b": 0.0 };  // Green is the default color
+                        color = normal_color;
 
                     color_n.push(color.r, color.g, color.b);
                     color_n.push(color.r, color.g, color.b);
