@@ -118,6 +118,14 @@ function updateGuiControl(data, engine_data) {
             );
             engine_data.controls[name_control] = gui_control;
         }
+        else if (data.gui == "button") {
+            // Do something here
+            engine_data.defaults[name_control] = data.default;
+            gui_control = gui_section.add(
+                engine_data.defaults, name_control
+            );
+            engine_data.controls[name_control] = gui_control;
+        }
     }
     return gui_control;
 }
