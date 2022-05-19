@@ -35,7 +35,8 @@ The steps to run the software locally is as follows:
 
 1. clone the repository
 2. `npm install`
-3. `node app.js`
+3. `python configure.py`
+4. `node app.js`
 
 If you get error when running `npm install`, then run `npm init` first.
 
@@ -86,5 +87,6 @@ python setup.py install
 ## Todo:
 
 * [ ] Write a script to combine all javascript files into one. Instead of hosting a directory. We can instead only host one file. If people want to use our package, they only need to import from an url.
-* [X] Add a python install script to further improve the easy to use ability.
-* [X] Add more introduction in the interface.
+* [x] Add a python install script to further improve the easy to use ability.
+* [x] Add more introduction in the interface.
+
