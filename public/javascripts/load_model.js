@@ -235,6 +235,15 @@ function loadModelGeometry(name, data_vis, engine_data) {
         geo = new THREE.Mesh(geometry, material);
         geo.add(new THREE.AxesHelper(scale));
     }
+    else if (geometry_type == "camera") {
+        // Work from here
+        let scale = data_vis["scale"];
+        const geometry = new THREE.SphereGeometry(0.001);  // small points
+        const material = new THREE.MeshBasicMaterial({color: 0xffff00});
+        geo = new THREE.Mesh(geometry, material);
+        geo.add(new THREE.AxesHelper(scale));
+        // Work end here
+    }
     else if (geometry_type == "box") {
         let width = data_vis["width"];
         let height = data_vis["height"];
