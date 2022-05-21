@@ -80,7 +80,12 @@ function parseJson(file_path, engine_data) {
             if (engine_data.controls[key].getValue()) {
                 $.each(engine_data.vis_controls[key],
                     (_i, name) => {
-                        loadModel(name, engine_data.data[name], engine_data);
+                        try {
+                            loadModel(name, engine_data.data[name], engine_data);
+                        }
+                        catch(err) {
+                            infoLog(name + " loads failed.");
+                        }
                         engine_data.obj_loaded.push(name);
                     })
             }
@@ -160,8 +165,13 @@ function visibleCallBack(name_control, engine_data) {
                 }
                 else {
                     // If it doesn't exist. Show it.
-                    loadModel(name, engine_data.data[name], engine_data);
-                    engine_data.obj_loaded.push(name);
+                    try {
+                        loadModel(name, engine_data.data[name], engine_data);
+                        engine_data.obj_loaded.push(name);
+                    }
+                    catch {
+                        infoLog(name + " loads failed.");
+                    }
                 }
             })
     }
