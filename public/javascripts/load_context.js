@@ -82,11 +82,11 @@ function parseJson(file_path, engine_data) {
                     (_i, name) => {
                         try {
                             loadModel(name, engine_data.data[name], engine_data);
+                            engine_data.obj_loaded.push(name);  // Mark it as loaded only as it is loaded
                         }
                         catch(err) {
                             infoLog(name + " loads failed.");
                         }
-                        engine_data.obj_loaded.push(name);
                     })
             }
         });
@@ -167,7 +167,7 @@ function visibleCallBack(name_control, engine_data) {
                     // If it doesn't exist. Show it.
                     try {
                         loadModel(name, engine_data.data[name], engine_data);
-                        engine_data.obj_loaded.push(name);
+                        engine_data.obj_loaded.push(name);  // Set it as loaded only if we have it in this scene
                     }
                     catch {
                         infoLog(name + " loads failed.");
