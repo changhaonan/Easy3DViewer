@@ -264,8 +264,8 @@ namespace Easy3DViewer {
             }
         }
 
-        void close(const bool enable_save=true) {
-            if (enable_save) save();
+        void close(const bool enable_save=true, const bool enable_inc = false) {
+            if (enable_save) save(enable_inc);
         }
 
         void clearDir() {
@@ -275,7 +275,8 @@ namespace Easy3DViewer {
         }
 
     private:
-        void save() {
+        // TODO: add inc mode
+        void save(const bool enable_inc) {
             std::string file_name = (currentDir() / "context.json").string();
             std::ofstream o(file_name);
             o << std::setw(4) << m_context_info << std::endl;
