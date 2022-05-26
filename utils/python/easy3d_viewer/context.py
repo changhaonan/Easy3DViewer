@@ -158,6 +158,33 @@ class Context():
 
         cls.context_info[name] = info_data
 
+    @classmethod
+    def addPointCloud(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), size=0.5):
+        """ Add point cloud to the context
+
+        Args:
+            name (string): data name
+            control_name (str, optional): name used for control. Defaults to "".
+            coordinate (np.matrix4f, optional): cam2world in col-major. Defaults to np.eye(4, dtype=np.float32).
+            size (float, optional): Point size in visualization. Defaults to 0.5.
+        """
+        info_data = dict()
+        info_data["file_type"] = "pcd"
+        info_data["file_name"] = name + ".pcd"
+
+        # Visualization part
+        info_data["vis"] = dict()
+        info_data["vis"]["section"] = "Point-Cloud"
+        info_data["vis"]["control"] = control_name if (control_name) else name
+        info_data["vis"]["mode"] = "point"
+        info_data["vis"]["gui"] = "check_box"
+        info_data["vis"]["default"] = False
+        info_data["vis"]["intersectable"] = False
+        info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
+        info_data["vis"]["size"] = size
+
+        cls.context_info[name] = info_data
+
     # Save/Load
     @classmethod
     def open(cls, id):
