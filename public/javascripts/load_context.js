@@ -1,4 +1,5 @@
 import { loadModel } from "/javascripts/load_model.js"
+import * as THREE from "https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js";
 
 /*
  * \brief we should enable lasy-loading and event-based loop
@@ -124,8 +125,19 @@ function updateGuiControl(data, engine_data) {
             engine_data.controls[name_control] = gui_control;
         }
         else if (data.gui == "button") {
-            // Do something here
-            engine_data.defaults[name_control] = data.default;
+            var settings = {
+                myFunction: function() { 
+                    engine_data.camera.matrixAutoUpdate = false;
+                    var button_view = new THREE.Matrix4();
+                    button_view.fromArray(engine_data.data[name_control].vis.coordinate);
+                    button_view.decompose(engine_data.camera.position, engine_data.camera.quaternion, engine_data.camera.scale);
+                    engine_data.camera.updateMatrix();
+                    engine_data.camera.updateMatrixWorld();
+                    engine_data.camera.up.set(0,-1,0);
+                    engine_data.camera.matrixAutoUpdate = true; 
+                }
+            };
+            engine_data.defaults[name_control] = settings.myFunction;
             gui_control = gui_section.add(
                 engine_data.defaults, name_control
             );
@@ -153,6 +165,7 @@ function infoLog(msg) {
     console.log(msg);
 }
 
+
 // Call-back function
 function visibleCallBack(name_control, engine_data) {
     return function (value) {
@@ -167,7 +180,8 @@ function visibleCallBack(name_control, engine_data) {
                     // If it doesn't exist. Show it.
                     try {
                         loadModel(name, engine_data.data[name], engine_data);
-                        engine_data.obj_loaded.push(name);  // Set it as loaded only if we have it in this scene
+                        engine_data.obj_loaded.push(name);
+                        // Set it as loaded only if we have it in this scene
                     }
                     catch {
                         infoLog(name + " loads failed.");
