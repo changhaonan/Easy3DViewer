@@ -41,9 +41,9 @@ void main() {
     gl_FragColor = vec4(viewColor * (faceRatio * 0.5 + 0.5), 1.0);
 }
 </script><h3>Debug</h3><div class="single_canvas_container"><div style="height: 90%; width: 100%; margin: auto;  position: relative"><div class="canvas" id="move_dragon" style="height: 100%; width: 100%"><script type="module">import { createBasicCanvas, animate } from "http://localhost:8000/javascripts/basic_canvas.js";
-import { loadFirstContext, loadContext } from "http://localhost:8000/javascripts/load_context.js";
-import { onKeydown } from "http://localhost:8000/javascripts/key_parser.js";
-import { loadModel } from "http://localhost:8000/javascripts/load_model.js";
+import { loadFirstContext, loadContext } from "http://changhaonan.github.io/Easy3DViewer/javascripts/load_context.js";
+import { onKeydown } from "http://changhaonan.github.io/Easy3DViewer/javascripts/key_parser.js";
+import { loadModel } from "http://changhaonan.github.io/Easy3DViewer/javascripts/load_model.js";
 const engine_data = createBasicCanvas(move_dragon, true);
 let frames = "frame_000001,frame_000002,frame_000003,frame_000004,frame_000005".split(',') 
 engine_data.container_id = "move_dragon";
