@@ -22,4 +22,4 @@ public/external
 
 # Node Related
 package.json
-package.lock.json
+package-lock.json

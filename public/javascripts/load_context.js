@@ -1,4 +1,5 @@
 import { loadModel } from "/javascripts/load_model.js"
+import * as THREE from "https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js"
 
 /*
  * \brief we should enable lasy-loading and event-based loop
@@ -35,7 +36,7 @@ export function loadFirstContext(root_folder, default_data_folder, data_root, so
     engine_data.data = null;
     engine_data.guis = {};
     engine_data.obj_loaded = [];
-    engine_data.defaults = {};
+    engine_data.gui_data = {};
     engine_data.controls = {};
     engine_data.locker = { "context": true };
 
@@ -117,26 +118,38 @@ function updateGuiControl(data, engine_data) {
     }
     else {
         if (data.gui == "check_box") {  // Check box is to control visibility
-            engine_data.defaults[name_control] = data.default;
+            engine_data.gui_data[name_control] = data.default;
             gui_control = gui_section.add(
-                engine_data.defaults, name_control
+                engine_data.gui_data, name_control
             );
             engine_data.controls[name_control] = gui_control;
         }
         else if (data.gui == "button") {  // Check box has a lot of different functions
-            gui_control = gui_section.add(
-                () => { 
+            if (data.mode == "camera") {
+                engine_data.gui_data[name_control] = () => { 
                     engine_data.camera.matrixAutoUpdate = false;
-                    var button_view = new THREE.Matrix4();
-                    button_view.fromArray(engine_data.data[name_control].vis.coordinate);
-                    button_view.decompose(engine_data.camera.position, engine_data.camera.quaternion, engine_data.camera.scale);
+                    let cam_view = new THREE.Matrix4();
+                    cam_view.fromArray(engine_data.data[name_control].vis.coordinate);
+                    cam_view.decompose(engine_data.camera.position, engine_data.camera.quaternion, engine_data.camera.scale);
                     engine_data.camera.updateMatrix();
                     engine_data.camera.updateMatrixWorld();
-                    engine_data.camera.up.set(0, -1, 0);
+
+                    let cam_ny = new THREE.Vector3(0, -1, 0);
+                    let cam_rot =  new THREE.Matrix3();
+                    cam_rot.setFromMatrix4(cam_view);
+                    let cam_rot_inworld = cam_ny.applyMatrix3(cam_rot);
+                    // engine_data.camera.up.set(cam_ny.applyMatrix3(cam_rot));  // Should be -y of camera
+                    engine_data.camera.up.set(cam_rot_inworld.x, cam_rot_inworld.y, cam_rot_inworld.z);
                     engine_data.camera.matrixAutoUpdate = true; 
-                }, name_control
-            );
-            engine_data.controls[name_control] = gui_control;
+                };
+                gui_control = gui_section.add(
+                    engine_data.gui_data, name_control
+                );
+                engine_data.controls[name_control] = gui_control;
+            }
+            else {
+                console.log(data.mode, "'s button is not implemented.");
+            }
         }
     }
     return gui_control;
