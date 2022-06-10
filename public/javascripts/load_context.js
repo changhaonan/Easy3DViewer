@@ -141,6 +141,8 @@ function updateGuiControl(data, engine_data) {
                     // engine_data.camera.up.set(cam_ny.applyMatrix3(cam_rot));  // Should be -y of camera
                     engine_data.camera.up.set(cam_rot_inworld.x, cam_rot_inworld.y, cam_rot_inworld.z);
                     engine_data.camera.matrixAutoUpdate = true; 
+
+                    // FIXME: Still having bugs here: After clicking for multiple times, the camera will be missing.
                 };
                 gui_control = gui_section.add(
                     engine_data.gui_data, name_control
