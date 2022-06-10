@@ -19,3 +19,7 @@ obj
 
 # External
 public/external
+
+# Node Related
+package.json
+package.lock.json

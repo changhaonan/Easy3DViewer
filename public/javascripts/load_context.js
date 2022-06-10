@@ -116,18 +116,25 @@ function updateGuiControl(data, engine_data) {
         gui_control = engine_data.controls[name_control];
     }
     else {
-        if (data.gui == "check_box") {
+        if (data.gui == "check_box") {  // Check box is to control visibility
             engine_data.defaults[name_control] = data.default;
             gui_control = gui_section.add(
                 engine_data.defaults, name_control
             );
             engine_data.controls[name_control] = gui_control;
         }
-        else if (data.gui == "button") {
-            // Do something here
-            engine_data.defaults[name_control] = data.default;
+        else if (data.gui == "button") {  // Check box has a lot of different functions
             gui_control = gui_section.add(
-                engine_data.defaults, name_control
+                () => { 
+                    engine_data.camera.matrixAutoUpdate = false;
+                    var button_view = new THREE.Matrix4();
+                    button_view.fromArray(engine_data.data[name_control].vis.coordinate);
+                    button_view.decompose(engine_data.camera.position, engine_data.camera.quaternion, engine_data.camera.scale);
+                    engine_data.camera.updateMatrix();
+                    engine_data.camera.updateMatrixWorld();
+                    engine_data.camera.up.set(0, -1, 0);
+                    engine_data.camera.matrixAutoUpdate = true; 
+                }, name_control
             );
             engine_data.controls[name_control] = gui_control;
         }
