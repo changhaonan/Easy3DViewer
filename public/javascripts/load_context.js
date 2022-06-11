@@ -1,5 +1,5 @@
-import { loadModel } from "/javascripts/load_model.js"
 import * as THREE from "https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js"
+import { loadModel } from "/javascripts/load_model.js"
 
 /*
  * \brief we should enable lasy-loading and event-based loop
@@ -127,22 +127,30 @@ function updateGuiControl(data, engine_data) {
         else if (data.gui == "button") {  // Check box has a lot of different functions
             if (data.mode == "camera") {
                 engine_data.gui_data[name_control] = () => { 
+                    // Reset camera control
+                    engine_data.camera_control.reset();
+                    
+                    // Reset camera pose
                     engine_data.camera.matrixAutoUpdate = false;
                     let cam_view = new THREE.Matrix4();
-                    cam_view.fromArray(engine_data.data[name_control].vis.coordinate);
+                    cam_view.elements = engine_data.data[name_control].vis.coordinate;
                     cam_view.decompose(engine_data.camera.position, engine_data.camera.quaternion, engine_data.camera.scale);
                     engine_data.camera.updateMatrix();
                     engine_data.camera.updateMatrixWorld();
-
+                    
                     let cam_ny = new THREE.Vector3(0, -1, 0);
+                    let cam_nz = new THREE.Vector3(0, 0, 1);
                     let cam_rot =  new THREE.Matrix3();
                     cam_rot.setFromMatrix4(cam_view);
-                    let cam_rot_inworld = cam_ny.applyMatrix3(cam_rot);
-                    // engine_data.camera.up.set(cam_ny.applyMatrix3(cam_rot));  // Should be -y of camera
-                    engine_data.camera.up.set(cam_rot_inworld.x, cam_rot_inworld.y, cam_rot_inworld.z);
+                    let cam_ny_inworld = cam_ny.applyMatrix3(cam_rot);
+                    let cam_nz_inwolrd = cam_nz.applyMatrix4(cam_view);
+                    engine_data.camera.lookAt(cam_nz_inwolrd);
+                    engine_data.camera.up.set(cam_ny_inworld.x, cam_ny_inworld.y, cam_ny_inworld.z);
                     engine_data.camera.matrixAutoUpdate = true; 
 
                     // FIXME: Still having bugs here: After clicking for multiple times, the camera will be missing.
+                    // The bug seems to be relevant with trackball control
+                    // Still a little bit offset due to trackball control
                 };
                 gui_control = gui_section.add(
                     engine_data.gui_data, name_control

@@ -8,7 +8,7 @@ export function createBasicCanvas(container_id, gui_enable=false) {
         "renderer": null,
         "scene": null,
         "camera": null,
-        "control": null,
+        "camera_control": null,
         "gui": null,
         "record" : false
     };
@@ -36,6 +36,7 @@ export function createBasicCanvas(container_id, gui_enable=false) {
     scene.add(camera);
     
     // Trackball Control
+    // FIXME: Trackball Control may need to be tuned?
     const trackBall_control = new TrackballControls(camera, renderer.domElement);
     trackBall_control.addEventListener("change", () => { render(renderer, scene, camera); }); // use if there is no animation loop
     trackBall_control.rotateSpeed = 5.0;
@@ -56,7 +57,7 @@ export function createBasicCanvas(container_id, gui_enable=false) {
     engine_data.renderer = renderer;
     engine_data.scene = scene;
     engine_data.camera = camera;
-    engine_data.control = trackBall_control;
+    engine_data.camera_control = trackBall_control;
 
     // Load font to engine_data
     const loader = new FontLoader();
@@ -78,6 +79,6 @@ export function render(renderer, scene, camera) {
 
 export function animate(engine_data) {
     requestAnimationFrame(() => { animate(engine_data); });
-    engine_data.control.update();
+    engine_data.camera_control.update();
     render(engine_data.renderer, engine_data.scene, engine_data.camera);
 }
