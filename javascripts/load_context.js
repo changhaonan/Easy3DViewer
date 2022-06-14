@@ -57,7 +57,7 @@ export function loadFirstContext(root_folder, default_data_folder, data_root, so
     console.log(engine_data)
 }
 
-export function loadContext(data_dir, engine_data) {
+export function loadContext(data_dir, engine_data, loadModel) {
     if (engine_data.locker.context) return false;
     engine_data.locker = { "context": true };
     // parse file_path first
