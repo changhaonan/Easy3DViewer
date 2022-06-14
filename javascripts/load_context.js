@@ -93,8 +93,6 @@ function parseJson(file_path, engine_data, loadModel) {
                         engine_data.obj_loaded.push(name);
                     })
             }
-            console.log("VS")
-            console.log(engine_data.data[name])
         });
 
         // Release locker
