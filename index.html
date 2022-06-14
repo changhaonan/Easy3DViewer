@@ -48,7 +48,7 @@ const engine_data = createBasicCanvas(move_dragon, true);
 let frames = "frame_000001,frame_000002,frame_000003,frame_000004,frame_000005".split(',') 
 engine_data.container_id = "move_dragon";
 loadFirstContext("http://localhost:8000", "/test_data", "move_dragon4Cam", "https://changhaonan.github.io/Easy3DViewer", "/test_data", frames, engine_data, loadModel);
-$(document).keydown((e) => { onKeydown(e, engine_data, false); });
+$(document).keydown((e) => { onKeydown(e, engine_data, false, loadModel); });
 animate(engine_data);</script></div><div class="figure_title"><p>Fig. Move Dragon Toy</p></div></div></div><div class="single_canvas_container"><div style="height: 90%; width: 100%; margin: auto;  position: relative"><div class="canvas" id="scarf" style="height: 100%; width: 100%"><script type="module">import { createBasicCanvas, animate } from "https://changhaonan.github.io/Easy3DViewer/javascripts/basic_canvas.js";
 import { loadFirstContext, loadContext } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_context.js";
 import { onKeydown } from "https://changhaonan.github.io/Easy3DViewer/javascripts/key_parser.js";
