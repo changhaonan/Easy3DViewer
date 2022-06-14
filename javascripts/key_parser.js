@@ -1,14 +1,14 @@
 import { loadContext } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_context.js"
 
-export function onKeydown(event, engine_data, global_keyevent, loadModel) {
+export function onKeydown(event, engine_data, global_keyevent) {
     if (!global_keyevent)
         if ($("#" + engine_data.container_id + ":hover").length == 0) return;  // Earyly stop
 
     if (event.key === "d") {
-        ParseNext(engine_data, loadModel);
+        ParseNext(engine_data);
     }
     else if (event.key == "a") {
-        ParseLast(engine_data, loadModel);
+        ParseLast(engine_data);
     }
     else if (event.key == "p") {
         // Do screen shot
@@ -33,7 +33,7 @@ export function onKeydown(event, engine_data, global_keyevent, loadModel) {
     }
 }
 
-function ParseNext(engine_data, loadModel) {
+function ParseNext(engine_data) {
     // Checking locker
     let locker_status = false;
     $.each(engine_data.locker, (key, value) => {
@@ -48,11 +48,11 @@ function ParseNext(engine_data, loadModel) {
 
     let p = engine_data.p;
     p = (engine_data.dir_list.length <= p + 1) ? 0 : p + 1;
-    loadContext(engine_data.data_root + "/" + engine_data.dir_list[p], engine_data, loadModel);
+    loadContext(engine_data.data_root + "/" + engine_data.dir_list[p], engine_data);
     engine_data.p = p;
 }
 
-function ParseLast(engine_data, loadModel) {
+function ParseLast(engine_data) {
     // Checking locker
     let locker_status = false;
     $.each(engine_data.locker, (key, value) => {
@@ -67,7 +67,7 @@ function ParseLast(engine_data, loadModel) {
 
     let p = engine_data.p;
     p = (p == 0) ? engine_data.dir_list.length - 1 : p - 1;
-    loadContext(engine_data.data_root + "/" + engine_data.dir_list[p], engine_data, loadModel);
+    loadContext(engine_data.data_root + "/" + engine_data.dir_list[p], engine_data);
     engine_data.p = p;
 }
 
