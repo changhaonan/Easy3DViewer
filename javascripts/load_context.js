@@ -57,13 +57,13 @@ export function loadFirstContext(root_folder, default_data_folder, data_root, so
     console.log(engine_data)
 }
 
-export function loadContext(data_dir, engine_data, loadModel) {
+export function loadContext(data_dir, engine_data) {
     if (engine_data.locker.context) return false;
     engine_data.locker = { "context": true };
     // parse file_path first
     engine_data.data_dir = data_dir;
     let file_path = data_dir + "/context.json";
-    parseJson(file_path, engine_data, loadModel);
+    parseJson(file_path, engine_data);
 }
 
 function parseJson(file_path, engine_data, loadModel) {
