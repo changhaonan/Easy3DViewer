@@ -1,4 +1,4 @@
-import { loadModel } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/OBJLoader.js";
+import { loadModel } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_model.js";
 /*
  * \brief we should enable lasy-loading and event-based loop
  */
