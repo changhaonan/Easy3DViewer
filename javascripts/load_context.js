@@ -63,7 +63,7 @@ export function loadContext(data_dir, engine_data) {
     // parse file_path first
     engine_data.data_dir = data_dir;
     let file_path = data_dir + "/context.json";
-    parseJson(file_path, engine_data);
+    parseJson(file_path, engine_data, loadModel);
 }
 
 function parseJson(file_path, engine_data, loadModel) {
