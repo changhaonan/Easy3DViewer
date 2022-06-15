@@ -416,6 +416,5 @@ export {
     onKeydown,
     loadModel,
     loadFirstContext,
-    loadContext,
-    MarkdownToc
+    loadContext
 };
