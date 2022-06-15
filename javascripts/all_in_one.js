@@ -366,44 +366,105 @@ function visibleCallBack(e, n, r)
 
 class MarkdownToc 
 {
-    constructor(e, t, o) 
-    {
-        jQuery.ajaxSetup({
-            async: !1
-        }), this.levelsToShow = e, this.menus = [];
-        var n = t.split(",");
-        for (let e = 0; e < n.length; ++e) {
-            var r = "/Easy3DViewer/markdown/" + o + "/" + n[e] + ".md";
-            $.get(r, e => {
-                this.process(e)
+    constructor(level2show, list_of_md_str, root_dir) {
+        // Sync reading
+        jQuery.ajaxSetup({ async: false });
+        this.levelsToShow = level2show;
+        this.menus = [];
+
+        let list_of_md = list_of_md_str.split(",");
+        for (let i = 0; i < list_of_md.length; ++i) {
+            let md_file_name = "/Easy3DViewer/markdown/" + root_dir + "/" + list_of_md[i] + ".md";
+            $.get(md_file_name, (data) => {
+                this.process(data);
             })
         }
-        jQuery.ajaxSetup({
-            async: !0
-        })
+        jQuery.ajaxSetup({ async: true });
     }
 
-    getToc() 
-    {
-        return this.menus.join("\n")
-    }
+    getToc() { return this.menus.join("\n"); }
 
-    process(e) 
-    {
-        const t = e;
-        let o = !1;
-        var n, r;
-        let a = null;
-        for (n of t.split("\n")) {
-            const l = n.trim();
-            if (!(o = l.startsWith("```") ? !o : o)) {
-                let e = NaN,
-                    t = null;
-                if (l.startsWith("#")) {
-                    const s = l.match(/(#+)\s*(.*?)#*\s*$/);
-                    e = s[1].length, t = s[2].trim()
-                } else null != a && 0 < a.length && 0 < l.length && (null == l.match(/[^=]/g) ? (e = 1, t = a) : null == l.match(/[^-]/g) && null != a.match(/[^-]/g) && (e = 2, t = a));
-                isNaN(e) || null == t ? a = l : e - 1 >= this.levelsToShow || (r = t.toLocaleLowerCase().replace(/\s/g, "-").replace(/[^A-Za-z0-9-_]/g, ""), r = `${"  ".repeat(e-1)}- [${t}](#${r})`, this.menus.push(r), a = null)
+    process(md_value) {
+        const input = md_value;
+        
+        let isCodeBlock = false;
+        let topLevel = 1;  // TopLevel is fixed to 1
+        let previous = null;
+
+        for (let line of input.split("\n")) {
+
+            const trimmed = line.trim();
+    
+            if (trimmed.startsWith("```")) {
+                isCodeBlock = !isCodeBlock;
+            }
+
+            if (isCodeBlock) {
+                continue;
+            }
+
+            let level = NaN;
+            let title = null;
+
+            // Check for:
+            // 1. ATX-style headers: ## My Header
+            //
+            // 2. Setext-style headers:
+            //     a) Level 1 header: My Header
+            //                        =========
+            //
+            //     b) Level 2 header: My Header
+            //                        ---------
+            //
+            //    Edge cases that do not count as headers:
+            //     i) Horizontal rule ("Underline" preceded by empty line):
+            //
+            //           Some paragraph 1
+            //           <empty line>
+            //           -----
+            //           Some paragraph 2
+            //
+            //     ii) Two or more horizontal rules:
+            //
+            //           Some paragraph 1
+            //
+            //           -----
+            //           -----
+            //           -----
+            //           Some paragraph 2
+
+            if (trimmed.startsWith("#")) {
+                const match = trimmed.match(/(#+)\s*(.*?)#*\s*$/);
+                level = match[1].length;
+                title = match[2].trim();
+            } else if (previous != null && previous.length > 0 && trimmed.length > 0) {
+                if (trimmed.match(/[^=]/g) == null) {
+                    level = 1;
+                    title = previous;
+                } else if (trimmed.match(/[^-]/g) == null && previous.match(/[^-]/g) != null) {
+                    level = 2;
+                    title = previous;
+                }
+            }
+
+            if (!isNaN(level) && title != null) {
+                //if (isNaN(topLevel)) {
+                //    topLevel = level;
+                //}
+
+                if (level - topLevel >= this.levelsToShow) {
+                    continue;
+                }
+
+                const link = title.toLocaleLowerCase()
+                    .replace(/\s/g, "-")
+                    .replace(/[^A-Za-z0-9-_]/g, "");
+                const menu = `${"  ".repeat(level - topLevel)}- [${title}](#${link})`;
+                this.menus.push(menu);
+
+                previous = null;
+            } else {
+                previous = trimmed;
             }
         }
     }
