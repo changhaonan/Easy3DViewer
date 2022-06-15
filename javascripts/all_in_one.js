@@ -3,7 +3,7 @@
 //Then running the following command: "uglifyjs file1.js file2.js  -o output.js -c -m"
 
 import * as THREE from "https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js";
-import { TrackballControls } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/controlsTrackballControls.js";
+import { TrackballControls } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/controls/TrackballControls.js";
 import { GUI } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/libs/lil-gui.module.min.js";
 import { FontLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/FontLoader.js";
 import { OBJLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/OBJLoader.js";
