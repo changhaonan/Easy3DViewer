@@ -359,7 +359,7 @@ function visibleCallBack(e, n, r)
 {
     return function (o) {
         $.each(n.vis_controls[e], (e, t) => {
-            n.obj_loaded.includes(t) ? null != n.scene.getObjectByName(t) && (n.scene.getObjectByName(t).visible = o) : (r(t, n.data[t], n), n.obj_loaded.push(t))
+            n.obj_loaded.includes(t) ? null != n.scene.getObjectByName(t) && (n.scene.getObjectByName(t).visible = o) : (loadModel(t, n.data[t], n), n.obj_loaded.push(t))
         })
     }
 }
@@ -416,5 +416,6 @@ export {
     onKeydown,
     loadModel,
     loadFirstContext,
-    loadContext
+    loadContext,
+    MarkdownToc
 };
