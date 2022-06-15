@@ -86,17 +86,19 @@
         <div class="single_canvas_container">
             <div style="height: 90%; width: 100%; margin: auto;  position: relative">
                 <div class="canvas" id="move_dragon" style="height: 100%; width: 100%">
-                    <script type="module">import { createBasicCanvas, animate } from "https://changhaonan.github.io/Easy3DViewer/javascripts/basic_canvas.js";
-                                          import { loadFirstContext, loadContext } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_context.js";
-                                          import { onKeydown } from "https://changhaonan.github.io/Easy3DViewer/javascripts/key_parser.js";
-                                          import { loadModel } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_model.js";
-
-                                          const engine_data = createBasicCanvas(move_dragon, true);
+                    <script type="module">import * as mf from "https://changhaonan.github.io/Easy3DViewer/javascripts/all_in_one.js";   
+                                          //import { createBasicCanvas, animate } from "https://changhaonan.github.io/Easy3DViewer/javascripts/basic_canvas.js";
+                                          //import { loadFirstContext, loadContext } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_context.js";
+                                          //import { onKeydown } from "https://changhaonan.github.io/Easy3DViewer/javascripts/key_parser.js";
+                                          //import { loadModel } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_model.js";
+                                                         
+                        
+                                          const engine_data = mf.createBasicCanvas(move_dragon, true);
                                           let frames = "frame_000001,frame_000002,frame_000003,frame_000004,frame_000005".split(',') 
                                           engine_data.container_id = "move_dragon";
-                                          loadFirstContext("http://localhost:8000", "/test_data", "move_dragon4Cam", "https://changhaonan.github.io/Easy3DViewer", "/test_data", frames, engine_data, loadModel);
-                                          $(document).keydown((e) => { onKeydown(e, engine_data, false); });
-                                          animate(engine_data);
+                                          mf.loadFirstContext("http://localhost:8000", "/test_data", "move_dragon4Cam", "https://changhaonan.github.io/Easy3DViewer", "/test_data", frames, engine_data, loadModel);
+                                          $(document).keydown((e) => { mf.onKeydown(e, engine_data, false); });
+                                          mf.animate(engine_data);
                     </script>
                 </div>
 
@@ -109,17 +111,18 @@
         <div class="single_canvas_container">
             <div style="height: 90%; width: 100%; margin: auto;  position: relative">
                 <div class="canvas" id="scarf" style="height: 100%; width: 100%">
-                    <script type="module">import { createBasicCanvas, animate } from "https://changhaonan.github.io/Easy3DViewer/javascripts/basic_canvas.js";
-                                          import { loadFirstContext, loadContext } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_context.js";
-                                          import { onKeydown } from "https://changhaonan.github.io/Easy3DViewer/javascripts/key_parser.js";
-                                          import { loadModel } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_model.js";
+                    <script type="module">import * as mf from "https://changhaonan.github.io/Easy3DViewer/javascripts/all_in_one.js";
+                                          //import { createBasicCanvas, animate } from "https://changhaonan.github.io/Easy3DViewer/javascripts/basic_canvas.js";
+                                          //import { loadFirstContext, loadContext } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_context.js";
+                                          //import { onKeydown } from "https://changhaonan.github.io/Easy3DViewer/javascripts/key_parser.js";
+                                          //import { loadModel } from "https://changhaonan.github.io/Easy3DViewer/javascripts/load_model.js";
                                           
-                                          const engine_data = createBasicCanvas(scarf, true);
+                                          const engine_data = mf.createBasicCanvas(scarf, true);
                                           let frames = "frame_000001".split(',') 
                                           engine_data.container_id = "scarf";
-                                          loadFirstContext("http://localhost:8000", "/test_data", "scarf4Cam", "https://changhaonan.github.io/Easy3DViewer", "/test_data", frames, engine_data, loadModel);
-                                          $(document).keydown((e) => { onKeydown(e, engine_data, false); });
-                                          animate(engine_data);
+                                          mf.loadFirstContext("http://localhost:8000", "/test_data", "scarf4Cam", "https://changhaonan.github.io/Easy3DViewer", "/test_data", frames, engine_data, loadModel);
+                                          $(document).keydown((e) => { mf.onKeydown(e, engine_data, false); });
+                                          mf.animate(engine_data);
                     </script>
                 </div>
 
@@ -145,7 +148,8 @@
 
     <div class="sidenav">
         <div id="toc">
-            <script src="https://changhaonan.github.io/Easy3DViewer/javascripts/markdown_toc.js"></script>
+            <!--<script src="https://changhaonan.github.io/Easy3DViewer/javascripts/markdown_toc.js"></script>-->
+            <script src="https://changhaonan.github.io/Easy3DViewer/javascripts/all_in_one.js"></script>
             <script>
                 const markdown_toc = new MarkdownToc(3, "progress,issue,plan", "star");
                 $("#toc").html(marked.parse(markdown_toc.getToc()));
