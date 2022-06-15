@@ -350,10 +350,10 @@ function updateGuiVis(e, t, o)
     t in o.vis_controls ? o.vis_controls[t].includes(e) || o.vis_controls[t].push(e) : (o.vis_controls[t] = [], o.vis_controls[t].push(e))
 }
 
-function infoLog(e) 
-{
-    console.log(e)
-}
+//function infoLog(e) 
+//{
+//    console.log(e)
+//}
 
 function visibleCallBack(e, n, r) 
 {
