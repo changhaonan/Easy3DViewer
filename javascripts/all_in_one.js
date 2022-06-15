@@ -6,7 +6,6 @@ import * as THREE from "https://changhaonan.github.io/Easy3DViewer/external/thre
 import { TrackballControls } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/controlsTrackballControls.js";
 import { GUI } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/libs/lil-gui.module.min.js";
 import { FontLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/FontLoader.js";
-
 import { OBJLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/OBJLoader.js";
 import { PCDLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/PCDLoader.js";
 import { Lut } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/math/Lut.js";
