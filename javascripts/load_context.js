@@ -92,9 +92,7 @@ function parseJson(file_path, engine_data, loadModel) {
                         //loadModel(name, engine_data.data[name], engine_data);
                         engine_data.obj_loaded.push(name);
                         console.log(engine_data.data[name]);
-                        console.log(engine_data);
-                        //console.log(name);
-                       
+                        console.log(engine_data);     
             }
         });
 
