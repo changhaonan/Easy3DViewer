@@ -91,6 +91,7 @@ function parseJson(file_path, engine_data, loadModel) {
                        console.log(typeof engine_data),
                       console.log(typeof engine_data.data[name]),
                        console.log(engine_data.data[name]),
+                       console.log(name),
                     (_i, name) => {
                         loadModel(name, engine_data.data[name], engine_data);
                         console.log(typeof engine_data.data[name]),
