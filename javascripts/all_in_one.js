@@ -364,51 +364,6 @@ function visibleCallBack(e, n, r)
     }
 }
 
-class MarkdownToc 
-{
-   constructor(e, t, o) 
-    {
-        jQuery.ajaxSetup({
-            async: !1
-        }), this.levelsToShow = e, this.menus = [];
-        var n = t.split(",");
-        for (let e = 0; e < n.length; ++e) {
-            var r = "/Easy3DViewer/markdown/" + o + "/" + n[e] + ".md";
-            $.get(r, e => {
-                this.process(e)
-            })
-        }
-        jQuery.ajaxSetup({
-            async: !0
-        })
-    }
-
-    getToc() 
-    {
-        return this.menus.join("\n")
-    }
-
-    process(e) 
-    {
-        const t = e;
-        let o = !1;
-        var n, r;
-        let a = null;
-        for (n of t.split("\n")) {
-            const l = n.trim();
-            if (!(o = l.startsWith("```") ? !o : o)) {
-                let e = NaN,
-                    t = null;
-                if (l.startsWith("#")) {
-                    const s = l.match(/(#+)\s*(.*?)#*\s*$/);
-                    e = s[1].length, t = s[2].trim()
-                } else null != a && 0 < a.length && 0 < l.length && (null == l.match(/[^=]/g) ? (e = 1, t = a) : null == l.match(/[^-]/g) && null != a.match(/[^-]/g) && (e = 2, t = a));
-                isNaN(e) || null == t ? a = l : e - 1 >= this.levelsToShow || (r = t.toLocaleLowerCase().replace(/\s/g, "-").replace(/[^A-Za-z0-9-_]/g, ""), r = `${"  ".repeat(e-1)}- [${t}](#${r})`, this.menus.push(r), a = null)
-            }
-        }
-    }
-}
-
 export {
     createBasicCanvas,
     render,
