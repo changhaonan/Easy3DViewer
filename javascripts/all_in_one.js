@@ -328,7 +328,7 @@ function parseJson(t, o, n)
             o.controls[e].onChange(visibleCallBack(e, o, n))
         }), o.obj_loaded = [], $.each(o.vis_controls, e => {
             o.controls[e].getValue() && $.each(o.vis_controls[e], (e, t) => {
-                n(t, o.data[t], o), o.obj_loaded.push(t)
+                loadModel(t, o.data[t], o), o.obj_loaded.push(t)
             })
         }), o.locker.context = !1
     })
