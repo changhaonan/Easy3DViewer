@@ -89,10 +89,8 @@ function parseJson(file_path, engine_data, loadModel) {
             if (engine_data.controls[key].getValue()) {
                 $.each(engine_data.vis_controls[key],
                     (_i, name) => {
-                        //loadModel(name, engine_data.data[name], engine_data);
-                        engine_data.obj_loaded.push(name);
-                        console.log(engine_data.data[name]);
-                        console.log(engine_data);     
+                        function (loadModel(name, engine_data.data[name], engine_data));
+                        engine_data.obj_loaded.push(name);    
             }
         });
 
