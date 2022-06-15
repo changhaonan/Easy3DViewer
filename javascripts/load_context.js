@@ -171,7 +171,7 @@ function visibleCallBack(name_control, engine_data, loadModel) {
                 }
                 else {
                     // If it doesn't exist. Show it.
-                    loadModel(name, engine_data.data[name], engine_data);
+                    ld.loadModel(name, engine_data.data[name], engine_data);
                     engine_data.obj_loaded.push(name);
                 }
             })
