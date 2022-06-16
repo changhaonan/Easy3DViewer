@@ -45,7 +45,7 @@ Website
 
 **Installation:** Run the command in cmd `npm install uglify-js -g` to install globally.
 
-**To Use:** cd into the directory where all the .js file you want to unify are located at. 
+**To Use:** `cd` into the directory where all the .js file you want to unify are located at. 
         Upon doing that now run the command `uglifyjs file1.js file2.js  -o output.js -c -m`
 
 The uglifyjs toolkit should have generated the output.js file in that same directory which is a unification of all the .js files you provided in the above command such as file1.js and file2.js
