@@ -15,6 +15,7 @@ R : To take individual screenshots while going through different frames by using
 
 ### Website Structure
 
+...
 Website
    |
    |----> Stylesheets
@@ -35,6 +36,7 @@ Website
    |----> external/three.js directory
    |----> images/slogan.svg
    |----> index.html
+...
 
 #### How to do the .js files compression/unification
 
