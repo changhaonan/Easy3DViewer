@@ -147,6 +147,19 @@ namespace Easy3DViewer {
             addData(name, info_data);
         }
 
+        void addCamera(const std::string& name, const std::string& control_name = "", 
+            const Eigen::Matrix4f& coordinate = Eigen::Matrix4f::Identity()) {
+            json info_data;
+            // Visualization part
+            info_data["vis"]["section"] = "Camera";
+            info_data["vis"]["control"] = (control_name.empty()) ? name : control_name;
+            info_data["vis"]["mode"] = "camera";
+            info_data["vis"]["gui"] = "button";
+            info_data["vis"]["coordinate"] = std::vector<float>(coordinate.data(), coordinate.data() + 16);
+            info_data["vis"]["default"] = false;
+            addData(name, info_data);
+        }
+
         void addStats(const std::string& name, const float val) {
             if (m_context_info.contains(name)) {  // add to end 
                 m_context_info[name]["data"].push_back(val);

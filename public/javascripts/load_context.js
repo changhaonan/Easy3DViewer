@@ -1,3 +1,9 @@
+/**
+ * @Author: Haonan Chang
+ * @Date:   2022-05-31 13:47:06
+ * @Last Modified by:   Haonan Chang
+ * @Last Modified time: 2022-07-23 22:35:45
+ */
 import * as THREE from "https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js"
 import { loadModel } from "/javascripts/load_model.js"
 
@@ -133,7 +139,13 @@ function updateGuiControl(data, engine_data) {
                     // Reset camera pose
                     engine_data.camera.matrixAutoUpdate = false;
                     let cam_view = new THREE.Matrix4();
-                    cam_view.elements = engine_data.data[name_control].vis.coordinate;
+                    // cam_view.elements = engine_data.data[name_control].vis.coordinate;
+                    // Add little disturbance to avoid camera pose lock
+                    let cam_pose = engine_data.data[name_control].vis.coordinate;
+                    if (cam_pose[14] == 0.0) {
+                        cam_pose[14] += 0.01;  // Add little shift over z-axis
+                    }
+                    cam_view.elements = cam_pose;
                     cam_view.decompose(engine_data.camera.position, engine_data.camera.quaternion, engine_data.camera.scale);
                     engine_data.camera.updateMatrix();
                     engine_data.camera.updateMatrixWorld();
@@ -147,10 +159,13 @@ function updateGuiControl(data, engine_data) {
                     engine_data.camera.lookAt(cam_nz_inwolrd);
                     engine_data.camera.up.set(cam_ny_inworld.x, cam_ny_inworld.y, cam_ny_inworld.z);
                     engine_data.camera.matrixAutoUpdate = true; 
-
-                    // FIXME: Still having bugs here: After clicking for multiple times, the camera will be missing.
+                    
+                    console.log("Camera reset.");
+                    // FIXME: Still having bugs here: 
+                    // 1. After clicking for multiple times, the camera will be missing.
                     // The bug seems to be relevant with trackball control
                     // Still a little bit offset due to trackball control
+                    // 2. The camera can not be set at origin. (Not fully understand why)
                 };
                 gui_control = gui_section.add(
                     engine_data.gui_data, name_control

@@ -1,3 +1,9 @@
+/**
+ * @Author: Haonan Chang
+ * @Date:   2022-05-31 13:47:06
+ * @Last Modified by:   Haonan Chang
+ * @Last Modified time: 2022-07-23 22:37:05
+ */
 import * as THREE from "https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js";
 import { TrackballControls } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/controls/TrackballControls.js";
 import { GUI } from 'https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/libs/lil-gui.module.min.js';
@@ -38,9 +44,11 @@ export function createBasicCanvas(container_id, gui_enable=false) {
     // Trackball Control
     // FIXME: Trackball Control may need to be tuned?
     const trackBall_control = new TrackballControls(camera, renderer.domElement);
-    trackBall_control.addEventListener("change", () => { render(renderer, scene, camera); }); // use if there is no animation loop
+    trackBall_control.addEventListener("change", () => { 
+        render(renderer, scene, camera); 
+    }); // use if there is no animation loop
     trackBall_control.rotateSpeed = 5.0;
-    trackBall_control.panSpeed = 1.0;
+    trackBall_control.panSpeed = 3.0;
     trackBall_control.zoomSpeed = 2.0;
     trackBall_control.target.set(0.0, 0.0, 1.0);  // look at z-axis
     trackBall_control.staticMoving = true;
