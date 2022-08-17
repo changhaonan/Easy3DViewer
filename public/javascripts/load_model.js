@@ -129,7 +129,8 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
                 });
                 pcd.material = shaderMaterial;
                 // Draw normal
-                const normal_helper = new VertexNormalsHelper(pcd, 1.0, 0x00ff00, 1.0);
+                // const normal_helper = new VertexNormalsHelper(pcd, 1.0, 0x00ff00, 1.0);  // Green
+                const normal_helper = new VertexNormalsHelper(pcd, 1.0, Math.random() * 0xffffff, 1.0);  // Random color
                 pcd_whole.add(normal_helper);
             }
             else {
