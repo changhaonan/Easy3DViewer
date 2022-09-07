@@ -312,7 +312,8 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
             const graph = new THREE.Group();
 
             // Look up table
-            const lut = new Lut('rainbow', 512);
+            // const lut = new Lut('rainbow', 512);
+            const lut = new Lut("grayscale", 512);
             lut.setMax(data_vis.max_val);
             lut.setMin(data_vis.min_val);
 
@@ -456,8 +457,15 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                         data.vertices[id_e1][2]));
                 
                 let color;
-                if (data.weight_e != undefined) 
-                    color = lut.getColor(data.weight_e[i]);
+                if (data.weight_e != undefined) {
+                    const reverse = true;  // Flip the order of color map to suit the background better
+                    if (reverse) {
+                        color = lut.getColor(data_vis.max_val - data.weight_e[i]);
+                    }
+                    else {
+                        color = lut.getColor(data.weight_e[i]);
+                    }
+                }
                 else 
                     color = {"r": 0.0, "g": 0.0, "b": 0.0};
                 
