@@ -22,6 +22,7 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
+#include "context_utils.hpp"
 
 namespace Easy3DViewer {
     namespace utils {
@@ -160,6 +161,28 @@ namespace Easy3DViewer {
             addData(name, info_data);
         }
 
+        void addRGBDCamera(const std::string& name, const std::string& control_name, const RGBDCamera& camera) {
+            json info_data;
+            // Data part (camera needs higher accuracy)
+            info_data["extrinsic"] = std::vector<double>{ camera.extrinsic.data(), camera.extrinsic.data() + 16 };
+            info_data["intrinsic"] = camera.intrinsic;
+            info_data["image_cols"] = camera.resolution[0];
+            info_data["image_rows"] = camera.resolution[1];
+            info_data["clip_near"] = camera.clip[0];
+            info_data["clip_far"] = camera.clip[1];
+            info_data["depth_flip"] = camera.depth_flip;
+            info_data["downsample_scale"] = camera.downsample_scale;
+
+            // Visualization part
+            info_data["vis"]["section"] = "Camera";
+            info_data["vis"]["control"] = (control_name.empty()) ? name : control_name;
+            info_data["vis"]["mode"] = "camera";
+            info_data["vis"]["gui"] = "button";
+            info_data["vis"]["coordinate"] = std::vector<double>{ camera.extrinsic.data(), camera.extrinsic.data() + 16 };
+            info_data["vis"]["default"] = false;
+            addData(name, info_data);
+        }
+
         void addStats(const std::string& name, const float val) {
             if (m_context_info.contains(name)) {  // add to end 
                 m_context_info[name]["data"].push_back(val);
@@ -276,9 +299,19 @@ namespace Easy3DViewer {
                 boost::filesystem::create_directories(current_dir);
             }
         }
+        
+        void clear() {
+            m_context_info.clear();
+        }
 
         void close(const bool enable_save=true, const bool enable_inc = false) {
             if (enable_save) save(enable_inc);
+        }
+        
+        void saveTo(const std::string& path) {
+            std::ofstream o(path);
+            o << std::setw(4) << m_context_info << std::endl;
+            o.close();
         }
 
         void clearDir() {

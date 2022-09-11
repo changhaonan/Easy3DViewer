@@ -1,5 +1,6 @@
 // Created by Haonan Chang, 1/11/2022
 // A lot of (A few) different format models are provided here
+#pragma once
 #include <boost/filesystem.hpp>
 #include <Eigen/Eigen>
 // Json related
@@ -100,4 +101,15 @@ namespace Easy3DViewer {
             }
         }
     }
+
+    // Camera-related
+    struct RGBDCamera {
+        std::vector<double> intrinsic;     // (fx, fy, cx, cy)
+        Eigen::Matrix4d extrinsic;
+        std::vector<unsigned> resolution;        // width, height
+        std::vector<double> clip;           // near, far
+        double downsample_scale = 1.0;
+        bool depth_flip = false;
+    };
+
 }
