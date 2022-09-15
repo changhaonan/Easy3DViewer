@@ -22,8 +22,6 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
-#include "context_utils.hpp"
-
 namespace Easy3DViewer {
     namespace utils {
         template<typename ... Args>
@@ -36,6 +34,18 @@ namespace Easy3DViewer {
             return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
         }
     }
+
+
+    // Camera-related
+    struct RGBDCamera {
+        std::vector<double> intrinsic;     // (fx, fy, cx, cy)
+        Eigen::Matrix4d extrinsic;
+        std::vector<unsigned> resolution;        // width, height
+        std::vector<double> clip;           // near, far
+        double downsample_scale = 1.0;
+        bool depth_flip = false;
+    };
+
 
     class Context {
     public:
