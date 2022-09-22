@@ -104,39 +104,61 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
         (pcd) => {
             const pcd_whole = new THREE.Group();
             pcd_whole.add(pcd);
+            // Defualt size
+            const pcd_default_size = pcd.material.size;
 
-            // size
+            // Change material
             if (pcd.geometry.attributes.normal != undefined && pcd.geometry.attributes.color != undefined) {
+                // Color with shadow
+                let uniforms = {
+                    size: { value: data_vis.size },
+                };
                 let shaderMaterial = new THREE.ShaderMaterial({
+                    uniforms: uniforms,
                     vertexShader: $("#normalcolor-vertexshader")[0].textContent,
                     fragmentShader: $("#normalcolor-fragmentshader")[0].textContent,
                 });
                 pcd.material = shaderMaterial;
             }
             else if (pcd.geometry.attributes.normal != undefined) {  // normal is defined
-                let uniforms = {
-                    color: { value: new THREE.Color(0xffff00) },
-                };
-                //let shaderMaterial = new THREE.ShaderMaterial({
-                //    uniforms: uniforms,
-                //    vertexShader: $("#normal-vertexshader")[0].textContent,
-                //    fragmentShader: $("#normal-fragmentshader")[0].textContent,
-                //});
-                let shaderMaterial = new THREE.ShaderMaterial({
-                    uniforms: uniforms,
-                    vertexShader: $("#shadow-vertexshader")[0].textContent,
-                    fragmentShader: $("#shadow-fragmentshader")[0].textContent,
-                });
-                pcd.material = shaderMaterial;
-                // Draw normal
-                // const normal_helper = new VertexNormalsHelper(pcd, 1.0, 0x00ff00, 1.0);  // Green
-                const normal_helper = new VertexNormalsHelper(pcd, 1.0, Math.random() * 0xffffff, 1.0);  // Random color
-                pcd_whole.add(normal_helper);
+                if (data_vis.normal_mode == "shadow") {
+                    // Pure shadow
+                    let uniforms = {
+                        color: { value: new THREE.Color(0xffff00) },
+                        size: { value: data_vis.size },
+                    };
+                    let shaderMaterial = new THREE.ShaderMaterial({
+                        uniforms: uniforms,
+                        vertexShader: $("#shadow-vertexshader")[0].textContent,
+                        fragmentShader: $("#shadow-fragmentshader")[0].textContent,
+                    });
+                    pcd.material = shaderMaterial;
+                }
+                else if (data_vis.normal_mode == "normal_color") {
+                    // Normal as color
+                    let uniforms = {
+                        color: { value: new THREE.Color(0xffff00) },
+                        size: { value: data_vis.size },
+                    };
+                    let shaderMaterial = new THREE.ShaderMaterial({
+                        uniforms: uniforms,
+                        vertexShader: $("#normal-vertexshader")[0].textContent,
+                        fragmentShader: $("#normal-fragmentshader")[0].textContent,
+                    });
+                    pcd.material = shaderMaterial;
+                    pcd.material.size = data_vis.size;
+                }
+                else {
+                    // (Default) Draw normal as vector
+                    const normal_helper = new VertexNormalsHelper(pcd, 1.0, Math.random() * 0xffffff, 1.0);  // Random color
+                    pcd_whole.add(normal_helper);
+                }
             }
             else {
-                pcd.material.size = pcd.material.size * data_vis.size;
+                // (Default) Draw point cloud as point
+                pcd.material.size = pcd_default_size * data_vis.size;
             }
-                        
+            
             let pcd_to_remove;
             if ((pcd_to_remove = engine_data.scene.getObjectByName(name)) != undefined) {
                 // color inherit

@@ -63,7 +63,7 @@ block content
         void main() {
             viewNormal = normal;
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-            gl_PointSize = 2.5;
+            gl_PointSize = 5.0;
             gl_Position = projectionMatrix * mvPosition;
         }
     script(id="normal-fragmentshader").
@@ -75,13 +75,15 @@ block content
 
     // Shadow-Shader
     script(id="shadow-vertexshader").
+        uniform float size;
         varying float faceRatio;
         void main() {
             vec3 axis_default;
-            axis_default = vec3(0.0, 0.0, -1.0);
+            axis_default = vec3(0.0, 0.0, 1.0);
             faceRatio = -dot(normal, axis_default);
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-            gl_PointSize = 2.5;
+            // gl_PointSize = size;
+            gl_PointSize = 5.0;
             gl_Position = projectionMatrix * mvPosition;
         }
     script(id="shadow-fragmentshader").
@@ -101,10 +103,10 @@ block content
         void main() {
             viewColor = color;
             vec3 axis_default;
-            axis_default = vec3(0.0, 0.0, -1.0);
+            axis_default = vec3(0.0, 0.0, 1.0);
             faceRatio = -dot(normal, axis_default);
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-            gl_PointSize = 2.5;
+            gl_PointSize = 5.0;
             gl_Position = projectionMatrix * mvPosition;
         }
     script(id="normalcolor-fragmentshader").

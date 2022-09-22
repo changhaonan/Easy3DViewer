@@ -85,7 +85,7 @@ namespace Easy3DViewer {
 
         // Adding function
         void addPointCloud(const std::string& name, const std::string& control_name="",
-            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float size=0.5f) {
+            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float size=0.5f, const std::string& normal_mode="vector") {
             json info_data;
             info_data["file_type"] = "pcd";
             info_data["file_name"] = (name + ".pcd");
@@ -99,6 +99,7 @@ namespace Easy3DViewer {
             info_data["vis"]["intersectable"] = false;
             info_data["vis"]["coordinate"] = std::vector<float>(coordinate.data(), coordinate.data() + 16);
             info_data["vis"]["size"] = size;
+            info_data["vis"]["normal_mode"] = normal_mode;
             addData(name, info_data);
         }
 

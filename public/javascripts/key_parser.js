@@ -77,6 +77,6 @@ function ScreenShot(engine_data) {
     // Download
     var download = document.createElement("a");  // href
     download.href = dataURL;
-    download.download = engine_data.container_id.toString() + "_" + engine_data.p.toString() + ".png";
+    download.download = engine_data.p.toString().padStart(6, "0") + ".png";
     download.click();
 }
