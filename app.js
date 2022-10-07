@@ -25,7 +25,7 @@ const config = require("./config")
 app.get("/", (req, res) => {
     console.log("Config fetched.")
     res.send(compiledFunction({
-        git_root_file: config.repository_name, config : config.data
+        git_root_file: config.repository_name, config: config.data
     }))
 })
 

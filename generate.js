@@ -9,7 +9,7 @@ const compiledFunction = pug.compileFile('./views/index.pug');
 
 // Generate the output index.html that you can plug anywhere
 fs.writeFile('index.html', compiledFunction({
-    git_root_file: config.repository_name, default_data_folder:config.default_data_folder, config: config.data
-    }), function (err) {
+    git_root_file: config.repository_name, default_data_folder: config.default_data_folder, config: config.data
+}), function (err) {
     if (err) return console.log(err);
 });
