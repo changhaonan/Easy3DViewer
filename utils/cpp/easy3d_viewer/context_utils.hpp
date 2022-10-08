@@ -10,7 +10,7 @@ using json = nlohmann::json;
 #include <yaml-cpp/yaml.h>
 
 
-namespace Easy3DViewer {
+namespace easy3d {
 
     // Name related
     enum FileType {

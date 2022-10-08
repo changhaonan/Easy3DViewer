@@ -22,7 +22,7 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
-namespace Easy3DViewer {
+namespace easy3d {
     namespace utils {
         template<typename ... Args>
         std::string stringFormat(const std::string& format, Args ... args) {
@@ -52,7 +52,7 @@ namespace Easy3DViewer {
         explicit Context() {};
         void setDir(
             const std::string& data_root_dir,
-            const std::string& dir_prefix="",
+            const std::string& dir_prefix="frame",
             const std::string& dir_suffix="") {
             m_data_root_dir = data_root_dir;
             m_dir_prefix = dir_prefix;
