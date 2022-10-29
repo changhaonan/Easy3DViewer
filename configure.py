@@ -32,7 +32,7 @@ if __name__ == "__main__":
             for file_name in os.listdir(os.path.join("public", data_dir, dir_name)):
                 if file_name.startswith("frame"):
                     frame_list.append(file_name)
-            canvas_json["frames"] = frame_list
+            canvas_json["frames"] = sorted(frame_list)
             config_json["data"].append(canvas_json)
 
     with open("config.json", "w") as f:
