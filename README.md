@@ -70,7 +70,7 @@ node app.js
 
 ```
 cd Easy3DViewer/
-pip install .
+pip install -e .
 ```
 
 Or

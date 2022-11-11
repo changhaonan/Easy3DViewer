@@ -24,7 +24,7 @@ class Context():
         return cls 
 
     @classmethod
-    def setDir(cls, data_root_dir, dir_prefix="", dir_suffix=""):
+    def setDir(cls, data_root_dir, dir_prefix="frame_", dir_suffix=""):
         """ Set root workspace
         """
         cls.data_root_dir = data_root_dir
@@ -55,7 +55,8 @@ class Context():
         if name in cls.context_info.keys():
             return cls.currentFile(name)
         else:
-            print(f"Warning: {name} is not founded.")
+            raise Exception("No such key in context!")
+            return ""
 
     # Add visualization info
     @classmethod
