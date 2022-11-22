@@ -104,12 +104,12 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
         (pcd) => {
             const pcd_whole = new THREE.Group();
             pcd_whole.add(pcd);
-            // Defualt size
+            // defualt size
             const pcd_default_size = pcd.material.size;
 
-            // Change material
+            // change material
             if (pcd.geometry.attributes.normal != undefined && pcd.geometry.attributes.color != undefined) {
-                // Color with shadow
+                // color with shadow
                 let uniforms = {
                     size: { value: data_vis.size },
                 };
@@ -122,7 +122,7 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
             }
             else if (pcd.geometry.attributes.normal != undefined) {  // normal is defined
                 if (data_vis.normal_mode == "shadow") {
-                    // Pure shadow
+                    // pure shadow
                     let uniforms = {
                         color: { value: new THREE.Color(0xffff00) },
                         size: { value: data_vis.size },
@@ -135,7 +135,7 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
                     pcd.material = shaderMaterial;
                 }
                 else if (data_vis.normal_mode == "normal_color") {
-                    // Normal as color
+                    // normal as color
                     let uniforms = {
                         color: { value: new THREE.Color(0xffff00) },
                         size: { value: data_vis.size },
@@ -149,13 +149,15 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
                     pcd.material.size = data_vis.size;
                 }
                 else {
-                    // (Default) Draw normal as vector
+                    // (default) draw normal as vector
                     const normal_helper = new VertexNormalsHelper(pcd, 1.0, Math.random() * 0xffffff, 1.0);  // Random color
                     pcd_whole.add(normal_helper);
+                    // set pcd size
+                    pcd.material.size = pcd_default_size * data_vis.size;
                 }
             }
             else {
-                // (Default) Draw point cloud as point
+                // (default) draw point cloud as point
                 pcd.material.size = pcd_default_size * data_vis.size;
             }
             
@@ -181,7 +183,7 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
                 engine_data.intersectable.push(pcd_whole);
             }
 
-            // Release locker
+            // release locker
             engine_data.locker[name] = false;
         },
         // called while loading is progressing

@@ -104,7 +104,7 @@ class Context():
         cls.addGeomtry(name, control_name, "bounding_box", coordinate, width, height, depth)
 
     @classmethod
-    def addCamera(cls, name, control_name, coordinate, intrinsic, image_cols, image_rows, clip_near=0, clip_far=0, depth_flip=False,
+    def addCamera(cls, name, control_name, coordinate, intrinsic, image_cols, image_rows, clip_near=0.0, clip_far=0.0, depth_flip=False,
         downsample_scale=1.0
     ):
         info_data = dict()
@@ -224,6 +224,12 @@ class Context():
         """
         return cls.context_info
 
+    @classmethod
+    def saveContext(cls, path):
+        """ Save the context to a file
+        """
+        with open(path, "w") as f:
+            json.dump(cls.context_info, f)
 
 if __name__ == "__main__":
     context = Context.Instance()
