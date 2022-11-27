@@ -9,7 +9,7 @@ if __name__ == "__main__":
     # 1. Parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--data_dir", type=str, default="test_data", help="data directory")
-    parser.add_argument("-r", "--repository_name", type=str, default="http://localhost:8000", help="directory to publish")
+    parser.add_argument("-r", "--repository_name", type=str, default="http://localhost:8800", help="directory to publish")
     args = parser.parse_args()
 
     # 2. Generate config.json

@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.set("port", process.env.PORT || 8000);
+app.set("port", process.env.PORT || 8800);
 
 // WebPage compling
 const pug = require("pug");
