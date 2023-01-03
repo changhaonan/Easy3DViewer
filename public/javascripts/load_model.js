@@ -513,8 +513,8 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                 const bevelEnabled = false;
 
                 const text_materials = [
-                    new THREE.MeshPhongMaterial({ color: 0xffffff, flatShading: true }), // front
-                    new THREE.MeshPhongMaterial({ color: 0xffffff }) // side
+                    new THREE.MeshPhongMaterial({ color: 0xfb3b1e, flatShading: true }), // front
+                    new THREE.MeshPhongMaterial({ color: 0xc61a09 }) // side
                 ];
 
                 $.each(vertices, (i, vertex) => {
