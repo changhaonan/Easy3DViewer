@@ -12,7 +12,7 @@
 
 #include <memory>
 #include <string>
-#include <iomanip> 
+#include <iomanip>
 #include <stdexcept>
 #include <fstream>
 #include <iostream>
@@ -22,46 +22,55 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
-namespace easy3d {
-    namespace utils {
-        template<typename ... Args>
-        std::string stringFormat(const std::string& format, Args ... args) {
-            int size_s = std::snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
-            if (size_s <= 0) { throw std::runtime_error("Error during formatting."); }
+namespace easy3d
+{
+    namespace utils
+    {
+        template <typename... Args>
+        std::string stringFormat(const std::string &format, Args... args)
+        {
+            int size_s = std::snprintf(nullptr, 0, format.c_str(), args...) + 1; // Extra space for '\0'
+            if (size_s <= 0)
+            {
+                throw std::runtime_error("Error during formatting.");
+            }
             auto size = static_cast<size_t>(size_s);
             auto buf = std::make_unique<char[]>(size);
-            std::snprintf(buf.get(), size, format.c_str(), args ...);
+            std::snprintf(buf.get(), size, format.c_str(), args...);
             return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
         }
     }
 
-
     // Camera-related
-    struct RGBDCamera {
-        std::vector<double> intrinsic;     // (fx, fy, cx, cy)
+    struct RGBDCamera
+    {
+        std::vector<double> intrinsic; // (fx, fy, cx, cy)
         Eigen::Matrix4d extrinsic;
-        std::vector<unsigned> resolution;        // width, height
-        std::vector<double> clip;           // near, far
+        std::vector<unsigned> resolution; // width, height
+        std::vector<double> clip;         // near, far
         double downsample_scale = 1.0;
         bool depth_flip = false;
     };
 
-
-    class Context {
+    class Context
+    {
     public:
-        explicit Context() {};
+        explicit Context(){};
         void setDir(
-            const std::string& data_root_dir,
-            const std::string& dir_prefix="frame",
-            const std::string& dir_suffix="") {
+            const std::string &data_root_dir,
+            const std::string &dir_prefix = "frame",
+            const std::string &dir_suffix = "")
+        {
             m_data_root_dir = data_root_dir;
             m_dir_prefix = dir_prefix;
             m_dir_suffix = dir_suffix;
 
-            if (boost::filesystem::exists(m_data_root_dir)) {
+            if (boost::filesystem::exists(m_data_root_dir))
+            {
                 clearDir();
             }
-            else {
+            else
+            {
                 boost::filesystem::create_directories(m_data_root_dir);
             }
         }
@@ -73,19 +82,39 @@ namespace easy3d {
 
     public:
         // Generate file path
-        std::string at(const std::string& name) {
-            if (m_context_info.contains(name)) {
+        std::string at(const std::string &name) const
+        {
+            if (m_context_info.contains(name))
+            {
                 return currentFile(name).string();
             }
-            else {
+            else
+            {
                 std::cout << "Warning: " << name << " is not founded." << std::endl;
                 return "";
             }
         }
-
+        json of(const std::string &name) const
+        {
+            if (m_context_info.contains(name))
+            {
+                return m_context_info[name];
+            }
+            else
+            {
+                std::cout << "Warning: " << name << " is not founded." << std::endl;
+                json empty;
+                return empty;
+            }
+        }
+        bool has(const std::string &name) const
+        {
+            return m_context_info.contains(name);
+        }
         // Adding function
-        void addPointCloud(const std::string& name, const std::string& control_name="",
-            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float size=0.5f, const std::string& normal_mode="vector") {
+        void addPointCloud(const std::string &name, const std::string &control_name = "",
+                           const Eigen::Matrix4f &coordinate = Eigen::Matrix4f::Identity(), const float size = 0.5f, const std::string &normal_mode = "vector")
+        {
             json info_data;
             info_data["file_type"] = "pcd";
             info_data["file_name"] = (name + ".pcd");
@@ -103,8 +132,9 @@ namespace easy3d {
             addData(name, info_data);
         }
 
-        void addPoly(const std::string& name, const std::string& control_name="",
-            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity()) {
+        void addPoly(const std::string &name, const std::string &control_name = "",
+                     const Eigen::Matrix4f &coordinate = Eigen::Matrix4f::Identity())
+        {
             json info_data;
             info_data["file_type"] = "obj";
             info_data["file_name"] = (name + ".obj");
@@ -120,10 +150,11 @@ namespace easy3d {
             addData(name, info_data);
         }
 
-        void addGraph(const std::string& name, const std::string& control_name="",
-            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float size = 1.f, 
-            const float min_val=0.f, const float max_val=1.f,  const bool id_visible=false,
-            const float normal_len = 1.f, const std::string& color_code="") {
+        void addGraph(const std::string &name, const std::string &control_name = "",
+                      const Eigen::Matrix4f &coordinate = Eigen::Matrix4f::Identity(), const float size = 1.f,
+                      const float min_val = 0.f, const float max_val = 1.f, const bool id_visible = false,
+                      const float normal_len = 1.f, const std::string &color_code = "")
+        {
             json info_data;
             info_data["file_type"] = "json";
             info_data["file_name"] = (name + ".json");
@@ -145,7 +176,8 @@ namespace easy3d {
             addData(name, info_data);
         }
 
-        void addImage(const std::string& name, const std::string& control_name="") {
+        void addImage(const std::string &name, const std::string &control_name = "")
+        {
             json info_data;
             info_data["file_type"] = "png";
             info_data["file_name"] = (name + ".png");
@@ -159,8 +191,9 @@ namespace easy3d {
             addData(name, info_data);
         }
 
-        void addCamera(const std::string& name, const std::string& control_name = "", 
-            const Eigen::Matrix4f& coordinate = Eigen::Matrix4f::Identity()) {
+        void addCamera(const std::string &name, const std::string &control_name = "",
+                       const Eigen::Matrix4f &coordinate = Eigen::Matrix4f::Identity())
+        {
             json info_data;
             // Visualization part
             info_data["vis"]["section"] = "Camera";
@@ -172,10 +205,11 @@ namespace easy3d {
             addData(name, info_data);
         }
 
-        void addRGBDCamera(const std::string& name, const std::string& control_name, const RGBDCamera& camera) {
+        void addRGBDCamera(const std::string &name, const std::string &control_name, const RGBDCamera &camera)
+        {
             json info_data;
             // Data part (camera needs higher accuracy)
-            info_data["extrinsic"] = std::vector<double>{ camera.extrinsic.data(), camera.extrinsic.data() + 16 };
+            info_data["extrinsic"] = std::vector<double>{camera.extrinsic.data(), camera.extrinsic.data() + 16};
             info_data["intrinsic"] = camera.intrinsic;
             info_data["image_cols"] = camera.resolution[0];
             info_data["image_rows"] = camera.resolution[1];
@@ -189,29 +223,33 @@ namespace easy3d {
             info_data["vis"]["control"] = (control_name.empty()) ? name : control_name;
             info_data["vis"]["mode"] = "camera";
             info_data["vis"]["gui"] = "button";
-            info_data["vis"]["coordinate"] = std::vector<double>{ camera.extrinsic.data(), camera.extrinsic.data() + 16 };
+            info_data["vis"]["coordinate"] = std::vector<double>{camera.extrinsic.data(), camera.extrinsic.data() + 16};
             info_data["vis"]["default"] = false;
             addData(name, info_data);
         }
 
-        void addStats(const std::string& name, const float val) {
-            if (m_context_info.contains(name)) {  // add to end 
+        void addStats(const std::string &name, const float val)
+        {
+            if (m_context_info.contains(name))
+            { // add to end
                 m_context_info[name]["data"].push_back(val);
             }
-            else {
+            else
+            {
                 json info_data;
                 info_data["file_type"] = "json";
                 info_data["file_name"] = (name + ".json");
-                info_data["data"] = std::vector<float>{ val };
+                info_data["data"] = std::vector<float>{val};
 
                 // Visualization part : powered by d3 [not avaliable now]
                 addData(name, info_data);
             }
         }
 
-        void addGeometry(const std::string& name, const std::string& control_name="", 
-            const std::string& geometry_type="coord", const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(),
-            const float param_0=0.f, const float param_1=0.f, const float param_2=0.f) {
+        void addGeometry(const std::string &name, const std::string &control_name = "",
+                         const std::string &geometry_type = "coord", const Eigen::Matrix4f &coordinate = Eigen::Matrix4f::Identity(),
+                         const float param_0 = 0.f, const float param_1 = 0.f, const float param_2 = 0.f)
+        {
 
             json info_data;
             // Visulaization part
@@ -222,23 +260,27 @@ namespace easy3d {
             info_data["vis"]["default"] = false;
             info_data["vis"]["intersectable"] = false;
             info_data["vis"]["coordinate"] = std::vector<float>(coordinate.data(), coordinate.data() + 16);
-            
+
             // Different according to geometry type
             info_data["vis"]["geometry"] = geometry_type;
-            if (geometry_type == "coord") {
+            if (geometry_type == "coord")
+            {
                 info_data["vis"]["scale"] = param_0;
             }
-            else if (geometry_type == "box") {
+            else if (geometry_type == "box")
+            {
                 info_data["vis"]["width"] = param_0;
                 info_data["vis"]["height"] = param_1;
                 info_data["vis"]["depth"] = param_2;
             }
-            else if (geometry_type == "bounding_box") {
+            else if (geometry_type == "bounding_box")
+            {
                 info_data["vis"]["width"] = param_0;
                 info_data["vis"]["height"] = param_1;
                 info_data["vis"]["depth"] = param_2;
             }
-            else if (geometry_type == "plane") {
+            else if (geometry_type == "plane")
+            {
                 info_data["vis"]["width"] = param_0;
                 info_data["vis"]["height"] = param_1;
             }
@@ -246,31 +288,42 @@ namespace easy3d {
             addData(name, info_data);
         }
 
-        void addCoord(const std::string& name, const std::string& control_name="",
-            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float scale=0.1f) {
+        void addCoord(const std::string &name, const std::string &control_name = "",
+                      const Eigen::Matrix4f &coordinate = Eigen::Matrix4f::Identity(), const float scale = 0.1f)
+        {
             addGeometry(name, control_name, "coord", coordinate, scale);
         }
 
         // Box is centered at (0, 0, 0) of the coordinate
-        void addBox(const std::string& name, const std::string& control_name="",
-            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float width=1.f,
-            const float height=1.f, const float depth=1.f) {
+        void addBox(const std::string &name, const std::string &control_name = "",
+                    const Eigen::Matrix4f &coordinate = Eigen::Matrix4f::Identity(), const float width = 1.f,
+                    const float height = 1.f, const float depth = 1.f)
+        {
             addGeometry(name, control_name, "box", coordinate, width, height, depth);
         }
 
         // Bounding Box is centered at (0, 0, 0) of the coordinate
-        void addBoundingBox(const std::string& name, const std::string& control_name="",
-            const Eigen::Matrix4f& coordinate=Eigen::Matrix4f::Identity(), const float width=1.f,
-            const float height=1.f, const float depth=1.f) {
+        void addBoundingBox(const std::string &name, const std::string &control_name = "",
+                            const Eigen::Matrix4f &coordinate = Eigen::Matrix4f::Identity(), const float width = 1.f,
+                            const float height = 1.f, const float depth = 1.f)
+        {
             addGeometry(name, control_name, "bounding_box", coordinate, width, height, depth);
         }
-        
+
+        // Add extra information to the context
+        void addExtra(const std::string &name, const json &info)
+        {
+            addData(name, info);
+        }
+
     private:
-        void addData(const std::string& name, const json& info) {
+        void addData(const std::string &name, const json &info)
+        {
             m_context_info[name] = info;
         }
 
-        boost::filesystem::path currentFile(const std::string& name) {
+        boost::filesystem::path currentFile(const std::string &name) const
+        {
             boost::filesystem::path data_dir = currentDir();
             std::string file_name;
             std::string file_type = m_context_info[name]["file_type"];
@@ -279,7 +332,8 @@ namespace easy3d {
             return file_path;
         }
 
-        boost::filesystem::path currentDir() {
+        boost::filesystem::path currentDir() const
+        {
             std::string dir_name;
             if ((m_dir_prefix == "") && (m_dir_suffix == ""))
                 dir_name = utils::stringFormat("%06d", m_id);
@@ -299,41 +353,50 @@ namespace easy3d {
         json m_context_info;
 
     public:
-        void open(const int id) {
+        void open(const int id)
+        {
             // Assign id
             m_id = id;
             // Clear info
             m_context_info.clear();
             // Check existence
             boost::filesystem::path current_dir;
-            if (!boost::filesystem::exists(current_dir = currentDir())) {
+            if (!boost::filesystem::exists(current_dir = currentDir()))
+            {
                 boost::filesystem::create_directories(current_dir);
             }
         }
-        
-        void clear() {
+
+        void clear()
+        {
             m_context_info.clear();
         }
 
-        void close(const bool enable_save=true, const bool enable_inc = false) {
-            if (enable_save) save(enable_inc);
+        void close(const bool enable_save = true, const bool enable_inc = false)
+        {
+            if (enable_save)
+                save(enable_inc);
         }
-        
-        void saveTo(const std::string& path) {
+
+        void saveTo(const std::string &path)
+        {
             std::ofstream o(path);
             o << std::setw(4) << m_context_info << std::endl;
             o.close();
         }
 
-        void clearDir() {
-            for (boost::filesystem::directory_iterator end_dir_it, it(m_data_root_dir); it != end_dir_it; ++it) {
+        void clearDir()
+        {
+            for (boost::filesystem::directory_iterator end_dir_it, it(m_data_root_dir); it != end_dir_it; ++it)
+            {
                 boost::filesystem::remove_all(it->path());
             }
         }
 
     private:
         // TODO: add inc mode
-        void save(const bool enable_inc) {
+        void save(const bool enable_inc)
+        {
             std::string file_name = (currentDir() / "context.json").string();
             std::ofstream o(file_name);
             o << std::setw(4) << m_context_info << std::endl;
@@ -341,7 +404,8 @@ namespace easy3d {
         }
 
     public:
-        static Context& Instance() {
+        static Context &Instance()
+        {
             static Context context;
             return context;
         }

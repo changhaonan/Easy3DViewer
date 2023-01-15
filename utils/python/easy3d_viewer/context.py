@@ -1,5 +1,4 @@
 """
-Created by Haonan Chang, 03/28/2022
 The python interface for Easy3DViewer
 """
 import os
@@ -189,6 +188,10 @@ class Context():
         info_data["vis"]["size"] = size
 
         cls.context_info[name] = info_data
+
+    @classmethod
+    def addExtra(cls, name, info):
+        cls.context_info[name] = info
 
     # Save/Load
     @classmethod
