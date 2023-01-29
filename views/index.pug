@@ -6,6 +6,7 @@ mixin basicCanvas(name)
             import { createBasicCanvas, animate } from "#{git_root_file}/javascripts/basic_canvas.js";
             const engine_data = createBasicCanvas(#{name});
             animate(engine_data);
+            
 
 mixin guiCanvas(name)
     div(id= name, class="canvas", style="height: 100%; width: 100%")
@@ -23,29 +24,95 @@ mixin loadConfigCanvas(name, data_root, global_keyevent)
             const engine_data = createBasicCanvas(#{name}, true);
             engine_data.container_id = "#{name}";
             loadFirstContext("#{data_root}", engine_data);
-            
             $(document).keydown((e) => { onKeydown(e, engine_data, #{global_keyevent}); });
             animate(engine_data);
-
+//- /**
+//-  * @Author: Kowndinya Boyalakuntla
+//-  * @Date:   2022-05-31 13:47:06
+//-  * @Last Modified by:   Kowndinya Boyalakuntla 
+//-  * @Function Modified:  loadConfigCanvasSingle()
+//-  * @Last Modified time: 2023-01-28 19:07:45
+//-  */
 mixin loadConfigCanvasSingle(root_folder, default_data_folder, source_url, source_directory, name, data_root, figure_title="", frames=['frame_000001'], global_keyevent=false)
      div(class="single_canvas_container")
-        div(style="height: 90%; width: 100%; margin: auto;  position: relative")
+        div(style="height: 90%; width: 100%; margin: auto;  position: relative; margin-top:2rem")
             div.help
-                p (a/d): go to last/next frame; (p): screen shot
+                p(style="font-family:Nunito;font-weight:bold;") (a/d): go to last/next frame; (p): screen shot
             div(id= name, class="canvas", style="height: 100%; width: 100%")
                 script(type="module").
+                    var interval_id;
                     import { createBasicCanvas, animate } from "#{source_url? source_url: git_root_file}/javascripts/basic_canvas.js";
                     import { loadFirstContext, loadContext } from "#{source_url? source_url: git_root_file}/javascripts/load_context.js";
-                    import { onKeydown } from "#{source_url? source_url: git_root_file}/javascripts/key_parser.js";
+                    import { onKeydown, ParseNow } from "#{source_url? source_url: git_root_file}/javascripts/key_parser.js";
                     import { loadModel } from "#{source_url? source_url: git_root_file}/javascripts/load_model.js";
                     const engine_data = createBasicCanvas(#{name}, true);
                     let frames = "#{frames}".split(',') 
                     engine_data.container_id = "#{name}";
                     loadFirstContext("#{root_folder}", "#{default_data_folder}", "#{data_root}", "#{source_url}", "#{source_directory}", frames, engine_data);
                     $(document).keydown((e) => { onKeydown(e, engine_data, #{global_keyevent}); });
+                    
+                    
+                    $('#total_frames'+engine_data.container_id).text(engine_data.dir_list.length)
+                    $(document).on('input', '#pbar'+engine_data.container_id, function() {
+                        ParseNow(engine_data, this.value);
+                        console.log("Acknowledgment Here!");
+                        //- $('#prog'+engine_data.container_id).text(this.value + " %")
+                        $('#frame'+engine_data.container_id).text(engine_data.p+1)
+
+                    })
                     animate(engine_data);
-            div.figure_title
-                p Fig. #{figure_title}
+                    $("#play_frames").click(function(){
+                        console.log("here:", $("#stop_loader").css("display"));
+                        if($("#stop_loader").css("display") == "none"){
+                            
+                            var curr_prog = parseInt($('#pbar'+engine_data.container_id).val());
+                            if(curr_prog == 100){
+                                $('#pbar'+engine_data.container_id).val(0);
+                                ParseNow(engine_data, 0);
+                            }
+                            $("#play_frames").css("background-image","url('/images/pause-button-circled-24.png')")
+                            $("#stop_loader").css("display", "inline-block");
+                            //- Automatically Global
+                            interval_id = setInterval(update_frame, 40);
+                            function update_frame(){
+                                var prog = parseInt($('#pbar'+engine_data.container_id).val())
+                                if(prog < 100){
+                                    prog += 1;
+                                    $('#pbar'+engine_data.container_id).val(prog);
+                                    ParseNow(engine_data, prog);
+                                    //- $('#prog'+engine_data.container_id).text(prog + " %")
+                                    $('#frame'+engine_data.container_id).text(engine_data.p+1) 
+                                } else{
+                                    //- $("#play_frames").text("Replay");
+                                    $("#play_frames").css("background-image","url('/images/rotate-button-circled-24.png')")
+                                    clearInterval(interval_id);
+                                    $("#stop_loader").css("display", "none");
+                                }
+                            }
+                        } else{
+                            //- $("#play_frames").text("Resume")
+                            $("#play_frames").css("background-image","url('/images/play-button-circled-24.png')")
+                            $("#stop_loader").css("display", "none");                                    
+                            clearInterval(interval_id);
+                        }
+                    })
+
+            div(style="height:1.8rem;width:100%;display:flex;margin-top:0.3rem;z-index:0rem;") 
+                div(style="height:100%;flex:1;background:transparent;border-radius:2rem;margin-left: 2rem;z-index:2rem;text-align:center")
+                    button(id="play_frames", style="background-image:url('/images/play-button-circled-24.png');height: 1.1rem;margin-top:0rem;padding: 1rem;background-position:left;background-color:#ff4754;background-repeat:no-repeat;background-position-x:0.28rem;outline:None;") 
+                        p(style="color:#fff;width:100%;height:100%;text-align:center;margin-top:0rem;font-family: Nunito;font-size: 0.8rem;")
+                    div(style="display:inline;margin-top:1rem;position:absolute;")
+                        div(class="loading_animation" id="stop_loader" style="margin-left:0.2rem;display:none;")
+                div(style="height:100%;flex:2;background:transparent;border-radius:0.5rem;margin-right:2rem;margin-left: 3rem;z-index:2rem;text-align:center;margin-top:0.5rem;")
+                    input(id='pbar'+name, type="range", min="0", max="100", value="5", style="height: 1.1rem;margin-top:0.5rem;")
+                div(style="height:100%;flex:0.5;border-radius:0.5rem;margin-right:2rem;margin-left: 2rem;z-index:2rem;text-align:center;margin-top:0.5rem;")
+                    div(style="height:100%;width:100%;display:flex;") 
+                        div(style="height:100%;flex:1;background:#0F1418;border-radius:0.5rem 0rem 0rem 0.5rem;text-align:center;padding:auto;")
+                            p(id='frame'+name, style="color:#fff;width:100%;height:100%;text-align:center;margin-top:0.3rem;font-weight:bold;font-family: Nunito;font-size: 0.8rem;") 1
+                        div(style="height:100%;flex:1;background:#E4E5F2;border-radius:0rem 0.5rem 0.5rem 0rem;text-align:center;padding:auto;")
+                            p(id='total_frames'+name, style="color:#000;width:100%;height:100%;text-align:center;margin-top:0.3rem;font-weight:bold;font-family: Nunito;font-size: 0.8rem;") (Total)
+            div.figure_title(style="margin-top:1rem;")
+                p(style="font-family:Nunito;font-weight:bold;") Fig. #{figure_title}
 
 mixin loadMarkDown(name, root_dir)
     div(id= name, class="markdown_block")

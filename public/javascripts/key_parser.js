@@ -32,6 +32,35 @@ export function onKeydown(event, engine_data, global_keyevent) {
         
     }
 }
+//- /**
+//-  * @Author: Kowndinya Boyalakuntla
+//-  * @Date:   2022-05-31 13:47:06
+//-  * @Last Modified by:   Kowndinya Boyalakuntla 
+//-  * @Function Modified:  ParseNow()
+//-  * @Last Modified time: 2023-01-28 19:07:45
+//-  */
+export function ParseNow(engine_data, progress) {
+    // Checking locker
+    let locker_status = false;
+    $.each(engine_data.locker, (key, value) => {
+        if (value) locker_status = true;  // One file is locked
+    });
+    if (locker_status) return;
+
+    // Check record & record
+    if (engine_data.record) {
+        ScreenShot(engine_data);
+    }
+
+    let p = Math.floor((engine_data.dir_list.length*progress)/100);
+    if((engine_data.dir_list.length*progress)%100 == 0){
+        if(p >= engine_data.dir_list.length){
+            p = p-1
+        }
+    }
+    loadContext(engine_data.data_root + "/" + engine_data.dir_list[p], engine_data);
+    engine_data.p = p;
+}
 
 function ParseNext(engine_data) {
     // Checking locker

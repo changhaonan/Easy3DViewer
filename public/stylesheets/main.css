@@ -38,7 +38,8 @@ body {
 
 .title_right {
     font-size: 15px;
-    font-family: 'Times New Roman', Times, serif;
+    /* font-family: 'Times New Roman', Times, serif; */
+    font-family: Nunito;
     justify-content: right;
     margin: 10px;
 }
@@ -52,6 +53,7 @@ body {
     max-width: 1100px;
     position: relative;
     background-color: AntiqueWhite
+    /* background-color: #0F1418; */
 }
 
 a {
@@ -288,6 +290,10 @@ textarea {
 }
 
 @import url(http://fonts.googleapis.com/css?family=Merriweather:300italic,300);
+@font-face {
+    font-family: Nunito;
+    src: url(/fonts/nunito/Nunito-VariableFont_wght.ttf);
+}
 
 html {
     font-size: 18px;
@@ -364,4 +370,46 @@ a:hover,
 a:focus,
 a:active {
     color: #2980b9;
+}
+#pbar{
+    -webkit-appearance: none;
+}
+#pbar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #F47694;
+  }
+#pbar::-webkit-slider-runnable-track {
+    background-color: #ff4754;
+}
+/* button:hover{
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+} */
+.loading_animation{
+    border: 2px solid transparent;
+    border-radius: 50%;
+    border-top: 2px solid #121212;
+    border-bottom: 2px solid #121212;
+    width: 16px;
+    height: 16px;
+    -webkit-animation: spin 1.5s linear infinite; 
+    animation: spin 1.5s linear infinite;
+}
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

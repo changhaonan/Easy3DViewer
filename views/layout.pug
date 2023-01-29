@@ -1,10 +1,14 @@
 doctype html
 html
     head
+        link(rel="stylesheet", href=`${git_root_file}/stylesheets/normalize.min.css`)
+        link(rel="stylesheet", href=`${git_root_file}/stylesheets/native-elements.css`)
         link(rel="stylesheet", href=`${git_root_file}/stylesheets/main.css`)
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
         script(src="https://cdn.jsdelivr.net/npm/marked/marked.min.js")
-
+        link(rel="preconnect", href=`https://fonts.googleapis.com`)
+        link(rel="preconnect", href=`https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap`)
+        
     body
         include header
         .container
