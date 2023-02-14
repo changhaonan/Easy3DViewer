@@ -84,6 +84,15 @@ python setup.py install
 
 - [ ] When I remove "source_directory": "/test_data", the file can not be correctly loaded.
 
+## KeyBoard ShortCut
+
+- Press 'a' to go to last frame.
+- Press 'd' to go to next frame.
+- Press 'p' to do screen shot.
+- Press 'r' to do screen record.
+- Press ' ' to switch the transform control mode.
+- Press 'Tab' to download the current meta information.
+
 ## Todo:
 
-* [ ] Add a moving box and save it in engine.txt.
+- Add a floor object to make it looks better.

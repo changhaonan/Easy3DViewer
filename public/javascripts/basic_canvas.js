@@ -9,7 +9,6 @@ import { TrackballControls } from "https://changhaonan.github.io/Easy3DViewer/ex
 import { GUI } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/libs/lil-gui.module.min.js";
 import { FontLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/FontLoader.js";
 import { TransformControls } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/controls/TransformControls.js";
-// import { TransformControls } from "three/examples/jsm/controls/TransformControls.js";
 
 export function createBasicCanvas(container_id, gui_enable = false) {
     const engine_data = {
@@ -56,7 +55,6 @@ export function createBasicCanvas(container_id, gui_enable = false) {
     trackBall_control.target.set(0.0, 0.0, 1.0);  // look at z-axis
     trackBall_control.staticMoving = true;
     trackBall_control.update();
-    // trackBall_control.enabled = false;  // Disable trackball control by default
 
     // Transform Control
     const transform_control = new TransformControls(camera, renderer.domElement);
