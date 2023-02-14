@@ -24,12 +24,31 @@ export function onKeydown(event, engine_data, global_keyevent) {
         // Start recording mode
         engine_data.record = !engine_data.record;
         if (engine_data.record) {
-            console.log("record starting!");
+            console.log("Record starting!");
         }
         else {
-            console.log("record stop!");
+            console.log("Record stop!");
         }
-
+    }
+    else if (event.key == " ") {
+        // Switching transform control mode
+        if (engine_data.t_control.mode == "translate") {
+            engine_data.t_control.setMode("rotate");
+            console.log("t_control: rotate mode.");
+        }
+        else if (engine_data.t_control.mode == "rotate") {
+            engine_data.t_control.setMode("scale");
+            console.log("t_control: scale mode.");
+        }
+        else if (engine_data.t_control.mode == "scale") {
+            engine_data.t_control.setMode("translate");
+            console.log("t_control: translate mode.");
+        }
+    }
+    else if (event.key == "Tab") {
+        // Save current meta information
+        DownloadMetaInfo(engine_data);
+        console.log("Meta information saved!");
     }
 }
 
@@ -108,5 +127,24 @@ function ScreenShot(engine_data) {
     var download = document.createElement("a");  // href
     download.href = dataURL;
     download.download = engine_data.p.toString().padStart(6, "0") + ".png";
+    download.click();
+}
+
+function DownloadMetaInfo(engine_data) {
+    // Load current meta information
+    let meta_info = {};
+    
+    // Current t_control information
+    meta_info.t_control = {};
+    meta_info.t_control.mode = engine_data.t_control.mode;
+    meta_info.t_control.position = engine_data.t_control.object.position;
+    meta_info.t_control.scale = engine_data.t_control.object.scale;
+    meta_info.t_control.quaternion = engine_data.t_control.object.quaternion;
+
+    // Save info into a json file and download
+    let data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(meta_info));
+    var download = document.createElement("a");  // href
+    download.href = "data:" + data;
+    download.download = engine_data.p.toString().padStart(6, "0") + ".json";
     download.click();
 }

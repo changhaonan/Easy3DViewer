@@ -56,7 +56,7 @@ export function createBasicCanvas(container_id, gui_enable = false) {
     trackBall_control.target.set(0.0, 0.0, 1.0);  // look at z-axis
     trackBall_control.staticMoving = true;
     trackBall_control.update();
-    trackBall_control.enabled = false;  // Disable trackball control by default
+    // trackBall_control.enabled = false;  // Disable trackball control by default
 
     // Transform Control
     const transform_control = new TransformControls(camera, renderer.domElement);

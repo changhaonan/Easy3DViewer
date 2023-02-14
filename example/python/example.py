@@ -29,9 +29,6 @@ if __name__ == "__main__":
         sphere_coordinate[3, 2] = 0.5
         context.addGeometry("sphere", "sphere", geometry_type="sphere", coordinate=sphere_coordinate, param_0=0.2)
         
-        # add box
-        box_coordinate = np.eye(4, dtype=np.float32)
-        box_coordinate[3, 0] = 0.3
-        box_coordinate[3, 2] = 0.5
-        context.addBBox9D("box", "box", coordinate=box_coordinate, width=0.2, height=0.2, depth=0.2)
+        # add unit box
+        context.addBBox9D("box", "box", coordinate=np.eye(4, dtype=np.float32), width=1.0, height=1.0, depth=1.0)
         context.close()

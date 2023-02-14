@@ -346,6 +346,8 @@ function loadModelGeometry9D(name, data_vis, engine_data) {
         let depth = data_vis["depth"];
         const geometry = new THREE.BoxGeometry(width, height, depth);
         const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
+        material.opacity = 0.3;
+        material.transparent = true;
         geo = new THREE.Mesh(geometry, material);
     }
     else if (geometry_type == "bounding_box") {
