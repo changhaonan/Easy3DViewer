@@ -21,7 +21,17 @@ if __name__ == "__main__":
     for i in range(10):
         context.open(i)
         context.addCoord("origin", scale=1.0)
+        # add a coordinate
         context.addGraph("color_graph", "color_graph", size=10.0)
         SaveGraph(vertices=vertices, vertex_color=vertex_color, edges=edges, file_name=context.at("color_graph"))
-        # SaveGraph(vertices=vertices, vertex_color=vertex_color, file_name=context.at("color_graph"))
+        # add a sphere
+        sphere_coordinate = np.eye(4, dtype=np.float32)
+        sphere_coordinate[3, 2] = 0.5
+        context.addGeometry("sphere", "sphere", geometry_type="sphere", coordinate=sphere_coordinate, param_0=0.2)
+        
+        # add box
+        box_coordinate = np.eye(4, dtype=np.float32)
+        box_coordinate[3, 0] = 0.3
+        box_coordinate[3, 2] = 0.5
+        context.addBBox9D("box", "box", coordinate=box_coordinate, width=0.2, height=0.2, depth=0.2)
         context.close()

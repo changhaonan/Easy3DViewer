@@ -59,7 +59,7 @@ class Context():
 
     # Add visualization info
     @classmethod
-    def addGeomtry(cls, name, control_name="", geometry_type="coord", coordinate=np.eye(4, dtype=np.float32),
+    def addGeometry(cls, name, control_name="", geometry_type="coord", coordinate=np.eye(4, dtype=np.float32),
         param_0=0.0, param_1=1.0, param_2=2.0):
 
         info_data = dict()
@@ -84,6 +84,8 @@ class Context():
             info_data["vis"]["width"] = param_0
             info_data["vis"]["height"] = param_1
             info_data["vis"]["depth"] = param_2
+        elif geometry_type == "sphere":
+            info_data["vis"]["radius"] = param_0
         elif geometry_type == "plane":
             info_data["vis"]["width"] = param_0
             info_data["vis"]["height"] = param_1
@@ -92,15 +94,19 @@ class Context():
 
     @classmethod
     def addCoord(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), scale=0.1):
-        cls.addGeomtry(name, control_name, "coord", coordinate, scale)
+        cls.addGeometry(name, control_name, "coord", coordinate, scale)
 
     @classmethod
     def addBox(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), width=1.0, height=1.0, depth=1.0):
-        cls.addGeomtry(name, control_name, "box", coordinate, width, height, depth)
+        cls.addGeometry(name, control_name, "box", coordinate, width, height, depth)
 
     @classmethod
     def addBoundingBox(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), width=1.0, height=1.0, depth=1.0):
-        cls.addGeomtry(name, control_name, "bounding_box", coordinate, width, height, depth)
+        cls.addGeometry(name, control_name, "bounding_box", coordinate, width, height, depth)
+
+    @classmethod
+    def addSphere(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), radius=1.0):
+        cls.addGeometry(name, control_name, "sphere", coordinate, radius)
 
     @classmethod
     def addCamera(cls, name, control_name, coordinate, intrinsic, image_cols, image_rows, clip_near=0.0, clip_far=0.0, depth_flip=False,
@@ -136,6 +142,24 @@ class Context():
         info_data["clip_far"] = clip_far
         info_data["depth_flip"] = depth_flip
         info_data["downsample_scale"] = downsample_scale
+        cls.context_info[name] = info_data
+
+    @classmethod
+    def addBBox9D(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), width=1.0, height=1.0, depth=1.0):
+        # A BBox whose 9D pose can be controlled by the user
+        info_data = dict()
+        info_data["vis"] = dict()
+        info_data["vis"]["section"] = "Transform"
+        info_data["vis"]["control"] = control_name if (control_name) else name
+        info_data["vis"]["mode"] = "geometry_9d"
+        info_data["vis"]["geometry"] = "box"
+        info_data["vis"]["gui"] = "check_box"
+        info_data["vis"]["default"] = False
+        info_data["vis"]["intersectable"] = True
+        info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
+        info_data["vis"]["width"] = width
+        info_data["vis"]["height"] = height
+        info_data["vis"]["depth"] = depth
         cls.context_info[name] = info_data
 
     @classmethod

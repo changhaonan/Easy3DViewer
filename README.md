@@ -86,7 +86,4 @@ python setup.py install
 
 ## Todo:
 
-* [x] Write a script to combine all javascript files into one. Instead of hosting a directory. We can instead only host one file. If people want to use our package, they only need to import from an url.
-* [x] Add a python install script to further improve the easy to use ability.
-* [x] Add more introduction in the interface.
-
+* [ ] Add a moving box and save it in engine.txt.

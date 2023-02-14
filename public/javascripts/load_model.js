@@ -33,6 +33,10 @@ export function loadModel(name, data, engine_data) {
         loadModelGeometry(name, data.vis, engine_data);
         infoLog("Geometry: " + name + " loaded");
     }
+    else if (data.vis.mode == "geometry_9d") {
+        loadModelGeometry9D(name, data.vis, engine_data);
+        infoLog("Geometry9D: " + name + " loaded");
+    }
     else {
         infoLog("Data is not supported:");
         infoLog(data);
@@ -79,7 +83,7 @@ function loadModelOBJ(name, file_name, data_vis, engine_data) {
                 engine_data.intersectable.push(obj);
             }
 
-            // Release locker
+            // release locker
             engine_data.locker[name] = false;
         },
         // called while loading is progressing
@@ -242,7 +246,7 @@ function loadModelCorr(name, file_name, data_vis, engine_data) {
                 engine_data.intersectable.push(line);
             }
 
-            // Release locker
+            // release locker
             engine_data.locker[name] = false;
         }
     );
@@ -274,7 +278,7 @@ function loadModelGeometry(name, data_vis, engine_data) {
         let height = data_vis["height"];
         let depth = data_vis["depth"];
         const geometry = new THREE.BoxGeometry(width, height, depth);
-        const material = new THREE.MeshBasicMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
+        const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
         geo = new THREE.Mesh(geometry, material);
     }
     else if (geometry_type == "bounding_box") {
@@ -292,7 +296,13 @@ function loadModelGeometry(name, data_vis, engine_data) {
         let width = data_vis["width"];
         let height = data_vis["height"];
         const geometry = new THREE.PlaneGeometry(width, height);
-        const material = new THREE.MeshBasicMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
+        const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
+        geo = new THREE.Mesh(geometry, material);
+    }
+    else if (geometry_type == "sphere") {
+        let radius = data_vis["radius"];
+        const geometry = new THREE.SphereGeometry(radius);
+        const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff});
         geo = new THREE.Mesh(geometry, material);
     }
 
@@ -321,7 +331,64 @@ function loadModelGeometry(name, data_vis, engine_data) {
         engine_data.intersectable.push(geo);
     }
 
-    // Release locker
+    // release locker
+    engine_data.locker[name] = false;
+}
+
+function loadModelGeometry9D(name, data_vis, engine_data) {
+    engine_data.locker[name] = true;
+    let geometry_type = data_vis.geometry;
+    
+    let geo;
+    if (geometry_type == "box") {
+        let width = data_vis["width"];
+        let height = data_vis["height"];
+        let depth = data_vis["depth"];
+        const geometry = new THREE.BoxGeometry(width, height, depth);
+        const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
+        geo = new THREE.Mesh(geometry, material);
+    }
+    else if (geometry_type == "bounding_box") {
+        let width = data_vis["width"];
+        let height = data_vis["height"];
+        let depth = data_vis["depth"];
+        const geometry = new THREE.BoxGeometry(width, height, depth);
+        const material = new THREE.MeshBasicMaterial();
+        const box = new THREE.Mesh(geometry, material);
+        geo = new THREE.BoxHelper();
+        geo.setFromObject(box);
+        //geo = new THREE.BoxHelper(geometry);
+    }
+    else {
+        console.log("Unknown geometry type: " + geometry_type);
+        return;
+    }
+    // set name
+    geo.name = name;
+    
+    let M = new THREE.Matrix4();  // relative transform
+    M.elements = data_vis.coordinate;
+    geo.applyMatrix4(M);
+
+    let geo_to_remove;
+    if ((geo_to_remove = engine_data.scene.getObjectByName(name)) != undefined) {
+        // color inherit
+        geo.material.color = geo_to_remove.material.color;
+        const index = engine_data.intersectable.indexOf(geo_to_remove);
+        if (index > -1) {
+            engine_data.intersectable.splice(index, 1);
+        }
+        engine_data.scene.remove(geo_to_remove);
+    }
+
+    geo.visible = true;
+    engine_data.scene.add(geo);
+
+    if (data_vis.intersectable) {
+        engine_data.intersectable.push(geo);
+    }
+
+    // release locker
     engine_data.locker[name] = false;
 }
 
@@ -567,7 +634,7 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                 engine_data.intersectable.push(graph);
             }
 
-            // Release locker
+            // release locker
             engine_data.locker[name] = false;
         }
     );
@@ -605,7 +672,7 @@ function loadModelImage(name, file_name, data_vis, engine_data) {  //TODO: updat
     //    $("#" + name).css("display", "initial");
     //    modal_img.src = file_path;  // update modal
     //}
-    // Release locker
+    // release locker
     engine_data.locker[name] = false;
 }
 
