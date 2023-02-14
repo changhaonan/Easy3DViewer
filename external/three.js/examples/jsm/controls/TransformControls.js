@@ -18,7 +18,7 @@ import {
 	SphereGeometry,
 	TorusGeometry,
 	Vector3
-} from 'three';
+} from 'https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js';
 
 const _raycaster = new Raycaster();
 
