@@ -21,11 +21,16 @@ mixin loadConfigCanvas(name, data_root, global_keyevent)
             import { createBasicCanvas, animate } from "#{git_root_file}/javascripts/basic_canvas.js";
             import { loadFirstContext, loadContext } from "#{git_root_file}/javascripts/load_context.js";
             import { onKeydown } from "#{git_root_file}/javascripts/key_parser.js";
+            import { onPointerDown, onPointerUp, onPointerMove } from "#{git_root_file}/javascripts/pointer_parser.js";
             const engine_data = createBasicCanvas(#{name}, true);
             engine_data.container_id = "#{name}";
             loadFirstContext("#{data_root}", engine_data);
             $(document).keydown((e) => { onKeydown(e, engine_data, #{global_keyevent}); });
+            $(document).mousedown((e) => { onPointerDown(e, engine_data); });
+            $(document).mouseup((e) => { onPointerUp(e, engine_data); });
+            $(document).mousemove((e) => { onPointerMove(e, engine_data); });
             animate(engine_data);
+
 //- /**
 //-  * @Author: Kowndinya Boyalakuntla
 //-  * @Date:   2022-05-31 13:47:06
@@ -44,13 +49,16 @@ mixin loadConfigCanvasSingle(root_folder, default_data_folder, source_url, sourc
                     import { createBasicCanvas, animate } from "#{source_url? source_url: git_root_file}/javascripts/basic_canvas.js";
                     import { loadFirstContext, loadContext } from "#{source_url? source_url: git_root_file}/javascripts/load_context.js";
                     import { onKeydown, ParseNow } from "#{source_url? source_url: git_root_file}/javascripts/key_parser.js";
+                    import { onPointerDown, onPointerUp, onPointerMove } from "#{git_root_file}/javascripts/pointer_parser.js";
                     import { loadModel } from "#{source_url? source_url: git_root_file}/javascripts/load_model.js";
                     const engine_data = createBasicCanvas(#{name}, true);
                     let frames = "#{frames}".split(',') 
                     engine_data.container_id = "#{name}";
                     loadFirstContext("#{root_folder}", "#{default_data_folder}", "#{data_root}", "#{source_url}", "#{source_directory}", frames, engine_data);
                     $(document).keydown((e) => { onKeydown(e, engine_data, #{global_keyevent}); });
-                    
+                    $(document).mousedown((e) => { onPointerDown(e, engine_data); });
+                    $(document).mouseup((e) => { onPointerUp(e, engine_data); });
+                    $(document).mousemove((e) => { onPointerMove(e, engine_data); });
                     
                     $('#total_frames'+engine_data.container_id).text(engine_data.dir_list.length)
                     $(document).on('input', '#pbar'+engine_data.container_id, function() {

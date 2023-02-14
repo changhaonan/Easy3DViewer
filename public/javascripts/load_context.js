@@ -35,7 +35,6 @@ export function loadFirstContext(root_folder, default_data_folder, data_root, so
     }
     console.log(engine_data.data_root)
     engine_data.data_dir = "";
-    engine_data.controlls = {};
     engine_data.vis_controls = {};
     engine_data.intersectable = [];
     engine_data.camera_init = false;

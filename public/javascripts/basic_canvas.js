@@ -6,17 +6,20 @@
  */
 import * as THREE from "https://changhaonan.github.io/Easy3DViewer/external/three.js/build/three.module.js";
 import { TrackballControls } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/controls/TrackballControls.js";
-import { GUI } from 'https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/libs/lil-gui.module.min.js';
-import { FontLoader } from 'https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/FontLoader.js';
+import { GUI } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/libs/lil-gui.module.min.js";
+import { FontLoader } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/loaders/FontLoader.js";
+import { TransformControls } from "https://changhaonan.github.io/Easy3DViewer/external/three.js/examples/jsm/controls/TransformControls.js";
+// import { TransformControls } from "three/examples/jsm/controls/TransformControls.js";
 
-export function createBasicCanvas(container_id, gui_enable=false) {
+export function createBasicCanvas(container_id, gui_enable = false) {
     const engine_data = {
         "renderer": null,
         "scene": null,
         "camera": null,
         "camera_control": null,
+        "t_control": null,
         "gui": null,
-        "record" : false
+        "record": false
     };
 
     const renderer = new THREE.WebGLRenderer({ preserveDrawingBuffer: true });  // Enable screen shot
@@ -40,12 +43,12 @@ export function createBasicCanvas(container_id, gui_enable=false) {
     const pointLight = new THREE.PointLight(0xffffff, 0.8);
     camera.add(pointLight);
     scene.add(camera);
-    
+
     // Trackball Control
     // FIXME: Trackball Control may need to be tuned?
     const trackBall_control = new TrackballControls(camera, renderer.domElement);
-    trackBall_control.addEventListener("change", () => { 
-        render(renderer, scene, camera); 
+    trackBall_control.addEventListener("change", () => {
+        render(renderer, scene, camera);
     }); // use if there is no animation loop
     trackBall_control.rotateSpeed = 5.0;
     trackBall_control.panSpeed = 3.0;
@@ -53,6 +56,27 @@ export function createBasicCanvas(container_id, gui_enable=false) {
     trackBall_control.target.set(0.0, 0.0, 1.0);  // look at z-axis
     trackBall_control.staticMoving = true;
     trackBall_control.update();
+    trackBall_control.enabled = false;  // Disable trackball control by default
+
+    // Transform Control
+    const transform_control = new TransformControls(camera, renderer.domElement);
+    transform_control.addEventListener("change", () => {
+        render(renderer, scene, camera);
+    });
+    transform_control.addEventListener("dragging-changed", function (event) {
+        // Disable trackball control when transform control is active
+        trackBall_control.enabled = !event.value;
+    });
+    scene.add(transform_control);
+    // Pointer info
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    const on_up_position = new THREE.Vector2();
+    const on_down_position = new THREE.Vector2();
+    engine_data.raycaster = raycaster;
+    engine_data.pointer = pointer;
+    engine_data.on_up_position = on_up_position;
+    engine_data.on_down_position = on_down_position;
 
     // GUI
     if (gui_enable) {
@@ -66,6 +90,7 @@ export function createBasicCanvas(container_id, gui_enable=false) {
     engine_data.scene = scene;
     engine_data.camera = camera;
     engine_data.camera_control = trackBall_control;
+    engine_data.t_control = transform_control;
 
     // Load font to engine_data
     const loader = new FontLoader();

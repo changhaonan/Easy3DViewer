@@ -29,9 +29,10 @@ export function onKeydown(event, engine_data, global_keyevent) {
         else {
             console.log("record stop!");
         }
-        
+
     }
 }
+
 //- /**
 //-  * @Author: Kowndinya Boyalakuntla
 //-  * @Date:   2022-05-31 13:47:06
@@ -52,10 +53,10 @@ export function ParseNow(engine_data, progress) {
         ScreenShot(engine_data);
     }
 
-    let p = Math.floor((engine_data.dir_list.length*progress)/100);
-    if((engine_data.dir_list.length*progress)%100 == 0){
-        if(p >= engine_data.dir_list.length){
-            p = p-1
+    let p = Math.floor((engine_data.dir_list.length * progress) / 100);
+    if ((engine_data.dir_list.length * progress) % 100 == 0) {
+        if (p >= engine_data.dir_list.length) {
+            p = p - 1
         }
     }
     loadContext(engine_data.data_root + "/" + engine_data.dir_list[p], engine_data);
