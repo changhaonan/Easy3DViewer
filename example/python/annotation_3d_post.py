@@ -8,6 +8,7 @@ import json
 def post_process_annotation(recon_dir):
     # load the pcd model and the bbox file
     pcd = o3d.io.read_point_cloud(os.path.join(recon_dir, "recon.pcd"))
+    bbox_list = []
     for annotation in glob.glob(os.path.join(recon_dir, "*.json")):
         label_name = os.path.basename(annotation).split(".")[0]
         label_annotation = json.load(open(annotation))
@@ -35,11 +36,15 @@ def post_process_annotation(recon_dir):
         bbox = o3d.geometry.OrientedBoundingBox(
             center=bbox_pos, extent=bbox_scale, R=bbox_rot
         )
+        # send color to bright green
+        bbox.color = (0, 1, 0)
+        bbox_list.append(bbox)
         pcd_seg = pcd.crop(bbox)
         # save the segmented pcd
         o3d.io.write_point_cloud(os.path.join(recon_dir, f"{label_name}.pcd"), pcd_seg)
-        # visualize
-        o3d.visualization.draw_geometries([pcd_seg, bbox])
+
+    # visualize all
+    o3d.visualization.draw_geometries([pcd, *bbox_list])
 
 
 if __name__ == "__main__":

@@ -26,7 +26,7 @@ export function loadModel(name, data, engine_data) {
             infoLog("Graph: " + name + " loaded.");
         }
     }
-    else if(data.file_type == "png") {
+    else if (data.file_type == "png") {
         loadModelImage(name, data.file_name, data.vis, engine_data);
     }
     else if (data.vis.mode == "geometry") {
@@ -47,23 +47,23 @@ function loadModelOBJ(name, file_name, data_vis, engine_data) {
     engine_data.locker[name] = true;
     // get full path
     let file_path = engine_data.data_dir + "/" + file_name;
-    
+
     const obj_loader = new OBJLoader();
     obj_loader.load(
         file_path, // URL
         (mesh) => {
             let obj = mesh.children[0];
             obj.material.side = THREE.DoubleSide;
-            
+
             // set color
             obj.material.color.setHex(Math.random() * 0xffffff);
             obj.name = name;
-            
+
             // set relative transform to parent
             let M = new THREE.Matrix4();  // relative transform
             M.elements = data_vis.coordinate;
             obj.applyMatrix4(M);
-            
+
             // existence check
             let obj_to_remove;
             if ((obj_to_remove = engine_data.scene.getObjectByName(name)) != undefined) {
@@ -75,7 +75,7 @@ function loadModelOBJ(name, file_name, data_vis, engine_data) {
                 }
                 engine_data.scene.remove(obj_to_remove);
             }
-            
+
             obj.visible = true;  // update visible status
             engine_data.scene.add(obj);
 
@@ -101,7 +101,7 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
     engine_data.locker[name] = true;
     // get full path
     let file_path = engine_data.data_dir + "/" + file_name;
-    
+
     const pcd_loader = new PCDLoader();
     pcd_loader.load(
         file_path,
@@ -112,31 +112,29 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
             const pcd_default_size = pcd.material.size;
 
             // change material
-            if (pcd.geometry.attributes.normal != undefined && pcd.geometry.attributes.color != undefined) {
-                // color with shadow
-                let uniforms = {
-                    size: { value: data_vis.size },
-                };
-                let shaderMaterial = new THREE.ShaderMaterial({
-                    uniforms: uniforms,
-                    vertexShader: $("#normalcolor-vertexshader")[0].textContent,
-                    fragmentShader: $("#normalcolor-fragmentshader")[0].textContent,
-                });
-                pcd.material = shaderMaterial;
-            }
-            else if (pcd.geometry.attributes.normal != undefined) {  // normal is defined
+            if (pcd.geometry.attributes.normal != undefined) {  // normal is defined
                 if (data_vis.normal_mode == "shadow") {
                     // pure shadow
                     let uniforms = {
                         color: { value: new THREE.Color(0xffff00) },
                         size: { value: data_vis.size },
                     };
-                    let shaderMaterial = new THREE.ShaderMaterial({
-                        uniforms: uniforms,
-                        vertexShader: $("#shadow-vertexshader")[0].textContent,
-                        fragmentShader: $("#shadow-fragmentshader")[0].textContent,
-                    });
-                    pcd.material = shaderMaterial;
+                    if (pcd.geometry.attributes.color != undefined) {
+                        let shaderMaterial = new THREE.ShaderMaterial({
+                            uniforms: uniforms,
+                            vertexShader: $("#normalcolor-vertexshader")[0].textContent,
+                            fragmentShader: $("#normalcolor-fragmentshader")[0].textContent,
+                        });
+                        pcd.material = shaderMaterial;
+                    }
+                    else {
+                        let shaderMaterial = new THREE.ShaderMaterial({
+                            uniforms: uniforms,
+                            vertexShader: $("#shadow-vertexshader")[0].textContent,
+                            fragmentShader: $("#shadow-fragmentshader")[0].textContent,
+                        });
+                        pcd.material = shaderMaterial;
+                    }
                 }
                 else if (data_vis.normal_mode == "normal_color") {
                     // normal as color
@@ -152,11 +150,15 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
                     pcd.material = shaderMaterial;
                     pcd.material.size = data_vis.size;
                 }
-                else {
+                else if (data_vis.normal_mode == "vector") {
                     // (default) draw normal as vector
                     const normal_helper = new VertexNormalsHelper(pcd, 1.0, Math.random() * 0xffffff, 1.0);  // Random color
                     pcd_whole.add(normal_helper);
                     // set pcd size
+                    pcd.material.size = pcd_default_size * data_vis.size;
+                }
+                else {
+                    // (default) draw point cloud as point
                     pcd.material.size = pcd_default_size * data_vis.size;
                 }
             }
@@ -164,7 +166,7 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
                 // (default) draw point cloud as point
                 pcd.material.size = pcd_default_size * data_vis.size;
             }
-            
+
             let pcd_to_remove;
             if ((pcd_to_remove = engine_data.scene.getObjectByName(name)) != undefined) {
                 // color inherit
@@ -175,7 +177,7 @@ function loadModelPCD(name, file_name, data_vis, engine_data) {
                 }
                 engine_data.scene.remove(pcd_to_remove);
             }
-                        
+
             pcd_whole.name = name;
             let M = new THREE.Matrix4();  // relative transform
             M.elements = data_vis.coordinate;
@@ -205,21 +207,21 @@ function loadModelCorr(name, file_name, data_vis, engine_data) {
     engine_data.locker[name] = true;
     // get full path
     let file_path = engine_data.data_dir + "/" + file_name;
-    
+
     $.getJSON(file_path).done(
-        function(data) {
+        function (data) {
             const material = new THREE.LineBasicMaterial();
             material.color.setHex(Math.random() * 0xffffff);
-            
+
             let points_vec = data.set.data;
-            let num_pairs = points_vec.length/6;
-            
+            let num_pairs = points_vec.length / 6;
+
             const points = [];
-            for(let i = 0; i < num_pairs; ++i) {
-                points.push(new THREE.Vector3(points_vec[3*i+0], points_vec[3*i+1], points_vec[3*i+2]));
-                points.push(new THREE.Vector3(points_vec[3*(i+num_pairs)+0], points_vec[3*(i+num_pairs)+1], points_vec[3*(i+num_pairs)+2]));
+            for (let i = 0; i < num_pairs; ++i) {
+                points.push(new THREE.Vector3(points_vec[3 * i + 0], points_vec[3 * i + 1], points_vec[3 * i + 2]));
+                points.push(new THREE.Vector3(points_vec[3 * (i + num_pairs) + 0], points_vec[3 * (i + num_pairs) + 1], points_vec[3 * (i + num_pairs) + 2]));
             }
-            
+
             const geometry = new THREE.BufferGeometry().setFromPoints(points);
             const line = new THREE.LineSegments(geometry, material);
             line.name = name;
@@ -255,12 +257,12 @@ function loadModelCorr(name, file_name, data_vis, engine_data) {
 function loadModelGeometry(name, data_vis, engine_data) {
     engine_data.locker[name] = true;
     let geometry_type = data_vis.geometry;
-    
+
     let geo;
     if (geometry_type == "coord") {
         let scale = data_vis["scale"];
         const geometry = new THREE.SphereGeometry(0.001);  // small points
-        const material = new THREE.MeshBasicMaterial({color: 0xffff00});
+        const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         geo = new THREE.Mesh(geometry, material);
         geo.add(new THREE.AxesHelper(scale));
     }
@@ -268,7 +270,7 @@ function loadModelGeometry(name, data_vis, engine_data) {
         // Work from here
         let scale = data_vis["scale"];
         const geometry = new THREE.SphereGeometry(0.001);  // small points
-        const material = new THREE.MeshBasicMaterial({color: 0xffff00});
+        const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         geo = new THREE.Mesh(geometry, material);
         geo.add(new THREE.AxesHelper(scale));
         // Work end here
@@ -278,7 +280,7 @@ function loadModelGeometry(name, data_vis, engine_data) {
         let height = data_vis["height"];
         let depth = data_vis["depth"];
         const geometry = new THREE.BoxGeometry(width, height, depth);
-        const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
+        const material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff, side: THREE.DoubleSide });
         geo = new THREE.Mesh(geometry, material);
     }
     else if (geometry_type == "bounding_box") {
@@ -296,19 +298,19 @@ function loadModelGeometry(name, data_vis, engine_data) {
         let width = data_vis["width"];
         let height = data_vis["height"];
         const geometry = new THREE.PlaneGeometry(width, height);
-        const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
+        const material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff, side: THREE.DoubleSide });
         geo = new THREE.Mesh(geometry, material);
     }
     else if (geometry_type == "sphere") {
         let radius = data_vis["radius"];
         const geometry = new THREE.SphereGeometry(radius);
-        const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff});
+        const material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff });
         geo = new THREE.Mesh(geometry, material);
     }
 
     // set name
     geo.name = name;
-    
+
     let M = new THREE.Matrix4();  // relative transform
     M.elements = data_vis.coordinate;
     geo.applyMatrix4(M);
@@ -338,14 +340,14 @@ function loadModelGeometry(name, data_vis, engine_data) {
 function loadModelGeometry9D(name, data_vis, engine_data) {
     engine_data.locker[name] = true;
     let geometry_type = data_vis.geometry;
-    
+
     let geo;
     if (geometry_type == "box") {
         let width = data_vis["width"];
         let height = data_vis["height"];
         let depth = data_vis["depth"];
         const geometry = new THREE.BoxGeometry(width, height, depth);
-        const material = new THREE.MeshPhongMaterial({color: Math.random() * 0xffffff, side: THREE.DoubleSide});
+        const material = new THREE.MeshPhongMaterial({ color: Math.random() * 0xffffff, side: THREE.DoubleSide });
         material.opacity = 0.3;
         material.transparent = true;
         geo = new THREE.Mesh(geometry, material);
@@ -367,7 +369,7 @@ function loadModelGeometry9D(name, data_vis, engine_data) {
     }
     // set name
     geo.name = name;
-    
+
     let M = new THREE.Matrix4();  // relative transform
     M.elements = data_vis.coordinate;
     geo.applyMatrix4(M);
@@ -444,20 +446,20 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                         vertex[0], vertex[1], vertex[2]));
                 if (isolated_invisible && isolated_list.includes(i))
                     color_v.push(1.0, 1.0, 1.0);  // Make it white (invisible)
-                else if (data.color_v != undefined) 
+                else if (data.color_v != undefined)
                     color_v.push(data.color_v[i][0], data.color_v[i][1], data.color_v[i][2]);
                 else if (data.weight_v != undefined) {
                     let color = lut.getColor(data.weight_v[i]);
                     color_v.push(color.r, color.g, color.b);
                 }
-                else 
+                else
                     color_v.push(0.0, 0.0, 1.0);  // Blue is the default color
             });
 
             const geometry_v = new THREE.BufferGeometry().setFromPoints(vertices);
             geometry_v.setAttribute("color", new THREE.Float32BufferAttribute(color_v, 3));
-            
-            const material_v = new THREE.PointsMaterial({vertexColors: THREE.VertexColors});
+
+            const material_v = new THREE.PointsMaterial({ vertexColors: THREE.VertexColors });
             material_v.size = 0.005 * data_vis.size;  // relative size
             const points = new THREE.Points(geometry_v, material_v);
             graph.add(points);
@@ -474,22 +476,22 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                 else {
                     normal_len = 0.015;  // [meter]
                 }
-                
+
                 let normal_color;
                 if (data_vis.color_code != "") {
                     if (data_vis.color_code == "red")
-                        normal_color = { "r" : 1.0, "g" : 0.0, "b" : 0.0 };
+                        normal_color = { "r": 1.0, "g": 0.0, "b": 0.0 };
                     else if (data_vis.color_code == "green")
-                        normal_color = { "r" : 0.0, "g" : 1.0, "b" : 0.0 };
+                        normal_color = { "r": 0.0, "g": 1.0, "b": 0.0 };
                     else if (data_vis.color_code == "blue")
-                        normal_color = { "r" : 0.0, "g" : 0.0, "b" : 1.0 };
+                        normal_color = { "r": 0.0, "g": 0.0, "b": 1.0 };
                     else
-                        normal_color = { "r" : 0.0, "g" : 0.0, "b" : 0.0 };
+                        normal_color = { "r": 0.0, "g": 0.0, "b": 0.0 };
                 }
                 else {
-                    normal_color = { "r" : Math.random() * 0.5, "g" : Math.random() * 0.5, "b" : Math.random() * 0.5 };
+                    normal_color = { "r": Math.random() * 0.5, "g": Math.random() * 0.5, "b": Math.random() * 0.5 };
                 }
-                
+
                 $.each(data.normals, (i, normal) => {
                     normals.push(
                         new THREE.Vector3(
@@ -548,7 +550,7 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                         data.vertices[id_e1][0],
                         data.vertices[id_e1][1],
                         data.vertices[id_e1][2]));
-                
+
                 let color;
                 if (data.weight_e != undefined) {
                     const reverse = true;  // Flip the order of color map to suit the background better
@@ -559,17 +561,17 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
                         color = lut.getColor(data.weight_e[i]);
                     }
                 }
-                else 
-                    color = {"r": 0.0, "g": 0.0, "b": 0.0};
-                
+                else
+                    color = { "r": 0.0, "g": 0.0, "b": 0.0 };
+
                 color_e.push(color.r, color.g, color.b);
                 color_e.push(color.r, color.g, color.b);
             });
 
             const geometry_e = new THREE.BufferGeometry().setFromPoints(edges);
             geometry_e.setAttribute("color", new THREE.Float32BufferAttribute(color_e, 3));
-            
-            const material_e = new THREE.PointsMaterial({vertexColors: THREE.VertexColors});
+
+            const material_e = new THREE.PointsMaterial({ vertexColors: THREE.VertexColors });
             const lines = new THREE.LineSegments(geometry_e, material_e);
             graph.add(lines);
 
@@ -610,12 +612,12 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
             const point_0 = [];
             point_0.push(new THREE.Vector3(data.vertices[0][0], data.vertices[0][1], data.vertices[0][2]));
             const dotGeometry = new THREE.BufferGeometry().setFromPoints(point_0);
-            const dotMaterial = new THREE.PointsMaterial({size: 0.01*data_vis.size});
+            const dotMaterial = new THREE.PointsMaterial({ size: 0.01 * data_vis.size });
             const dot = new THREE.Points(dotGeometry, dotMaterial);
             graph.add(dot);
 
             graph.name = name;
-            
+
             let M = new THREE.Matrix4();  // relative transform
             M.elements = data_vis.coordinate;
             graph.applyMatrix4(M);
@@ -645,7 +647,7 @@ function loadModelGraph(name, file_name, data_vis, engine_data) {
 function loadModelImage(name, file_name, data_vis, engine_data) {  //TODO: update to new version later on
     engine_data.locker[name] = true;
     //let file_path = engine_data.data_dir + "/" + file_name;
-    
+
     //// fetch modal
     //let modal = document.getElementById("modal");
     //let modal_img = document.getElementById("modal-image");

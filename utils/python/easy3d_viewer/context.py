@@ -187,7 +187,7 @@ class Context():
         cls.context_info[name] = info_data
 
     @classmethod
-    def addPointCloud(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), size=0.5):
+    def addPointCloud(cls, name, control_name="", coordinate=np.eye(4, dtype=np.float32), size=0.5, normal_mode="none"):
         """ Add point cloud to the context
 
         Args:
@@ -195,6 +195,7 @@ class Context():
             control_name (str, optional): name used for control. Defaults to "".
             coordinate (np.matrix4f, optional): cam2world in col-major. Defaults to np.eye(4, dtype=np.float32).
             size (float, optional): Point size in visualization. Defaults to 0.5.
+            normal_mode (str, optional): "none", "shadow", "normal_color", "vector". Defaults to "none".
         """
         info_data = dict()
         info_data["file_type"] = "pcd"
@@ -210,6 +211,7 @@ class Context():
         info_data["vis"]["intersectable"] = False
         info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
         info_data["vis"]["size"] = size
+        info_data["vis"]["normal_mode"] = normal_mode
 
         cls.context_info[name] = info_data
 
