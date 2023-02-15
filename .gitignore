@@ -10,6 +10,7 @@ Easy3DViewer.njsproj.user
 
 # Data
 public/test_data/*
+public/external_data/*
 
 # Generated/Generating file
 config.json

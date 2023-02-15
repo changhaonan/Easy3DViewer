@@ -30,7 +30,7 @@ export function onKeydown(event, engine_data, global_keyevent) {
             console.log("Record stop!");
         }
     }
-    else if (event.key == " ") {
+    else if (event.key == "Alt") {
         // Switching transform control mode
         if (engine_data.t_control.mode == "translate") {
             engine_data.t_control.setMode("rotate");
