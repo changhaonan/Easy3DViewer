@@ -21,7 +21,7 @@ if __name__ == "__main__":
     config_json["default_data_folder"] = f"/{data_dir}"
     config_json["data"] = list()
 
-    for dir_name in os.listdir(os.path.join("public", data_dir)):
+    for dir_name in sorted(os.listdir(os.path.join("public", data_dir))):
         if os.path.isdir(os.path.join("public", data_dir, dir_name)):
             canvas_json = dict()
             canvas_json["source_directory"] = f"/{data_dir}"
