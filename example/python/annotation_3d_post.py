@@ -30,12 +30,10 @@ def post_process_annotation(recon_dir):
         quat_y = label_annotation["t_control"]["quaternion"]["_y"]
         quat_z = label_annotation["t_control"]["quaternion"]["_z"]
         quat_w = label_annotation["t_control"]["quaternion"]["_w"]
-        bbox_quat = np.array([quat_x, quat_y, quat_z, quat_w])
+        bbox_quat = np.array([quat_w, quat_x, quat_y, quat_z])
         bbox_rot = o3d.geometry.get_rotation_matrix_from_quaternion(bbox_quat)
         # create a unit open3d bbox
-        bbox = o3d.geometry.OrientedBoundingBox(
-            center=bbox_pos, extent=bbox_scale, R=bbox_rot
-        )
+        bbox = o3d.geometry.OrientedBoundingBox(center=bbox_pos, extent=bbox_scale, R=bbox_rot)
         # send color to bright green
         bbox.color = (0, 1, 0)
         bbox_list.append(bbox)
@@ -44,7 +42,8 @@ def post_process_annotation(recon_dir):
         o3d.io.write_point_cloud(os.path.join(recon_dir, f"{label_name}.pcd"), pcd_seg)
 
     # visualize all
-    o3d.visualization.draw_geometries([pcd, *bbox_list])
+    origin = o3d.geometry.TriangleMesh.create_coordinate_frame(size=1.0, origin=[0, 0, 0])
+    o3d.visualization.draw_geometries([pcd, *bbox_list, origin])
 
 
 if __name__ == "__main__":
@@ -52,11 +51,15 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="3D annotation example")
     parser.add_argument(
-        "--recon_dir",
+        "--data_root",
         type=str,
         default=".",
         help="The directory to save the annotation data",
     )
     args = parser.parse_args()
 
-    post_process_annotation(args.recon_dir)
+    for scene in glob.glob(os.path.join(args.data_root, "*")):
+        if not os.path.isdir(scene):
+            continue
+        print("Processing {}".format(scene))
+        post_process_annotation(os.path.join(scene, "recon"))
