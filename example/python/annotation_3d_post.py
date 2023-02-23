@@ -5,7 +5,7 @@ import glob
 import json
 
 
-def post_process_annotation(recon_dir):
+def post_process_annotation(recon_dir, output_dir):
     # load the pcd model and the bbox file
     pcd = o3d.io.read_point_cloud(os.path.join(recon_dir, "recon.pcd"))
     bbox_list = []
@@ -40,6 +40,10 @@ def post_process_annotation(recon_dir):
         pcd_seg = pcd.crop(bbox)
         # save the segmented pcd
         o3d.io.write_point_cloud(os.path.join(recon_dir, f"{label_name}.pcd"), pcd_seg)
+        # copy all json file
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        os.system(f"cp {annotation} {output_dir}")
 
     # visualize all
     origin = o3d.geometry.TriangleMesh.create_coordinate_frame(size=1.0, origin=[0, 0, 0])
@@ -50,16 +54,12 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="3D annotation example")
-    parser.add_argument(
-        "--data_root",
-        type=str,
-        default=".",
-        help="The directory to save the annotation data",
-    )
+    parser.add_argument("--data_root", type=str, default=".", help="The directory to save the annotation data")
+    parser.add_argument("--output_dir", type=str, default="", help="The output directory.")
     args = parser.parse_args()
 
     for scene in glob.glob(os.path.join(args.data_root, "*")):
         if not os.path.isdir(scene):
             continue
         print("Processing {}".format(scene))
-        post_process_annotation(os.path.join(scene, "recon"))
+        post_process_annotation(os.path.join(scene, "recon"), os.path.join(args.output_dir, os.path.basename(scene)))
