@@ -17,7 +17,7 @@ def check_pose_valid(pre_rot, cur_rot):
         return True
 
 
-def render_traj(traj_file):
+def render_traj_file(traj_file):
     project_name = "check_sequence"
     # Prepare the context
     context = ev.Context.Instance()
@@ -47,7 +47,7 @@ def render_traj(traj_file):
                 current_rot = prev_rot
 
         transform[:3, :3] = current_rot
-        transform[3, :3] = np.array(trans)
+        transform[:3, 3] = np.array(trans)
         context.addCoord("trajectory", scale=1.0, coordinate=transform)
         prev_rot = current_rot
         context.close()
@@ -60,4 +60,4 @@ if __name__ == "__main__":
     parser.add_argument("--traj_file", type=str, default="data.txt")
     args = parser.parse_args()
 
-    render_traj(args.traj_file)
+    render_traj_file(args.traj_file)
