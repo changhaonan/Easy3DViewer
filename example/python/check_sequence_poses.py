@@ -22,6 +22,7 @@ def render_traj_file(data_path, traj_path):
     frame = 0
     for traj_file in traj_files:
         cam2world = np.loadtxt(traj_file).astype(np.float32)
+        cam2world = np.linalg.inv(cam2world)
         context.open(frame)
         # add a coordinate
         context.addCoord("origin", scale=1.0)
