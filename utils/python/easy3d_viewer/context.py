@@ -70,7 +70,7 @@ class Context():
         info_data["vis"]["gui"] = "check_box"
         info_data["vis"]["default"] = False
         info_data["vis"]["intersectable"] = False
-        info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
+        info_data["vis"]["coordinate"] = coordinate.T.flatten().tolist()
         
         # Different according to geometry type
         info_data["vis"]["geometry"] = geometry_type
@@ -126,7 +126,7 @@ class Context():
         info_data["vis"]["gui"] = "check_box"
         info_data["vis"]["default"] = False
         info_data["vis"]["intersectable"] = False
-        info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
+        info_data["vis"]["coordinate"] = coordinate.T.flatten().tolist()
         info_data["vis"]["intrinsic"] = intrinsic.tolist()
         info_data["vis"]["image_cols"] = image_cols  # If this one is negative, we do not normalize the length of normal
         info_data["vis"]["image_rows"] = image_rows
@@ -134,7 +134,7 @@ class Context():
         info_data["vis"]["clip_far"] = clip_far
 
         # Stat part: used for constructing the space 
-        info_data["extrinsic"] = coordinate.flatten().tolist()
+        info_data["extrinsic"] = coordinate.T.flatten().tolist()
         info_data["intrinsic"] = intrinsic.tolist()
         info_data["image_cols"] = image_cols  # If this one is negative, we do not normalize the length of normal
         info_data["image_rows"] = image_rows
@@ -156,7 +156,7 @@ class Context():
         info_data["vis"]["gui"] = "check_box"
         info_data["vis"]["default"] = False
         info_data["vis"]["intersectable"] = True
-        info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
+        info_data["vis"]["coordinate"] = coordinate.T.flatten().tolist()
         info_data["vis"]["width"] = width
         info_data["vis"]["height"] = height
         info_data["vis"]["depth"] = depth
@@ -177,7 +177,7 @@ class Context():
         info_data["vis"]["gui"] = "check_box"
         info_data["vis"]["default"] = False
         info_data["vis"]["intersectable"] = False
-        info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
+        info_data["vis"]["coordinate"] = coordinate.T.flatten().tolist()
         info_data["vis"]["size"] = size
         info_data["vis"]["normal_len"] = normal_len  # If this one is negative, we do not normalize the length of normal
         info_data["vis"]["min_val"] = min_val
@@ -209,7 +209,7 @@ class Context():
         info_data["vis"]["gui"] = "check_box"
         info_data["vis"]["default"] = False
         info_data["vis"]["intersectable"] = False
-        info_data["vis"]["coordinate"] = coordinate.flatten().tolist()
+        info_data["vis"]["coordinate"] = coordinate.T.flatten().tolist()
         info_data["vis"]["size"] = size
         info_data["vis"]["normal_mode"] = normal_mode
 
