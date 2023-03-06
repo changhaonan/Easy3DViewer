@@ -154,7 +154,7 @@ block content
         varying float faceRatio;
         void main() {
             vec3 axis_default;
-            axis_default = vec3(0.0, 0.0, 1.0);
+            axis_default = vec3(0.0, -1.0, -1.0);
             faceRatio = -dot(normal, axis_default);
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             // gl_PointSize = size;
@@ -178,7 +178,7 @@ block content
         void main() {
             viewColor = color;
             vec3 axis_default;
-            axis_default = vec3(0.0, 0.0, 1.0);
+            axis_default = vec3(0.0, -1.0, -1.0);
             faceRatio = -dot(normal, axis_default);
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             gl_PointSize = 5.0;

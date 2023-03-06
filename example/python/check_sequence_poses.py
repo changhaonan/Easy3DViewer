@@ -4,6 +4,7 @@ from scipy.spatial.transform import Rotation as R
 import os
 import open3d as o3d
 import glob
+import tqdm
 
 
 def render_traj_file(data_path, traj_path):
@@ -18,9 +19,10 @@ def render_traj_file(data_path, traj_path):
     save_dir = os.path.dirname(__file__)
     context.setDir(os.path.join(save_dir, "../../public/test_data/example", project_name))
     traj_files = glob.glob(os.path.join(traj_path, "*.txt"))
-    traj_files.sort()
+    # sort by number order
+    traj_files = sorted(traj_files, key=lambda x: int(os.path.basename(x).split(".")[0]))
     frame = 0
-    for traj_file in traj_files:
+    for traj_file in tqdm.tqdm(traj_files):
         cam2world = np.loadtxt(traj_file).astype(np.float32)
         cam2world = np.linalg.inv(cam2world)
         context.open(frame)
@@ -29,7 +31,7 @@ def render_traj_file(data_path, traj_path):
         context.addCoord("trajectory", scale=0.1, coordinate=cam2world)
 
         # add depth measurement
-        context.addPointCloud("depth", "", cam2world, 0.1)
+        context.addPointCloud("depth", "", cam2world, 0.1, normal_mode="shadow")
         depth_image = o3d.io.read_image(os.path.join(data_path, "depth", f"{frame}.png"))
         img_size = np.array(depth_image).shape
         depth_pcd = o3d.geometry.PointCloud.create_from_depth_image(
@@ -41,6 +43,8 @@ def render_traj_file(data_path, traj_path):
             stride=1,
             project_valid_depth_only=False,
         )
+        # compute normals
+        # depth_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.01, max_nn=30))
         o3d.io.write_point_cloud(context.at("depth"), depth_pcd)
 
         context.close()
