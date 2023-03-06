@@ -33,19 +33,16 @@ def render_traj_file(data_path, traj_path):
         # add depth measurement
         context.addPointCloud("depth", "", cam2world, 0.1, normal_mode="shadow")
         depth_image = o3d.io.read_image(os.path.join(data_path, "depth", f"{frame}.png"))
+        color_image = o3d.io.read_image(os.path.join(data_path, "color", f"{frame}.png"))
         img_size = np.array(depth_image).shape
-        depth_pcd = o3d.geometry.PointCloud.create_from_depth_image(
-            depth_image,
-            o3d.camera.PinholeCameraIntrinsic(img_size[1], img_size[0], fx, fy, cx, cy),
-            np.eye(4),
-            depth_scale=1000.0,
-            depth_trunc=1000.0,
-            stride=1,
-            project_valid_depth_only=False,
+        intrinsics = o3d.camera.PinholeCameraIntrinsic(width=img_size[1], height=img_size[0], fx=fx, fy=fy, cx=cx, cy=cy)
+        rgbd_image = o3d.geometry.RGBDImage.create_from_color_and_depth(
+            o3d.geometry.Image(color_image), o3d.geometry.Image(depth_image), depth_scale=1000.0, depth_trunc=1000.0, convert_rgb_to_intensity=False
         )
-        # compute normals
+        color_pcd = o3d.geometry.PointCloud.create_from_rgbd_image(rgbd_image, intrinsics)
+
         # depth_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.01, max_nn=30))
-        o3d.io.write_point_cloud(context.at("depth"), depth_pcd)
+        o3d.io.write_point_cloud(context.at("depth"), color_pcd)
 
         context.close()
         frame += 1
