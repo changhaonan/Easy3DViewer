@@ -107,3 +107,5 @@ if __name__ == "__main__":
         print("Processing {}".format(dir))
         scene_name = "scene_" + os.path.basename(dir)
         prepare_annotation(cam2floor, pcd, os.path.join(args.output_dir, scene_name))
+        # Save cam2floor pose to source file
+        np.savetxt(os.path.join(dir, "rough_axis_alignment.txt"), cam2floor)  # Rough alignment, only take care of z-axis
