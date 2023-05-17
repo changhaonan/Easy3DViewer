@@ -49,10 +49,11 @@ def post_process_annotation(recon_dir, output_dir):
             transform_t = np.eye(4)
             transform_t[:3, 3] = bbox_pos
             transform_r = np.eye(4)
-            transform_r[:3, :3] = R.from_quat(bbox_quat).as_matrix()
+            bbox_quat_scipy = np.array([bbox_quat[1], bbox_quat[2], bbox_quat[3], bbox_quat[0]])
+            transform_r[:3, :3] = R.from_quat(bbox_quat_scipy).as_matrix()
             transform = transform_t @ transform_r
             # final axis alignment
-            final_axis_alignment = axis_alignment @ transform
+            final_axis_alignment = transform @ axis_alignment
             np.savetxt(os.path.join(recon_dir, "axis_alignment.txt"), final_axis_alignment)
             continue
         annotation_info = {}
@@ -83,6 +84,28 @@ def post_process_annotation(recon_dir, output_dir):
     o3d.visualization.draw_geometries([pcd, *bbox_list, origin])
 
 
+def check_annotation(recon_dir):
+    """Check if the annotation is correct"""
+    # load axis-alignment
+    if not os.path.exists(os.path.join(recon_dir, "axis_alignment.txt")):
+        return
+    axis_alignment = np.loadtxt(os.path.join(recon_dir, "axis_alignment.txt"))
+    # axis_alignment = np.linalg.inv(axis_alignment)
+    # load the pcd model and the bbox file
+    pcd = o3d.io.read_point_cloud(os.path.join(recon_dir, "recon.pcd"))
+    pcd.transform(axis_alignment)
+    # load annotation info
+    with open(os.path.join(recon_dir, "annotation_info.pkl"), "rb") as f:
+        annotation_info_list = pickle.load(f)
+    # color random color to different annotation
+    pcd_colors = np.asarray(pcd.colors)
+    for annotation_info in annotation_info_list:
+        indices_3d = annotation_info["pt_indices"]
+        color = np.random.rand(3)
+        pcd_colors[indices_3d] = color
+    origin = o3d.geometry.TriangleMesh.create_coordinate_frame(size=1.0, origin=[0, 0, 0])
+    o3d.visualization.draw_geometries([pcd, origin])
+
 if __name__ == "__main__":
     import argparse
 
@@ -96,3 +119,4 @@ if __name__ == "__main__":
             continue
         print("Processing {}".format(scene))
         post_process_annotation(scene, os.path.join(args.output_dir, os.path.basename(scene)))
+        check_annotation(scene)

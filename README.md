@@ -93,6 +93,15 @@ python setup.py install
 - Press ' ' to switch the transform control mode.
 - Press 'Tab' to download the current meta information.
 
+## Example
+
+### Annotation
+
+- Run label_pre first, and label world transform first and then label different objects.
+- Then copy all *.json into the recon_dir (Where the pcds are saved.)
+- Run label_post then. It will output an axis_alignment.txt and an annotation_info.pkl
+
+
 ## Todo:
 
 - Add a floor object to make it looks better.
