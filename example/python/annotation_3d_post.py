@@ -5,6 +5,7 @@ import glob
 import json
 import pickle
 from scipy.spatial.transform import Rotation as R
+from xml.etree.ElementTree import Element, SubElement, tostring
 
 
 def parse_annotation(annotation_file):
@@ -43,6 +44,8 @@ def post_process_annotation(recon_dir, output_dir):
     annotation_info_list = []
     for annotation in glob.glob(os.path.join(recon_dir, "*.json")):
         label_name = os.path.basename(annotation).split(".")[0]
+        if label_name == "language_label":
+            continue
         bbox_pos, bbox_scale, bbox_quat = parse_annotation(annotation)
         # parse world coord
         if label_name == "WCoordinates":
@@ -106,6 +109,48 @@ def check_annotation(recon_dir):
     origin = o3d.geometry.TriangleMesh.create_coordinate_frame(size=1.0, origin=[0, 0, 0])
     o3d.visualization.draw_geometries([pcd, origin])
 
+
+def generate_task(recon_dir):
+    """Generate the task file for following tasks"""
+    langauge_label_file = os.path.join(recon_dir, "language_label.json")
+    if not os.path.exists(langauge_label_file):
+        return
+    langauge_label = json.load(open(langauge_label_file, "r"))
+
+    # create xml file
+    root = Element("root")
+    env = SubElement(root, "env")
+    env.text = "notiondbovi"
+
+    for k, v in langauge_label.items():
+        # instruction
+        instruction = SubElement(root, "instruction", label=k)
+        instruction.text = v
+    # convert the XML tree to a string
+    xml_string = tostring(root, encoding="unicode")
+    # write the XML string to a file
+    with open(os.path.join(recon_dir, "task.xml"), "w") as file:
+        file.write(xml_string)
+
+    # generate gt_address
+    # load axis-alignment
+    if not os.path.exists(os.path.join(recon_dir, "axis_alignment.txt")):
+        return
+    axis_alignment = np.loadtxt(os.path.join(recon_dir, "axis_alignment.txt"))
+    gt_addresses = []
+    for k, v in langauge_label.items():
+        inst_pcd_file = os.path.join(recon_dir, f"{k}.pcd")
+        inst_pcd = o3d.io.read_point_cloud(inst_pcd_file)
+        inst_pcd.transform(axis_alignment)
+        inst_address = np.zeros(9)
+        inst_address[:3] = inst_pcd.get_center()
+        inst_address[3:6] = inst_pcd.get_min_bound()
+        inst_address[6:] = inst_pcd.get_max_bound()
+        gt_addresses.append(inst_address)
+    with open(os.path.join(recon_dir, "gt_address.pkl"), "wb") as f:
+        pickle.dump(gt_addresses, f)
+
+
 if __name__ == "__main__":
     import argparse
 
@@ -120,3 +165,4 @@ if __name__ == "__main__":
         print("Processing {}".format(scene))
         post_process_annotation(scene, os.path.join(args.output_dir, os.path.basename(scene)))
         check_annotation(scene)
+        generate_task(scene)
