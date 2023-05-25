@@ -55,6 +55,7 @@ def post_process_annotation(recon_dir, output_dir):
             bbox_quat_scipy = np.array([bbox_quat[1], bbox_quat[2], bbox_quat[3], bbox_quat[0]])
             transform_r[:3, :3] = R.from_quat(bbox_quat_scipy).as_matrix()
             transform = transform_t @ transform_r
+            transform = np.linalg.inv(transform)
             # final axis alignment
             final_axis_alignment = transform @ axis_alignment
             np.savetxt(os.path.join(recon_dir, "axis_alignment.txt"), final_axis_alignment)
@@ -63,7 +64,11 @@ def post_process_annotation(recon_dir, output_dir):
         # compute bbox in raw pcd coord
         bbox_rot = o3d.geometry.get_rotation_matrix_from_quaternion(bbox_quat)
         # create a unit open3d bbox
-        bbox = o3d.geometry.OrientedBoundingBox(center=bbox_pos, extent=bbox_scale, R=bbox_rot)
+        # bbox = o3d.geometry.OrientedBoundingBox(center=bbox_pos, extent=bbox_scale, R=bbox_rot)
+        bbox = o3d.geometry.OrientedBoundingBox(center=np.zeros(3,), R=np.eye(3), extent=bbox_scale)
+        bbox.rotate(bbox_rot, center=np.zeros(3,))
+        bbox.translate(bbox_pos)
+
         # send color to bright green
         bbox.color = (0, 1, 0)
         bbox_list.append(bbox)
@@ -73,10 +78,6 @@ def post_process_annotation(recon_dir, output_dir):
         annotation_info["pt_indices"] = bbox_pt_indices
         annotation_info["feature"] = None
         annotation_info_list.append(annotation_info)
-        # copy all json file
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        os.system(f"cp {annotation} {output_dir}")
     
     # save the annotation info
     with open(os.path.join(recon_dir, "annotation_info.pkl"), "wb") as f:
@@ -89,6 +90,7 @@ def post_process_annotation(recon_dir, output_dir):
 
 def check_annotation(recon_dir):
     """Check if the annotation is correct"""
+    print("Check the annotation...")
     # load axis-alignment
     if not os.path.exists(os.path.join(recon_dir, "axis_alignment.txt")):
         return
