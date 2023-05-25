@@ -77,7 +77,7 @@ def prepare_annotation(cam2world, pcd, save_dir):
     context.setDir(save_dir)
     context.open(0)
     # Add the pointcloud
-    context.addPointCloud("recon", "recon", coordinate=np.eye(4, dtype=np.float32))
+    context.addPointCloud("recon", "recon", coordinate=np.eye(4, dtype=np.float32), size=1.0)
     # Copy the pointcloud to the current frame
     o3d.io.write_point_cloud(context.at("recon"), pcd)
 

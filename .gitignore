@@ -25,3 +25,5 @@ public/external
 # Node Related
 package.json
 package-lock.json
+
+.DS_Store
