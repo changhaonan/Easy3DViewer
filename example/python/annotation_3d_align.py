@@ -64,21 +64,11 @@ def align_pcd(recon_dir):
     # origin
     origin = o3d.geometry.TriangleMesh.create_coordinate_frame(size=1.0, origin=[0, 0, 0])
     o3d.visualization.draw_geometries([pcd, origin, bbox])
-    pass
+    
+    # save the pcd
+    o3d.io.write_point_cloud(os.path.join(recon_dir, "recon_align.pcd"), pcd)
+    pcd.transform(np.linalg.inv(final_axis_alignment))
 
-
-def check_annotation(recon_dir):
-    """Check if the annotation is correct"""
-    # load axis-alignment
-    if not os.path.exists(os.path.join(recon_dir, "axis_alignment.txt")):
-        return
-    axis_alignment = np.loadtxt(os.path.join(recon_dir, "axis_alignment.txt"))
-    # axis_alignment = np.linalg.inv(axis_alignment)
-    # load the pcd model and the bbox file
-    pcd = o3d.io.read_point_cloud(os.path.join(recon_dir, "recon.pcd"))
-    pcd.transform(axis_alignment)
-    origin = o3d.geometry.TriangleMesh.create_coordinate_frame(size=1.0, origin=[0, 0, 0])
-    o3d.visualization.draw_geometries([pcd, origin])
 
 if __name__ == "__main__":
     import argparse
@@ -92,4 +82,4 @@ if __name__ == "__main__":
             continue
         align_pcd(scene)
         print("Processing {}".format(scene))
-        check_annotation(scene)
+

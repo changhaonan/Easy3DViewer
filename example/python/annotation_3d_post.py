@@ -64,7 +64,6 @@ def post_process_annotation(recon_dir, output_dir):
         # compute bbox in raw pcd coord
         bbox_rot = o3d.geometry.get_rotation_matrix_from_quaternion(bbox_quat)
         # create a unit open3d bbox
-        # bbox = o3d.geometry.OrientedBoundingBox(center=bbox_pos, extent=bbox_scale, R=bbox_rot)
         bbox = o3d.geometry.OrientedBoundingBox(center=np.zeros(3,), R=np.eye(3), extent=bbox_scale)
         bbox.rotate(bbox_rot, center=np.zeros(3,))
         bbox.translate(bbox_pos)
@@ -164,7 +163,8 @@ if __name__ == "__main__":
     for scene in glob.glob(os.path.join(args.recon_dir, "*")):
         if not os.path.isdir(scene):
             continue
-        print("Processing {}".format(scene))
-        post_process_annotation(scene, os.path.join(args.output_dir, os.path.basename(scene)))
-        check_annotation(scene)
-        generate_task(scene)
+        if scene.endswith("kitchen"):
+            print("Processing {}".format(scene))
+            post_process_annotation(scene, os.path.join(args.output_dir, os.path.basename(scene)))
+            check_annotation(scene)
+            generate_task(scene)
