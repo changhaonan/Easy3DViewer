@@ -1,5 +1,6 @@
 import numpy as np
 import easy3d_viewer as ev
+import easy3d_viewer.utils as utils
 from scipy.spatial.transform import Rotation as R
 import os
 import open3d as o3d
@@ -8,6 +9,7 @@ import tqdm
 
 
 def render_traj_file(data_path, traj_path):
+    """Render object trajectory and depth image"""
     project_name = "check_sequence"
     # Parse intrinsics
     with open(os.path.join(data_path, "intrinsics.txt")) as f:
@@ -23,7 +25,7 @@ def render_traj_file(data_path, traj_path):
     traj_files = sorted(traj_files, key=lambda x: int(os.path.basename(x).split(".")[0]))
     frame = 0
     prev_cam2world = np.eye(4, dtype=np.float32)
-    mask_center_T_init = np.eye(4, dtype=np.float32)
+    mask_T_init = np.eye(4, dtype=np.float32)
 
     for traj_file in tqdm.tqdm(traj_files):
         cam2world = np.loadtxt(traj_file).astype(np.float32)
@@ -47,23 +49,20 @@ def render_traj_file(data_path, traj_path):
         color_pcd = o3d.geometry.PointCloud.create_from_rgbd_image(rgbd_image, intrinsics)
         o3d.io.write_point_cloud(context.at("scene"), color_pcd)
         # mask rgbd image
-        context.addPointCloud("mask", "", np.eye(4, dtype=np.float32), 0.1, normal_mode="shadow")
-        masked_depth = np.array(depth_image)
-        masked_depth[np.array(seg_image) == 0] = 0
-        masked_rgbd_image = o3d.geometry.RGBDImage.create_from_color_and_depth(
-            o3d.geometry.Image(color_image), o3d.geometry.Image(masked_depth), depth_scale=1000.0, depth_trunc=1000.0, convert_rgb_to_intensity=False
-        )
-        masked_color_pcd = o3d.geometry.PointCloud.create_from_rgbd_image(masked_rgbd_image, intrinsics)
+        context.addPointCloud("mask", "", np.eye(4, dtype=np.float32), 0.1, normal_mode="shadow")  
+        masked_color_pcd = utils.get_masked_pcd(np.array(color_image), np.array(depth_image), np.array(seg_image), intrinsics)
         o3d.io.write_point_cloud(context.at("mask"), masked_color_pcd)
 
         # add obj center rep
         if frame == 0:
             mask_center = masked_color_pcd.get_center()
-            mask_center_T_init[:3, 3] = mask_center
-            context.addBoundingBox("obj_bbox", coordinate=mask_center_T_init, width=0.1, height=0.1, depth=0.1)
+            mask_bbox = masked_color_pcd.get_oriented_bounding_box()
+            mask_T_init[:3, :3] = mask_bbox.R
+            mask_T_init[:3, 3] = mask_center
+            context.addBoundingBox("obj_bbox", coordinate=mask_T_init, width=0.1, height=0.1, depth=0.1)
         else:
-            mask_center_T = cam2world @ mask_center_T_init
-            context.addBoundingBox("obj_bbox", coordinate=mask_center_T, width=0.1, height=0.1, depth=0.1)
+            mask_T = cam2world @ mask_T_init
+            context.addBoundingBox("obj_bbox", coordinate=mask_T, width=0.1, height=0.1, depth=0.1)
         context.close()
         frame += 1
 
